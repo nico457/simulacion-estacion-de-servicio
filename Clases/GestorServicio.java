@@ -39,8 +39,8 @@ public class GestorServicio {
 
     public GestorServicio() {
         this.reloj = 0;
-        this.cantSimulaciones = 10;
-        this.limiteSuperior = 3;
+        this.cantSimulaciones = 300;
+        this.limiteSuperior = 20;
         this.limiteInferior = 1;
         this.acumEsperaCombustible = 0;
         this.acumEsperaMantenimiento = 0;
@@ -61,7 +61,7 @@ public class GestorServicio {
             Object proximoEvento = filaAnterior.calcularProximoEvento();
             //LLEGADAS
             if (proximoEvento instanceof Llegada) {
-                filaActual.setRelojActual(((Llegada) proximoEvento).getProxLlegada(reloj));
+                filaActual.setRelojActual(((Llegada) proximoEvento).getProxLlegada());
                 reloj = filaActual.getRelojActual();
                 //LLEGADA COMBUSTIBLE
                 if (proximoEvento instanceof LlegadaCombustible) {
@@ -80,19 +80,22 @@ public class GestorServicio {
 
             } else {
                 // FIN ATENCION
-                filaActual.setRelojActual(((FinAtencion) proximoEvento).getProxFin(reloj));
+                filaActual.setRelojActual(((FinAtencion) proximoEvento).getProxFin());
                 reloj = filaActual.getRelojActual();
                 //FIN ATENCION COMBUSTIBLE
                 if (proximoEvento instanceof FinAtencionCombustible) {
                     FinAtencionCombustible objetoFin = (FinAtencionCombustible) proximoEvento;
                     calcularFinAtencionCombustible(objetoFin);
                 } else if (proximoEvento instanceof FinAtencionLavado) {
-                    //FIN ATENCION LAVADO
+                    FinAtencionLavado objetoFin = (FinAtencionLavado) proximoEvento;
+                    calcularFinAtencionLavado(objetoFin);
                 } else if (proximoEvento instanceof FinAtencionMantenimiento) {
-                    //FIN ATENCION MANTENIMIENTO
+                    FinAtencionMantenimiento objetoFin = (FinAtencionMantenimiento) proximoEvento;
+                    calcularFinAtencionMantenimiento(objetoFin);
                 } else {
                     //FIN ATENCION CAJA
-
+                    FinAtencionCaja objetoFin = (FinAtencionCaja) proximoEvento;
+                    calcularFinAtencionCaja(objetoFin);
                 }
 
             }
@@ -110,7 +113,7 @@ public class GestorServicio {
     public void llegadaCombustible(){
         boolean algunoLibre = false;
         int menorSurtidorSubIndice = 0;
-        filaActual.setLlegadaCombustible(new LlegadaCombustible(2));
+        filaActual.setLlegadaCombustible(new LlegadaCombustible(2,reloj));
         //hago una copia de los surtidores anteriores para no cambiarlos y actualizarlos para el actual
         ArrayList<Surtidor> surtidoresAct = filaAnterior.getSurtidores();
         for (Surtidor surtidor : filaAnterior.getSurtidores()) {
@@ -119,7 +122,7 @@ public class GestorServicio {
                 surtidoresAct.get(surtidor.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
-                filaActual.setFinAtencionCombustible(new FinAtencionCombustible(3,surtidor.getSubindice()));
+                filaActual.setFinAtencionCombustible(new FinAtencionCombustible(3,surtidor.getSubindice(),reloj));
                 surtidoresAct.get(surtidor.getSubindice()).agregarCliente(new ClienteCombustible("SA",filaActual.getRelojActual()));
                 filaActual.setSurtidores(surtidoresAct);
                 break;
@@ -140,7 +143,7 @@ public class GestorServicio {
     public void llegadaLavado(){
         boolean algunoLibre = false;
         int menorEstacionSubIndice = 0;
-        filaActual.setLlegadaLavado(new LlegadaLavado(4));
+        filaActual.setLlegadaLavado(new LlegadaLavado(4,reloj));
 
         ArrayList<EstacionLavado> estacionesAct = filaAnterior.getEstacionesLavado();
         for (EstacionLavado estacionLavado : filaAnterior.getEstacionesLavado()) {
@@ -149,7 +152,7 @@ public class GestorServicio {
                 estacionesAct.get(estacionLavado.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
-                filaActual.setFinAtencionLavado(new FinAtencionLavado(6,estacionLavado.getSubindice()));
+                filaActual.setFinAtencionLavado(new FinAtencionLavado(6,estacionLavado.getSubindice(),reloj));
                 estacionesAct.get(estacionLavado.getSubindice()).agregarCliente(new ClienteLavado("SA",filaActual.getRelojActual()));
                 filaActual.setEstacionesLavado(estacionesAct);
                 break;
@@ -170,7 +173,7 @@ public class GestorServicio {
     public void llegadaMantenimiento(){
         boolean algunoLibre = false;
         int menorEstacionSubIndice = 0;
-        filaActual.setLlegadaMantenimiento(new LlegadaMantenimiento(6));
+        filaActual.setLlegadaMantenimiento(new LlegadaMantenimiento(6,reloj));
 
         ArrayList<EstacionMantenimiento> estacionesAct = filaAnterior.getEstacionesMantenimiento();
         for (EstacionMantenimiento estacionMantenimiento : filaAnterior.getEstacionesMantenimiento()) {
@@ -179,7 +182,7 @@ public class GestorServicio {
                 estacionesAct.get(estacionMantenimiento.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
-                filaActual.setFinAtencionMantenimiento(new FinAtencionMantenimiento(12,estacionMantenimiento.getSubindice()));
+                filaActual.setFinAtencionMantenimiento(new FinAtencionMantenimiento(12,estacionMantenimiento.getSubindice(),reloj));
                 estacionesAct.get(estacionMantenimiento.getSubindice()).agregarCliente(new ClienteMantenimiento("SA",filaActual.getRelojActual()));
                 filaActual.setEstacionesMantenimiento(estacionesAct);
                 break;
@@ -200,7 +203,7 @@ public class GestorServicio {
     public void llegadaCaja() {
         boolean algunoLibre = false;
         int menorCajaSubIndice = 0;
-        filaActual.setLlegadaCaja(new LlegadaCaja(1.5));
+        filaActual.setLlegadaCaja(new LlegadaCaja(1.5,reloj));
         //hago una copia de los surtidores anteriores para no cambiarlos y actualizarlos para el actual
         ArrayList<Caja> cajasAct = filaAnterior.getCajas();
         for (Caja caja : filaAnterior.getCajas()) {
@@ -209,7 +212,7 @@ public class GestorServicio {
                 cajasAct.get(caja.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
-                filaActual.setFinAtencionCaja(new FinAtencionCaja(4, caja.getSubindice()));
+                filaActual.setFinAtencionCaja(new FinAtencionCaja(4, caja.getSubindice(),reloj));
                 cajasAct.get(caja.getSubindice()).agregarCliente(new ClienteCaja("SA", filaActual.getRelojActual()));
                 filaActual.setCajas(cajasAct);
                 break;
@@ -229,13 +232,14 @@ public class GestorServicio {
     public void calcularFinAtencionCombustible(FinAtencionCombustible objetoFin) {
         int indice = objetoFin.getSubindice();
         Surtidor surtidor = filaAnterior.getSurtidor(indice);
-        surtidor.eliminarCliente();
+        filaAnterior.getSurtidor(indice).eliminarCliente();
         if (surtidor.getCola() == 0) {
             surtidor.setEstado("libre");
         } else {
             surtidor.restarCola();
             surtidor.buscarSiguiente();
-            filaActual.setFinAtencionCombustible(new FinAtencionCombustible(3,surtidor.getSubindice()));
+
+            filaActual.setFinAtencionCombustible(new FinAtencionCombustible(3,surtidor.getSubindice(),reloj));
 
         }
     }
@@ -248,7 +252,7 @@ public class GestorServicio {
         } else {
             estacionLavado.restarCola();
             estacionLavado.buscarSiguiente();
-            filaActual.setFinAtencionLavado(new FinAtencionLavado(6,estacionLavado.getSubindice()));
+            filaActual.setFinAtencionLavado(new FinAtencionLavado(6,estacionLavado.getSubindice(),reloj));
 
         }
     }
@@ -261,7 +265,7 @@ public class GestorServicio {
         } else {
             estacionMantenimiento.restarCola();
             estacionMantenimiento.buscarSiguiente();
-            filaActual.setFinAtencionMantenimiento(new FinAtencionMantenimiento(12,estacionMantenimiento.getSubindice()));
+            filaActual.setFinAtencionMantenimiento(new FinAtencionMantenimiento(12,estacionMantenimiento.getSubindice(),reloj));
 
         }
     }
@@ -274,7 +278,7 @@ public class GestorServicio {
         } else {
             caja.restarCola();
             caja.buscarSiguiente();
-            filaActual.setFinAtencionCaja(new FinAtencionCaja(4,caja.getSubindice()));
+            filaActual.setFinAtencionCaja(new FinAtencionCaja(4,caja.getSubindice(),reloj));
 
         }
     }

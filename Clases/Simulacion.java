@@ -44,10 +44,10 @@ public class Simulacion implements Cloneable {
 
     public void inicializar(double mediaCaja,double mediaCombustible, double mediaLavado, double mediaMantenimiento){
         this.relojActual = 0;
-        this.llegadaCaja = new LlegadaCaja(mediaCaja);
-        this.llegadaCombustible = new LlegadaCombustible(mediaCombustible);
-        this.llegadaLavado = new LlegadaLavado(mediaLavado);
-        this.llegadaMantenimiento = new LlegadaMantenimiento(mediaMantenimiento);
+        this.llegadaCaja = new LlegadaCaja(mediaCaja,relojActual);
+        this.llegadaCombustible = new LlegadaCombustible(mediaCombustible,relojActual);
+        this.llegadaLavado = new LlegadaLavado(mediaLavado,relojActual);
+        this.llegadaMantenimiento = new LlegadaMantenimiento(mediaMantenimiento,relojActual);
         this.cajas = new ArrayList<>(2);
         this.cajas.add(new Caja(0));
         this.cajas.add(new Caja(1));
@@ -64,33 +64,33 @@ public class Simulacion implements Cloneable {
     }
 
     public Object calcularProximoEvento(){
-        double min = findMin(llegadaCaja.getProxLlegada(relojActual),
-                llegadaCombustible.getProxLlegada(relojActual),
-                llegadaLavado.getProxLlegada(relojActual),
-                llegadaMantenimiento.getProxLlegada(relojActual),
-                (finAtencionCombustible != null) ? finAtencionCombustible.getProxFin(relojActual) : -1,
-                (finAtencionLavado != null) ? finAtencionLavado.getProxFin(relojActual) : -1,
-                (finAtencionMantenimiento != null) ? finAtencionMantenimiento.getProxFin(relojActual) : -1);
+        double min = findMin(llegadaCaja.getProxLlegada(),
+                llegadaCombustible.getProxLlegada(),
+                llegadaLavado.getProxLlegada(),
+                llegadaMantenimiento.getProxLlegada(),
+                (finAtencionCombustible != null) ? finAtencionCombustible.getProxFin() : -1,
+                (finAtencionLavado != null) ? finAtencionLavado.getProxFin() : -1,
+                (finAtencionMantenimiento != null) ? finAtencionMantenimiento.getProxFin() : -1);
 
-        if (min == llegadaCaja.getProxLlegada(relojActual)) {
+        if (min == llegadaCaja.getProxLlegada()) {
             return llegadaCaja;
         }
-        if (min == llegadaCombustible.getProxLlegada(relojActual)) {
+        if (min == llegadaCombustible.getProxLlegada()) {
             return llegadaCombustible;
         }
-        if (min == llegadaLavado.getProxLlegada(relojActual)) {
+        if (min == llegadaLavado.getProxLlegada()) {
             return llegadaLavado;
         }
-        if (min == llegadaMantenimiento.getProxLlegada(relojActual)) {
+        if (min == llegadaMantenimiento.getProxLlegada()) {
             return llegadaMantenimiento;
         }
-        if (finAtencionCombustible != null && min == finAtencionCombustible.getProxFin(relojActual)) {
+        if (finAtencionCombustible != null && min == finAtencionCombustible.getProxFin()) {
             return finAtencionCombustible;
         }
-        if (finAtencionCombustible != null && min == finAtencionLavado.getProxFin(relojActual)) {
+        if (finAtencionCombustible != null && min == finAtencionLavado.getProxFin()) {
             return finAtencionLavado;
         }
-        if (finAtencionCombustible != null && min == finAtencionMantenimiento.getProxFin(relojActual)) {
+        if (finAtencionCombustible != null && min == finAtencionMantenimiento.getProxFin()) {
             return finAtencionMantenimiento;
         }
         return null;

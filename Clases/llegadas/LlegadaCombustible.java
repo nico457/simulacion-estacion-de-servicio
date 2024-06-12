@@ -8,6 +8,8 @@ public class LlegadaCombustible implements Llegada {
     private double llegada;
     private double media;
 
+    private double proxLlegada;
+
 
     public double getRnd() {
         return rnd;
@@ -19,14 +21,23 @@ public class LlegadaCombustible implements Llegada {
     }
 
     @Override
-    public double getProxLlegada(double reloj) {
-        return reloj + llegada;
+    public double getProxLlegada() {
+        return proxLlegada;
 
     }
 
-    public LlegadaCombustible(double media) {
+    public LlegadaCombustible(double media,double reloj) {
         this.rnd = Math.random();
         this.llegada = -media * Math.log(1 - rnd);
+        this.proxLlegada = reloj + llegada;
         this.media = media;
+    }
+
+    @Override
+    public String toString() {
+        return "LlegadaCombustible{" +
+                "rnd=" + rnd +
+                ", llegada=" + llegada +
+                '}';
     }
 }

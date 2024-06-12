@@ -5,14 +5,17 @@ import Clases.interfaces.FinAtencion;
 public class FinAtencionLavado implements FinAtencion {
     private double constante;
     private int subindice;
+
+    private double proxFin;
     @Override
-    public double getProxFin(double reloj) {
-        return constante + reloj;
+    public double getProxFin() {
+        return proxFin;
     }
 
-    public FinAtencionLavado(double constante, int subindice) {
+    public FinAtencionLavado(double constante, int subindice,double reloj) {
         this.constante = constante;
         this.subindice = subindice;
+        this.proxFin = reloj + constante;
     }
 
 

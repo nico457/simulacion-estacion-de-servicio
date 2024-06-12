@@ -6,6 +6,7 @@ public class LlegadaCaja implements Llegada {
     private double rnd;
     private double llegada;
     private double media;
+    private double proxLlegada;
 
 
     public double getRnd() {
@@ -19,14 +20,23 @@ public class LlegadaCaja implements Llegada {
     }
 
     @Override
-    public double getProxLlegada(double reloj) {
-        return reloj + llegada;
+    public double getProxLlegada() {
+        return proxLlegada;
 
     }
 
-    public LlegadaCaja(double media) {
+    public LlegadaCaja(double media,double reloj) {
         this.rnd = Math.random();
         this.llegada = -media * Math.log(1 - rnd);
+        this.proxLlegada = reloj + llegada;
         this.media = media;
+    }
+
+    @Override
+    public String toString() {
+        return "LlegadaCaja{" +
+                "rnd=" + rnd +
+                ", llegada=" + llegada +
+                '}';
     }
 }

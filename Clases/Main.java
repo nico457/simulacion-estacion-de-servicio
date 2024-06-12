@@ -8,7 +8,7 @@ public class Main {
         GestorServicio gestor = new GestorServicio();
         ArrayList<Simulacion> simulacions= gestor.generarSimulacion();
         for (Simulacion simulacion : simulacions) {
-            System.out.println(simulacion.toString());
+            System.out.println(simulacion.clone().toString());
             System.out.println("---------------------------------------------------");
         }
     }

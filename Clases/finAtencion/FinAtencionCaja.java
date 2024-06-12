@@ -7,14 +7,17 @@ public class FinAtencionCaja implements FinAtencion {
     private double constante;
 
     private int subindice;
+
+    private double proxFin;
     @Override
-    public double getProxFin(double reloj) {
-        return constante + reloj;
+    public double getProxFin() {
+        return proxFin;
     }
 
-    public FinAtencionCaja(double constante, int subindice) {
+    public FinAtencionCaja(double constante, int subindice,double reloj) {
         this.constante = constante;
         this.subindice = subindice;
+        this.proxFin = reloj + constante;
     }
 
 
