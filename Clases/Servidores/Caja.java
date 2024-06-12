@@ -40,7 +40,7 @@ public class Caja {
         clientesCaja.remove(getClienteActual());
     }
 
-    public void buscarSiguiente(){
+    public ClienteCaja buscarSiguiente(){
         double menor = Double.MAX_VALUE;
         ClienteCaja clienteMenor = null;
         for (ClienteCaja cliente : clientesCaja) {
@@ -49,6 +49,8 @@ public class Caja {
             }
         }
         clienteMenor.setEstado("SA");
+
+        return clienteMenor;
     }
 
     public ClienteCaja getClienteActual() {

@@ -17,6 +17,7 @@ import Clases.llegadas.LlegadaMantenimiento;
 import java.util.ArrayList;
 
 public class Simulacion implements Cloneable {
+    private int linea;
     private double relojActual;
 
     // Llegadas
@@ -31,18 +32,25 @@ public class Simulacion implements Cloneable {
     private FinAtencionMantenimiento finAtencionMantenimiento;
     private FinAtencionCaja finAtencionCaja;
 
-    //Objetos permanentes
-
+    // Objetos permanentes
     private ArrayList<Caja> cajas;
-
     private ArrayList<Surtidor> surtidores;
-
     private ArrayList<EstacionMantenimiento> estacionesMantenimiento;
-
     private ArrayList<EstacionLavado> estacionesLavado;
+
+    // Contadores y Acumuladores Actividades
+    private double acumEsperaCombustible;
+    private double acumEsperaLavado;
+    private double acumEsperaMantenimiento;
+    private double acumEsperaCaja;
+    private int contCombustibleAtendidos;
+    private int contLavadoAtendidos;
+    private int contMantenimientoAtendidos;
+    private int contCajaAtendidos;
 
 
     public void inicializar(double mediaCaja,double mediaCombustible, double mediaLavado, double mediaMantenimiento){
+        this.linea = 0;
         this.relojActual = 0;
         this.llegadaCaja = new LlegadaCaja(mediaCaja,relojActual);
         this.llegadaCombustible = new LlegadaCombustible(mediaCombustible,relojActual);
@@ -220,8 +228,6 @@ public class Simulacion implements Cloneable {
         this.estacionesLavado = estacionesLavado;
     }
 
-
-
     public double getRelojActual() {
         return relojActual;
     }
@@ -230,22 +236,99 @@ public class Simulacion implements Cloneable {
         this.relojActual = relojActual;
     }
 
+    public void actualizarEsperaCombustible(double tiempo) {
+        acumEsperaCombustible += tiempo;
+    }
+
+    public void actualizarEsperaLavado(double tiempo) {
+        acumEsperaLavado += tiempo;
+    }
+
+    public void actualizarEsperaMantenimiento(double tiempo) {
+        acumEsperaMantenimiento += tiempo;
+    }
+
+    public void actualizarEsperaCaja(double tiempo) {
+        acumEsperaCaja += tiempo;
+    }
+
+    public void actualizarAtendidosCombustible() {
+        contCombustibleAtendidos++;
+    }
+
+    public void actualizarAtendidosLavado() {
+        contLavadoAtendidos++;
+    }
+
+    public void actualizarAtendidosMantenimiento() {
+        contMantenimientoAtendidos++;
+    }
+
+    public void actualizarAtendidosCaja() {
+        contCajaAtendidos++;
+    }
+
+    public void setLinea(int i) {
+        linea = i;
+    }
+
+    public double getAcumEsperaCombustible(){
+        return acumEsperaCombustible;
+    }
+
+    public double getAcumEsperaLavado(){
+        return acumEsperaLavado;
+    }
+
+    public double getAcumEsperaMantenimiento(){
+        return acumEsperaMantenimiento;
+    }
+
+    public double getAcumEsperaCaja(){
+        return acumEsperaCaja;
+    }
+
+    public int getAtendidosCombustible(){
+        return contCombustibleAtendidos;
+    }
+
+    public int getAtendidosLavado(){
+        return contLavadoAtendidos;
+    }
+
+    public int getAtendidosMantenimiento(){
+        return contMantenimientoAtendidos;
+    }
+
+    public int getAtendidosCaja(){
+        return contCajaAtendidos;
+    }
+
     @Override
     public String toString() {
         return "Simulacion{" +
-                "relojActual=" + relojActual +
-                ", llegadaCaja=" + llegadaCaja +
-                ", llegadaCombustible=" + llegadaCombustible +
-                ", llegadaLavado=" + llegadaLavado +
-                ", llegadaMantenimiento=" + llegadaMantenimiento +
-                ", finAtencionCombustible=" + finAtencionCombustible +
-                ", finAtencionLavado=" + finAtencionLavado +
-                ", finAtencionMantenimiento=" + finAtencionMantenimiento +
-                ", finAtencionCaja=" + finAtencionCaja +
-                ", cajas=" + cajas +
-                ", surtidores=" + surtidores +
-                ", estacionesMantenimiento=" + estacionesMantenimiento +
-                ", estacionesLavado=" + estacionesLavado +
+                "\n linea=" + linea +
+                "\n relojActual=" + relojActual +
+                "\n llegadaCaja=" + llegadaCaja +
+                "\n llegadaCombustible=" + llegadaCombustible +
+                "\n llegadaLavado=" + llegadaLavado +
+                "\n llegadaMantenimiento=" + llegadaMantenimiento +
+                "\n finAtencionCombustible=" + finAtencionCombustible +
+                "\n finAtencionLavado=" + finAtencionLavado +
+                "\n finAtencionMantenimiento=" + finAtencionMantenimiento +
+                "\n finAtencionCaja=" + finAtencionCaja +
+                "\n cajas=" + cajas +
+                "\n surtidores=" + surtidores +
+                "\n estacionesMantenimiento=" + estacionesMantenimiento +
+                "\n estacionesLavado=" + estacionesLavado +
+                "\n acumEsperaCombustible=" + acumEsperaCombustible +
+                "\n acumEsperaLavado=" + acumEsperaLavado +
+                "\n acumEsperaMantenimiento=" + acumEsperaMantenimiento +
+                "\n acumEsperaCaja=" + acumEsperaCaja +
+                "\n contCombustiblesAtendidos=" + contCombustibleAtendidos +
+                "\n contLavadoAtendidos=" + contLavadoAtendidos +
+                "\n contMantenimientoAtendidos=" + contMantenimientoAtendidos +
+                "\n contCajaAtendidos=" + contCajaAtendidos +
                 '}';
     }
     @Override

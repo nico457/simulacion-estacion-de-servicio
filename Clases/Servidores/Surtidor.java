@@ -60,7 +60,7 @@ public class Surtidor {
         }
         return null;
     }
-    public void buscarSiguiente(){
+    public ClienteCombustible buscarSiguiente(){
         double menor = Double.MAX_VALUE;
         ClienteCombustible clienteMenor = null;
         for (ClienteCombustible cliente : clientesCombustible) {
@@ -69,5 +69,7 @@ public class Surtidor {
             }
         }
         clienteMenor.setEstado("SA");
+
+        return clienteMenor;
     }
 }

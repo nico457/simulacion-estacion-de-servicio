@@ -1,7 +1,5 @@
 package Clases.Servidores;
 
-import Clases.clientes.ClienteCaja;
-import Clases.clientes.ClienteCombustible;
 import Clases.clientes.ClienteLavado;
 
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class EstacionLavado {
         }
         return null;
     }
-    public void buscarSiguiente(){
+    public ClienteLavado buscarSiguiente(){
         double menor = Double.MAX_VALUE;
         ClienteLavado clienteMenor = null;
         for (ClienteLavado cliente : clientesLavado) {
@@ -58,6 +56,8 @@ public class EstacionLavado {
             }
         }
         clienteMenor.setEstado("SA");
+
+        return clienteMenor;
     }
 
     public int getCola() {

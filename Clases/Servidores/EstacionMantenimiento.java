@@ -1,7 +1,5 @@
 package Clases.Servidores;
 
-
-import Clases.clientes.ClienteCaja;
 import Clases.clientes.ClienteMantenimiento;
 
 import java.util.ArrayList;
@@ -62,7 +60,7 @@ public class EstacionMantenimiento {
         }
         return null;
     }
-    public void buscarSiguiente(){
+    public ClienteMantenimiento buscarSiguiente(){
         double menor = Double.MAX_VALUE;
         ClienteMantenimiento clienteMenor = null;
         for (ClienteMantenimiento cliente : clientesMantenimiento) {
@@ -71,5 +69,7 @@ public class EstacionMantenimiento {
             }
         }
         clienteMenor.setEstado("SA");
+
+        return clienteMenor;
     }
 }

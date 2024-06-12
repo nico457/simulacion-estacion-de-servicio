@@ -26,12 +26,14 @@ public class GestorServicio {
     private int cantSimulaciones;
     private int limiteSuperior;
     private int limiteInferior;
-    private float acumEsperaCombustible;
-    private float acumEsperaMantenimiento;
-    private float acumEsperaLavado;
-    private int clientesAtendidosCombustible;
-    private int clientesAtendidosMantenimiento;
-    private int clientesAtendidosLavado;
+    // private float acumEsperaCombustible;
+    // private float acumEsperaMantenimiento;
+    // private float acumEsperaLavado;
+    // private float acumEsperaCaja;
+    // private int clientesAtendidosCombustible;
+    // private int clientesAtendidosMantenimiento;
+    // private int clientesAtendidosLavado;
+    // private int clientesAtendidosCaja;
     private ArrayList<Simulacion> simulacionesRango;
     private Simulacion filaActual;
     private Simulacion filaAnterior;
@@ -39,15 +41,15 @@ public class GestorServicio {
 
     public GestorServicio() {
         this.reloj = 0;
-        this.cantSimulaciones = 300000;
-        this.limiteSuperior = 20;
-        this.limiteInferior = 1;
-        this.acumEsperaCombustible = 0;
-        this.acumEsperaMantenimiento = 0;
-        this.acumEsperaLavado = 0;
-        this.clientesAtendidosCombustible = 0;
-        this.clientesAtendidosMantenimiento = 0;
-        this.clientesAtendidosLavado = 0;
+        this.cantSimulaciones = 3000;
+        this.limiteSuperior = 350;
+        this.limiteInferior = 200;
+        // this.acumEsperaCombustible = 0;
+        // this.acumEsperaMantenimiento = 0;
+        // this.acumEsperaLavado = 0;
+        // this.clientesAtendidosCombustible = 0;
+        // this.clientesAtendidosMantenimiento = 0;
+        // this.clientesAtendidosLavado = 0;
         this.simulacionesRango = new ArrayList<>();
         this.filaActual = new Simulacion();
         this.filaAnterior = new Simulacion();
@@ -58,6 +60,7 @@ public class GestorServicio {
         filaActual.inicializar(1.5,2,4,6);
         filaAnterior = filaActual.clone(); // para la primer iteracion fila anterior es igual a la actual
         for (int i = 1; i < cantSimulaciones; i++) {
+            filaActual.setLinea(i);
             Object proximoEvento = filaAnterior.calcularProximoEvento();
             //LLEGADAS
             if (proximoEvento instanceof Llegada) {
@@ -103,8 +106,13 @@ public class GestorServicio {
                 }
 
             }
-
+            
+            // Guardo linea si esta en el rango de morstrar
             if (i >= limiteInferior && i <= limiteSuperior) {
+                simulacionesRango.add(filaActual.clone());
+            }
+            // Guardo si es la ultima linea
+            if (i == cantSimulaciones-1){
                 simulacionesRango.add(filaActual.clone());
             }
 
@@ -241,9 +249,13 @@ public class GestorServicio {
             surtidor.setEstado("libre");
 
         } else {
+            // Disminuyo cola
             surtidor.restarCola();
-            surtidor.buscarSiguiente();
-
+            // Busco siguiente cliente y calculo tiempo espera y sumo contador
+            ClienteCombustible cliente = surtidor.buscarSiguiente();
+            filaActual.actualizarEsperaCombustible(reloj - cliente.getTiempoLlegada());
+            filaActual.actualizarAtendidosCombustible();
+            // Obtengo siguiente fin atencion
             filaActual.setFinAtencionCombustible(new FinAtencionCombustible(3,surtidor.getSubindice(),reloj));
 
         }
@@ -257,8 +269,13 @@ public class GestorServicio {
             estacionLavado.setEstado("libre");
 
         } else {
+            // Disminuyo cola
             estacionLavado.restarCola();
-            estacionLavado.buscarSiguiente();
+            // Busco siguiente cliente y calculo tiempo espera y sumo contador
+            ClienteLavado cliente = estacionLavado.buscarSiguiente();
+            filaActual.actualizarEsperaLavado(reloj - cliente.getTiempoLlegada());
+            filaActual.actualizarAtendidosLavado();
+            // Obtengo siguiente fin atencion
             filaActual.setFinAtencionLavado(new FinAtencionLavado(6,estacionLavado.getSubindice(),reloj));
 
         }
@@ -271,8 +288,13 @@ public class GestorServicio {
             estacionMantenimiento.setEstado("libre");
 
         } else {
+            // Disminuyo cola
             estacionMantenimiento.restarCola();
-            estacionMantenimiento.buscarSiguiente();
+            // Busco siguiente cliente y calculo tiempo espera y sumo contador
+            ClienteMantenimiento cliente = estacionMantenimiento.buscarSiguiente();
+            filaActual.actualizarEsperaMantenimiento(reloj - cliente.getTiempoLlegada());
+            filaActual.actualizarAtendidosMantenimiento();
+            // Obtengo siguiente fin atencion
             filaActual.setFinAtencionMantenimiento(new FinAtencionMantenimiento(12,estacionMantenimiento.getSubindice(),reloj));
         }
     }
@@ -284,8 +306,13 @@ public class GestorServicio {
             caja.setEstado("libre");
 
         } else {
+            // Disminuyo cola
             caja.restarCola();
-            caja.buscarSiguiente();
+            // Busco siguiente cliente y calculo tiempo espera y sumo contador
+            ClienteCaja cliente = caja.buscarSiguiente();
+            filaActual.actualizarEsperaCaja(reloj - cliente.getTiempoLlegada());
+            filaActual.actualizarAtendidosCaja();
+            // Obtengo siguiente fin atencion
             filaActual.setFinAtencionCaja(new FinAtencionCaja(4,caja.getSubindice(),reloj));
 
         }
