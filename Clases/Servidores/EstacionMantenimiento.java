@@ -16,6 +16,7 @@ public class EstacionMantenimiento {
         estado = "libre";
         cola = 0;
         this.subindice = subindice;
+        clientesMantenimiento = new ArrayList<>();
     }
 
     public void sumarCola() {
@@ -49,6 +50,10 @@ public class EstacionMantenimiento {
         clientesMantenimiento.add(cliente);
     }
 
+    public void eliminarCliente() {
+        clientesMantenimiento.remove(getCliente());
+    }
+
     public ClienteMantenimiento getCliente() {
         for (ClienteMantenimiento cliente : clientesMantenimiento) {
             if (cliente.getEstado().equals("SA")) {
@@ -56,5 +61,15 @@ public class EstacionMantenimiento {
             }
         }
         return null;
+    }
+    public void buscarSiguiente(){
+        double menor = Double.MAX_VALUE;
+        ClienteMantenimiento clienteMenor = null;
+        for (ClienteMantenimiento cliente : clientesMantenimiento) {
+            if (cliente.getTiempoLlegada() <= menor) {
+                clienteMenor = cliente;
+            }
+        }
+        clienteMenor.setEstado("SA");
     }
 }

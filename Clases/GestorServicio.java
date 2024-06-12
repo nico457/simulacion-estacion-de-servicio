@@ -39,28 +39,30 @@ public class GestorServicio {
 
     public GestorServicio() {
         this.reloj = 0;
-        this.cantSimulaciones = 0;
-        this.limiteSuperior = 0;
-        this.limiteInferior = 0;
+        this.cantSimulaciones = 10;
+        this.limiteSuperior = 3;
+        this.limiteInferior = 1;
         this.acumEsperaCombustible = 0;
         this.acumEsperaMantenimiento = 0;
         this.acumEsperaLavado = 0;
         this.clientesAtendidosCombustible = 0;
         this.clientesAtendidosMantenimiento = 0;
         this.clientesAtendidosLavado = 0;
-        this.simulacionesRango = new ArrayList();
+        this.simulacionesRango = new ArrayList<>();
+        this.filaActual = new Simulacion();
+        this.filaAnterior = new Simulacion();
     }
 
-    public void generarSimulacion() {
+    public ArrayList<Simulacion> generarSimulacion() {
 
         filaActual.inicializar(1.5,2,4,6);
-        filaAnterior = filaActual; // para la primer iteracion fila anterior es igual a la actual
+        filaAnterior = filaActual.clone(); // para la primer iteracion fila anterior es igual a la actual
         for (int i = 1; i < cantSimulaciones; i++) {
             Object proximoEvento = filaAnterior.calcularProximoEvento();
-
             //LLEGADAS
             if (proximoEvento instanceof Llegada) {
                 filaActual.setRelojActual(((Llegada) proximoEvento).getProxLlegada(reloj));
+                reloj = filaActual.getRelojActual();
                 //LLEGADA COMBUSTIBLE
                 if (proximoEvento instanceof LlegadaCombustible) {
                     llegadaCombustible();
@@ -79,22 +81,30 @@ public class GestorServicio {
             } else {
                 // FIN ATENCION
                 filaActual.setRelojActual(((FinAtencion) proximoEvento).getProxFin(reloj));
+                reloj = filaActual.getRelojActual();
                 //FIN ATENCION COMBUSTIBLE
                 if (proximoEvento instanceof FinAtencionCombustible) {
                     FinAtencionCombustible objetoFin = (FinAtencionCombustible) proximoEvento;
                     calcularFinAtencionCombustible(objetoFin);
+                } else if (proximoEvento instanceof FinAtencionLavado) {
+                    //FIN ATENCION LAVADO
+                } else if (proximoEvento instanceof FinAtencionMantenimiento) {
+                    //FIN ATENCION MANTENIMIENTO
+                } else {
+                    //FIN ATENCION CAJA
 
                 }
-
-                if (i >= limiteInferior && i <= limiteSuperior) {
-                    simulacionesRango.add(filaActual);
-                }
-
-                //al finalizar la linea actual la guardo en la anterior
-                filaAnterior = filaActual;
 
             }
+
+            if (i >= limiteInferior && i <= limiteSuperior) {
+                simulacionesRango.add(filaActual.clone());
+            }
+
+            //al finalizar la linea actual la guardo en la anterior
+            filaAnterior = filaActual.clone();
         }
+        return simulacionesRango;
     }
 
     public void llegadaCombustible(){
@@ -229,4 +239,44 @@ public class GestorServicio {
 
         }
     }
+    public void calcularFinAtencionLavado(FinAtencionLavado objetoFin) {
+        int indice = objetoFin.getSubindice();
+        EstacionLavado estacionLavado = filaAnterior.getEstacionLavado(indice);
+        estacionLavado.eliminarCliente();
+        if (estacionLavado.getCola() == 0) {
+            estacionLavado.setEstado("libre");
+        } else {
+            estacionLavado.restarCola();
+            estacionLavado.buscarSiguiente();
+            filaActual.setFinAtencionLavado(new FinAtencionLavado(6,estacionLavado.getSubindice()));
+
+        }
+    }
+    public void calcularFinAtencionMantenimiento(FinAtencionMantenimiento objetoFin) {
+        int indice = objetoFin.getSubindice();
+        EstacionMantenimiento estacionMantenimiento = filaAnterior.getEstacionMantenimiento(indice);
+        estacionMantenimiento.eliminarCliente();
+        if (estacionMantenimiento.getCola() == 0) {
+            estacionMantenimiento.setEstado("libre");
+        } else {
+            estacionMantenimiento.restarCola();
+            estacionMantenimiento.buscarSiguiente();
+            filaActual.setFinAtencionMantenimiento(new FinAtencionMantenimiento(12,estacionMantenimiento.getSubindice()));
+
+        }
+    }
+    public void calcularFinAtencionCaja(FinAtencionCaja objetoFin) {
+        int indice = objetoFin.getSubindice();
+        Caja caja = filaAnterior.getCaja(indice);
+        caja.eliminarCliente();
+        if (caja.getCola() == 0) {
+            caja.setEstado("libre");
+        } else {
+            caja.restarCola();
+            caja.buscarSiguiente();
+            filaActual.setFinAtencionCaja(new FinAtencionCaja(4,caja.getSubindice()));
+
+        }
+    }
+
 }

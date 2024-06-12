@@ -14,6 +14,7 @@ public class Caja {
         estado = "libre";
         cola = 0;
         this.subindice = subindice;
+        clientesCaja = new ArrayList<>();
     }
 
     public void sumarCola() {
@@ -33,6 +34,21 @@ public class Caja {
 
     public void agregarCliente(ClienteCaja cliente){
         clientesCaja.add(cliente);
+    }
+
+    public void eliminarCliente() {
+        clientesCaja.remove(getClienteActual());
+    }
+
+    public void buscarSiguiente(){
+        double menor = Double.MAX_VALUE;
+        ClienteCaja clienteMenor = null;
+        for (ClienteCaja cliente : clientesCaja) {
+            if (cliente.getTiempoLlegada() <= menor) {
+                clienteMenor = cliente;
+            }
+        }
+        clienteMenor.setEstado("SA");
     }
 
     public ClienteCaja getClienteActual() {

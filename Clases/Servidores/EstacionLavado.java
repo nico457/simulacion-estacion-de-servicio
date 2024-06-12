@@ -1,6 +1,7 @@
 package Clases.Servidores;
 
 import Clases.clientes.ClienteCaja;
+import Clases.clientes.ClienteCombustible;
 import Clases.clientes.ClienteLavado;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class EstacionLavado {
         estado = "libre";
         cola = 0;
         this.subindice = subindice;
+        clientesLavado = new ArrayList<>();
     }
 
     public void sumarCola() {
@@ -35,6 +37,9 @@ public class EstacionLavado {
     public void agregarCliente(ClienteLavado cliente){
         clientesLavado.add(cliente);
     }
+    public void eliminarCliente() {
+        clientesLavado.remove(getCliente());
+    }
 
     public ClienteLavado getCliente() {
         for (ClienteLavado cliente : clientesLavado) {
@@ -43,6 +48,16 @@ public class EstacionLavado {
             }
         }
         return null;
+    }
+    public void buscarSiguiente(){
+        double menor = Double.MAX_VALUE;
+        ClienteLavado clienteMenor = null;
+        for (ClienteLavado cliente : clientesLavado) {
+            if (cliente.getTiempoLlegada() <= menor) {
+                clienteMenor = cliente;
+            }
+        }
+        clienteMenor.setEstado("SA");
     }
 
     public int getCola() {

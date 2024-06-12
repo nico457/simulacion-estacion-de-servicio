@@ -17,6 +17,7 @@ public class FinAtencionCaja implements FinAtencion {
         this.subindice = subindice;
     }
 
+
     public void setConstante(double constante) {
         this.constante = constante;
     }

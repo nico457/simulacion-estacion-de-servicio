@@ -16,7 +16,7 @@ import Clases.llegadas.LlegadaMantenimiento;
 
 import java.util.ArrayList;
 
-public class Simulacion {
+public class Simulacion implements Cloneable {
     private double relojActual;
 
     // Llegadas
@@ -43,15 +43,23 @@ public class Simulacion {
 
 
     public void inicializar(double mediaCaja,double mediaCombustible, double mediaLavado, double mediaMantenimiento){
+        this.relojActual = 0;
         this.llegadaCaja = new LlegadaCaja(mediaCaja);
         this.llegadaCombustible = new LlegadaCombustible(mediaCombustible);
         this.llegadaLavado = new LlegadaLavado(mediaLavado);
         this.llegadaMantenimiento = new LlegadaMantenimiento(mediaMantenimiento);
         this.cajas = new ArrayList<>(2);
+        this.cajas.add(new Caja(0));
+        this.cajas.add(new Caja(1));
         this.surtidores = new ArrayList<>(4);
-
+        this.surtidores.add(new Surtidor(0));
+        this.surtidores.add(new Surtidor(1));
+        this.surtidores.add(new Surtidor(2));
+        this.surtidores.add(new Surtidor(3));
         this.estacionesMantenimiento = new ArrayList<>(2);
+        this.estacionesMantenimiento.add(new EstacionMantenimiento(0));
         this.estacionesLavado = new ArrayList<>(2);
+        this.estacionesLavado.add(new EstacionLavado(0));
 
     }
 
@@ -60,9 +68,9 @@ public class Simulacion {
                 llegadaCombustible.getProxLlegada(relojActual),
                 llegadaLavado.getProxLlegada(relojActual),
                 llegadaMantenimiento.getProxLlegada(relojActual),
-                finAtencionCombustible.getProxFin(relojActual),
-                finAtencionLavado.getProxFin(relojActual),
-                finAtencionMantenimiento.getProxFin(relojActual));
+                (finAtencionCombustible != null) ? finAtencionCombustible.getProxFin(relojActual) : -1,
+                (finAtencionLavado != null) ? finAtencionLavado.getProxFin(relojActual) : -1,
+                (finAtencionMantenimiento != null) ? finAtencionMantenimiento.getProxFin(relojActual) : -1);
 
         if (min == llegadaCaja.getProxLlegada(relojActual)) {
             return llegadaCaja;
@@ -76,13 +84,13 @@ public class Simulacion {
         if (min == llegadaMantenimiento.getProxLlegada(relojActual)) {
             return llegadaMantenimiento;
         }
-        if (min == finAtencionCombustible.getProxFin(relojActual)) {
+        if (finAtencionCombustible != null && min == finAtencionCombustible.getProxFin(relojActual)) {
             return finAtencionCombustible;
         }
-        if (min == finAtencionLavado.getProxFin(relojActual)) {
+        if (finAtencionCombustible != null && min == finAtencionLavado.getProxFin(relojActual)) {
             return finAtencionLavado;
         }
-        if (min == finAtencionMantenimiento.getProxFin(relojActual)) {
+        if (finAtencionCombustible != null && min == finAtencionMantenimiento.getProxFin(relojActual)) {
             return finAtencionMantenimiento;
         }
         return null;
@@ -92,7 +100,10 @@ public class Simulacion {
     public static double findMin(double... numbers) {
         double min = Double.MAX_VALUE;
         for (double number : numbers) {
-            min = Math.min(min, number);
+            if (number >= 0) {
+                min = Math.min(min, number);
+            }
+
         }
         return min;
     }
@@ -164,6 +175,9 @@ public class Simulacion {
     public ArrayList<Caja> getCajas() {
         return cajas;
     }
+    public Caja getCaja(int indice) {
+        return cajas.get(indice);
+    }
 
     public void setCajas(ArrayList<Caja> cajas) {
         this.cajas = cajas;
@@ -174,8 +188,9 @@ public class Simulacion {
     }
 
     public Surtidor getSurtidor(int indice) {
-        return surtidores.get(indice-1);
+        return surtidores.get(indice);
     }
+
 
     public void setSurtidores(ArrayList<Surtidor> surtidores) {
         this.surtidores = surtidores;
@@ -193,6 +208,14 @@ public class Simulacion {
         return estacionesLavado;
     }
 
+    public EstacionMantenimiento getEstacionMantenimiento(int indice) {
+        return estacionesMantenimiento.get(indice);
+    }
+
+    public EstacionLavado getEstacionLavado(int indice) {
+        return estacionesLavado.get(indice);
+    }
+
     public void setEstacionesLavado(ArrayList<EstacionLavado> estacionesLavado) {
         this.estacionesLavado = estacionesLavado;
     }
@@ -205,5 +228,32 @@ public class Simulacion {
 
     public void setRelojActual(double relojActual) {
         this.relojActual = relojActual;
+    }
+
+    @Override
+    public String toString() {
+        return "Simulacion{" +
+                "relojActual=" + relojActual +
+                ", llegadaCaja=" + llegadaCaja +
+                ", llegadaCombustible=" + llegadaCombustible +
+                ", llegadaLavado=" + llegadaLavado +
+                ", llegadaMantenimiento=" + llegadaMantenimiento +
+                ", finAtencionCombustible=" + finAtencionCombustible +
+                ", finAtencionLavado=" + finAtencionLavado +
+                ", finAtencionMantenimiento=" + finAtencionMantenimiento +
+                ", finAtencionCaja=" + finAtencionCaja +
+                ", cajas=" + cajas +
+                ", surtidores=" + surtidores +
+                ", estacionesMantenimiento=" + estacionesMantenimiento +
+                ", estacionesLavado=" + estacionesLavado +
+                '}';
+    }
+    @Override
+    public Simulacion clone() {
+        try {
+            return (Simulacion) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(); // Can't happen
+        }
     }
 }

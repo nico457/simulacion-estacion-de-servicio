@@ -16,6 +16,7 @@ public class FinAtencionMantenimiento implements FinAtencion {
         this.subindice = subindice;
     }
 
+
     public double getConstante() {
         return constante;
     }

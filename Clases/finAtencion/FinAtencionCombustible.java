@@ -17,6 +17,7 @@ public class FinAtencionCombustible implements FinAtencion {
     }
 
 
+
     public int getSubindice() {
         return subindice;
     }

@@ -15,6 +15,7 @@ public class Surtidor {
         estado = "libre";
         cola = 0;
         this.subindice = subindice;
+        clientesCombustible = new ArrayList<>();
     }
 
     public void sumarCola() {
