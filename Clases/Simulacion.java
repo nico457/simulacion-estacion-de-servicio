@@ -97,10 +97,10 @@ public class Simulacion implements Cloneable {
 
 
     }
-    public static double findMin(double... numbers) {
+    public double findMin(double... numbers) {
         double min = Double.MAX_VALUE;
         for (double number : numbers) {
-            if (number >= 0) {
+            if (number > relojActual) {
                 min = Math.min(min, number);
             }
 

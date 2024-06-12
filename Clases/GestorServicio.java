@@ -39,7 +39,7 @@ public class GestorServicio {
 
     public GestorServicio() {
         this.reloj = 0;
-        this.cantSimulaciones = 300;
+        this.cantSimulaciones = 300000;
         this.limiteSuperior = 20;
         this.limiteInferior = 1;
         this.acumEsperaCombustible = 0;
@@ -63,16 +63,20 @@ public class GestorServicio {
             if (proximoEvento instanceof Llegada) {
                 filaActual.setRelojActual(((Llegada) proximoEvento).getProxLlegada());
                 reloj = filaActual.getRelojActual();
+
                 //LLEGADA COMBUSTIBLE
                 if (proximoEvento instanceof LlegadaCombustible) {
                     llegadaCombustible();
+
                     //LLEGADA LAVADO
                 } else if (proximoEvento instanceof LlegadaLavado) {
                     llegadaLavado();
                 } else if (proximoEvento instanceof LlegadaMantenimiento) {
+
                     //LLEGADA MANTENIMIENTO
                     llegadaMantenimiento();
                 } else {
+
                     //LLEGADA CAJA
                     llegadaCaja();
 
@@ -235,6 +239,7 @@ public class GestorServicio {
         filaAnterior.getSurtidor(indice).eliminarCliente();
         if (surtidor.getCola() == 0) {
             surtidor.setEstado("libre");
+
         } else {
             surtidor.restarCola();
             surtidor.buscarSiguiente();
@@ -242,6 +247,7 @@ public class GestorServicio {
             filaActual.setFinAtencionCombustible(new FinAtencionCombustible(3,surtidor.getSubindice(),reloj));
 
         }
+
     }
     public void calcularFinAtencionLavado(FinAtencionLavado objetoFin) {
         int indice = objetoFin.getSubindice();
@@ -249,6 +255,7 @@ public class GestorServicio {
         estacionLavado.eliminarCliente();
         if (estacionLavado.getCola() == 0) {
             estacionLavado.setEstado("libre");
+
         } else {
             estacionLavado.restarCola();
             estacionLavado.buscarSiguiente();
@@ -262,11 +269,11 @@ public class GestorServicio {
         estacionMantenimiento.eliminarCliente();
         if (estacionMantenimiento.getCola() == 0) {
             estacionMantenimiento.setEstado("libre");
+
         } else {
             estacionMantenimiento.restarCola();
             estacionMantenimiento.buscarSiguiente();
             filaActual.setFinAtencionMantenimiento(new FinAtencionMantenimiento(12,estacionMantenimiento.getSubindice(),reloj));
-
         }
     }
     public void calcularFinAtencionCaja(FinAtencionCaja objetoFin) {
@@ -275,6 +282,7 @@ public class GestorServicio {
         caja.eliminarCliente();
         if (caja.getCola() == 0) {
             caja.setEstado("libre");
+
         } else {
             caja.restarCola();
             caja.buscarSiguiente();
