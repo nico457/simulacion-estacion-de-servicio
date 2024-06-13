@@ -10,7 +10,7 @@ public class Pantalla extends javax.swing.JFrame {
 
     public Pantalla() {
         initComponents();
-        setSize(1010,600);
+        setSize(1010,700);
         setResizable(false);
         setLocationRelativeTo(null);
         
@@ -65,6 +65,18 @@ public class Pantalla extends javax.swing.JFrame {
         hasta = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         desde = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        promedio_combustible = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        promedio_mantenimiento = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        promedio_lavado = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        promedio_caja = new javax.swing.JTextField();
+        jLabel22 = new javax.swing.JLabel();
+        servicio_minimo = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        tiempo_minimo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -73,7 +85,7 @@ public class Pantalla extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
         jPanel3.setMinimumSize(new java.awt.Dimension(1500, 600));
-        jPanel3.setPreferredSize(new java.awt.Dimension(1010, 600));
+        jPanel3.setPreferredSize(new java.awt.Dimension(800, 600));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setBackground(new java.awt.Color(241, 233, 220));
@@ -87,14 +99,14 @@ public class Pantalla extends javax.swing.JFrame {
 
             },
             new String [] {
-                "reloj", "Ll. Combustible ", "Ll. Lavado", "Ll. Mantenimiento", "Ll. Caja", "At. Combustible 1", "At. Combustible 2", "At. Combustible 3", "At. Combustible 4", "At. lavado 1", "At. lavado 2", "At. Mantenimiento 1", "At. Mantenimiento 2", "At. caja 1", "At. caja 2", "S1 Estado", "S1 Cola", "S2 Estado", "S2 Cola", "S3 Estado", "S3 Cola", "S4 Estado", "S4 Cola", "L1 Estado", "L1 Cola", "L2 Estado", "L2 Cola", "M1 Estado", "M1 Cola", "M2 Estado", "M2 Cola", "C1 Estado", "C1 Cola", "C2 Estado", "C2 Cola"
+                "reloj", "Ll. Combustible ", "Ll. Lavado", "Ll. Mantenimiento", "Ll. Caja", "At. Combustible 1", "At. Combustible 2", "At. Combustible 3", "At. Combustible 4", "At. lavado 1", "At. lavado 2", "At. Mantenimiento 1", "At. Mantenimiento 2", "At. caja 1", "At. caja 2", "S1 Estado", "S1 Cola", "S2 Estado", "S2 Cola", "S3 Estado", "S3 Cola", "S4 Estado", "S4 Cola", "L1 Estado", "L1 Cola", "L2 Estado", "L2 Cola", "M1 Estado", "M1 Cola", "M2 Estado", "M2 Cola", "C1 Estado", "C1 Cola", "C2 Estado", "C2 Cola", "Espera Combustible", "Espera Lavado", "Espera Mantenimiento", "Espera Caja", "Atendidos Combustible", "Atendidos lavado", "Atendidos mantenimiento", "Atendidos caja"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true
+                false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -264,7 +276,49 @@ public class Pantalla extends javax.swing.JFrame {
 
         jPanel3.add(tabbedPaneCustom1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 650, 150));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 570));
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel18.setText("Promedio combustible: ");
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 590, -1, -1));
+
+        promedio_combustible.setEditable(false);
+        jPanel3.add(promedio_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 590, 120, -1));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel19.setText("Promedio mantenimiento: ");
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 590, -1, -1));
+
+        promedio_mantenimiento.setEditable(false);
+        jPanel3.add(promedio_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 590, 110, -1));
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel20.setText("Promedio lavado: ");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 630, -1, -1));
+
+        promedio_lavado.setEditable(false);
+        jPanel3.add(promedio_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 630, 120, -1));
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel21.setText("Promedio caja: ");
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 630, -1, -1));
+
+        promedio_caja.setEditable(false);
+        jPanel3.add(promedio_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 630, 110, -1));
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel22.setText("Servicio:");
+        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 630, 130, -1));
+
+        servicio_minimo.setEditable(false);
+        jPanel3.add(servicio_minimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 630, 80, -1));
+
+        jLabel23.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel23.setText("Tiempo minimo:");
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 590, 130, -1));
+
+        tiempo_minimo.setEditable(false);
+        jPanel3.add(tiempo_minimo, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 590, 80, -1));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 660));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -330,6 +384,12 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -353,7 +413,13 @@ public class Pantalla extends javax.swing.JFrame {
     public javax.swing.JTextField media_llegada_lavado;
     public javax.swing.JTextField media_llegada_mantenimiento;
     public javax.swing.JTextField nro_simulaciones;
+    public javax.swing.JTextField promedio_caja;
+    public javax.swing.JTextField promedio_combustible;
+    public javax.swing.JTextField promedio_lavado;
+    public javax.swing.JTextField promedio_mantenimiento;
+    public javax.swing.JTextField servicio_minimo;
     private tp4.view.tabbedPane.TabbedPaneCustom tabbedPaneCustom1;
     public javax.swing.JTable tabla_servicios;
+    public javax.swing.JTextField tiempo_minimo;
     // End of variables declaration//GEN-END:variables
 }

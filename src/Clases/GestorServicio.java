@@ -345,7 +345,7 @@ public class GestorServicio implements ActionListener {
      
             for (int i = 0; i < simulacionesRango.size(); i++) {
                
-                Object[] row = new Object[35];
+                Object[] row = new Object[43];
                 row[0] = String.format("%.2f",simulacionesRango.get(i).getRelojActual());
                 row[1] = String.format("%.2f",simulacionesRango.get(i).getLlegadaCombustible().getProxLlegada());
                 row[2] = String.format("%.2f",simulacionesRango.get(i).getLlegadaLavado().getProxLlegada());
@@ -407,11 +407,30 @@ public class GestorServicio implements ActionListener {
                 row[32] =simulacionesRango.get(i).getCaja(0).getCola();
                 row[33] =simulacionesRango.get(i).getCaja(1).getEstado();
                 row[34] =simulacionesRango.get(i).getCaja(1).getCola();
-               
+                
+                row[35] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCombustible());
+                row[36] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaLavado());
+                row[37] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaMantenimiento());
+                row[38] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCaja());
+                
+                row[39] =simulacionesRango.get(i).getAtendidosCombustible();
+                row[40] =simulacionesRango.get(i).getAtendidosLavado();
+                row[41] =simulacionesRango.get(i).getAtendidosMantenimiento();
+                row[42] =simulacionesRango.get(i).getAtendidosCaja();
+                
+          
                 model.addRow(row);
                 
             }
             views.tabla_servicios.setModel(model);
+            //promedios
+            views.promedio_combustible.setText(String.format("%.2f",promEsperaCombustible));
+            views.promedio_lavado.setText(String.format("%.2f",promEsperaLavado));
+            views.promedio_mantenimiento.setText(String.format("%.2f",promEsperaMantenimiento));
+            views.promedio_caja.setText(String.format("%.2f",promEsperaCaja));
+            views.tiempo_minimo.setText(String.format("%.2f",tiempoMinimoAtencion));
+            views.servicio_minimo.setText(nombreServicioMinimo);
+            
         
     }
     public void cleanTable() {
