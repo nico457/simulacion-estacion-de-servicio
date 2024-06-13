@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class EstacionLavado  implements Cloneable  {
     private String estado;
     private int subindice;
+    private int cola;
     private ArrayList<ClienteLavado> clientesLavado;
 
     public EstacionLavado(int subindice){
@@ -72,6 +73,16 @@ public class EstacionLavado  implements Cloneable  {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+    public int getCola() {
+        return cola;
+    }
+
+    public void setCola() {
+        cola = clientesLavado.size();
+    }
+    
+    
     
 
 

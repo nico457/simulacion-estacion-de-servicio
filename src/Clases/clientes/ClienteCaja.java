@@ -1,6 +1,6 @@
 package Clases.clientes;
 
-public class ClienteCaja {
+public class ClienteCaja implements Cloneable {
     private String estado;
     private double tiempoLlegada;
 
@@ -25,4 +25,5 @@ public class ClienteCaja {
     public void setTiempoLlegada(double tiempoLlegada) {
         this.tiempoLlegada = tiempoLlegada;
     }
+   
 }

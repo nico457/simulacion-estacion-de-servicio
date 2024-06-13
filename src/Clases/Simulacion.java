@@ -4,6 +4,7 @@ import Clases.Servidores.Caja;
 import Clases.Servidores.EstacionLavado;
 import Clases.Servidores.EstacionMantenimiento;
 import Clases.Servidores.Surtidor;
+import Clases.clientes.ClienteCombustible;
 import Clases.finAtencion.FinAtencionCaja;
 import Clases.finAtencion.FinAtencionCombustible;
 import Clases.finAtencion.FinAtencionLavado;
@@ -79,16 +80,20 @@ public class Simulacion implements Cloneable {
         this.cajas = new ArrayList<>(2);
         this.cajas.add(new Caja(0));
         this.cajas.add(new Caja(1));
+        
         this.surtidores = new ArrayList<>(4);
         this.surtidores.add(new Surtidor(0));
         this.surtidores.add(new Surtidor(1));
         this.surtidores.add(new Surtidor(2));
         this.surtidores.add(new Surtidor(3));
+        
         this.estacionesMantenimiento = new ArrayList<>(2);
         this.estacionesMantenimiento.add(new EstacionMantenimiento(0));
+        this.estacionesMantenimiento.add(new EstacionMantenimiento(1));
+        
         this.estacionesLavado = new ArrayList<>(2);
         this.estacionesLavado.add(new EstacionLavado(0));
-
+        this.estacionesLavado.add(new EstacionLavado(1));
     }
 
     public Object calcularProximoEvento(){
@@ -337,18 +342,23 @@ public Simulacion clone() {
         // Clonación profunda de listas de objetos permanentes
         clonada.cajas = new ArrayList<>();
         for (Caja caja : cajas) {
+            caja.setCola();
             clonada.cajas.add((Caja) caja.clone());
         }
         clonada.surtidores = new ArrayList<>();
         for (Surtidor surtidor : surtidores) {
+            surtidor.setCola();
             clonada.surtidores.add((Surtidor) surtidor.clone());
+         
         }
         clonada.estacionesMantenimiento = new ArrayList<>();
         for (EstacionMantenimiento estacion : estacionesMantenimiento) {
+            estacion.setCola();
             clonada.estacionesMantenimiento.add((EstacionMantenimiento) estacion.clone());
         }
         clonada.estacionesLavado = new ArrayList<>();
         for (EstacionLavado estacion : estacionesLavado) {
+            estacion.setCola();
             clonada.estacionesLavado.add((EstacionLavado) estacion.clone());
         }
 

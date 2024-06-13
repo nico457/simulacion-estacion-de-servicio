@@ -1,6 +1,6 @@
 package Clases.clientes;
 
-public class ClienteLavado {
+public class ClienteLavado implements Cloneable {
     private String estado;
     private double tiempoLlegada;
 
@@ -23,5 +23,9 @@ public class ClienteLavado {
 
     public void setTiempoLlegada(double tiempoLlegada) {
         this.tiempoLlegada = tiempoLlegada;
+    }
+         @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

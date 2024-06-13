@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Caja implements Cloneable {
     private String estado;
     private int subindice;
+    private int cola;
     private ArrayList<ClienteCaja> clientesCaja;
 
     public Caja(int subindice) {
@@ -74,6 +75,16 @@ public class Caja implements Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+    public int getCola() {
+        return cola;
+    }
+
+    public void setCola() {
+        cola =  clientesCaja.size();   
+    }
+    
+    
 
 
 }

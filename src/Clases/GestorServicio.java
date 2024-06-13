@@ -67,12 +67,15 @@ public class GestorServicio implements ActionListener {
              cleanTable();
              resetVariables();
              generarSimulacion();
-             mostrarSimulaciones();
              
              // Actividades
              calcularPromediosEspera();
              calcularPorcentajeOcupacion();
              calcularMenorTiempoAtencion();
+             
+             mostrarSimulaciones();
+             
+
              
         }
   
@@ -342,7 +345,7 @@ public class GestorServicio implements ActionListener {
      
             for (int i = 0; i < simulacionesRango.size(); i++) {
                
-                Object[] row = new Object[23];
+                Object[] row = new Object[35];
                 row[0] = String.format("%.2f",simulacionesRango.get(i).getRelojActual());
                 row[1] = String.format("%.2f",simulacionesRango.get(i).getLlegadaCombustible().getProxLlegada());
                 row[2] = String.format("%.2f",simulacionesRango.get(i).getLlegadaLavado().getProxLlegada());
@@ -382,13 +385,29 @@ public class GestorServicio implements ActionListener {
                
                 
                 row[15] = simulacionesRango.get(i).getSurtidor(0).getEstado();
-                row[16] = simulacionesRango.get(i).getSurtidor(0).getClientesCombustible().size();
+                row[16] = simulacionesRango.get(i).getSurtidor(0).getCola();
                 row[17] = simulacionesRango.get(i).getSurtidor(1).getEstado();
-                row[18] = simulacionesRango.get(i).getSurtidor(1).getClientesCombustible().size();
+                row[18] = simulacionesRango.get(i).getSurtidor(1).getCola();
                 row[19] = simulacionesRango.get(i).getSurtidor(2).getEstado();
-                row[20] = simulacionesRango.get(i).getSurtidor(2).getClientesCombustible().size();
+                row[20] = simulacionesRango.get(i).getSurtidor(2).getCola();
                 row[21] = simulacionesRango.get(i).getSurtidor(3).getEstado();
-                row[22] = simulacionesRango.get(i).getSurtidor(3).getClientesCombustible().size();
+                row[22] = simulacionesRango.get(i).getSurtidor(3).getCola();
+                
+                row[23] =simulacionesRango.get(i).getEstacionLavado(0).getEstado();
+                row[24] =simulacionesRango.get(i).getEstacionLavado(0).getCola();
+                row[25] =simulacionesRango.get(i).getEstacionLavado(1).getEstado();
+                row[26] =simulacionesRango.get(i).getEstacionLavado(1).getCola();
+                
+                row[27] =simulacionesRango.get(i).getEstacionMantenimiento(0).getEstado();
+                row[28] =simulacionesRango.get(i).getEstacionMantenimiento(0).getCola();
+                row[29] =simulacionesRango.get(i).getEstacionMantenimiento(1).getEstado();
+                row[30] =simulacionesRango.get(i).getEstacionMantenimiento(1).getCola();
+                
+                row[31] =simulacionesRango.get(i).getCaja(0).getEstado();
+                row[32] =simulacionesRango.get(i).getCaja(0).getCola();
+                row[33] =simulacionesRango.get(i).getCaja(1).getEstado();
+                row[34] =simulacionesRango.get(i).getCaja(1).getCola();
+               
                 model.addRow(row);
                 
             }

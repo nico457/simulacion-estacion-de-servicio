@@ -9,6 +9,7 @@ public class Surtidor implements Cloneable {
     private String estado;
     private int subindice;
     private ArrayList<ClienteCombustible> clientesCombustible;
+    private int cola;
 
     public Surtidor(int subindice) {
         estado = "libre";
@@ -71,6 +72,14 @@ public class Surtidor implements Cloneable {
          @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+    public int getCola(){
+        return cola;
+    }
+
+    public void setCola() {
+             cola =  clientesCombustible.size();
+       
     }
     
 }
