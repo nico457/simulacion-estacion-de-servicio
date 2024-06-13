@@ -334,6 +334,23 @@ public Simulacion clone() {
         for (FinAtencionCaja fin : finAtencionCaja) {
             clonada.finAtencionCaja.add(fin != null ? (FinAtencionCaja) fin.clone() : null);
         }
+        // Clonación profunda de listas de objetos permanentes
+        clonada.cajas = new ArrayList<>();
+        for (Caja caja : cajas) {
+            clonada.cajas.add((Caja) caja.clone());
+        }
+        clonada.surtidores = new ArrayList<>();
+        for (Surtidor surtidor : surtidores) {
+            clonada.surtidores.add((Surtidor) surtidor.clone());
+        }
+        clonada.estacionesMantenimiento = new ArrayList<>();
+        for (EstacionMantenimiento estacion : estacionesMantenimiento) {
+            clonada.estacionesMantenimiento.add((EstacionMantenimiento) estacion.clone());
+        }
+        clonada.estacionesLavado = new ArrayList<>();
+        for (EstacionLavado estacion : estacionesLavado) {
+            clonada.estacionesLavado.add((EstacionLavado) estacion.clone());
+        }
 
        
 

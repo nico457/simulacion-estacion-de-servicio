@@ -85,7 +85,7 @@
             <Component class="javax.swing.JTable" name="tabla_servicios">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="15" rowCount="0">
+                  <Table columnCount="23" rowCount="0">
                     <Column editable="false" title="reloj" type="java.lang.String"/>
                     <Column editable="true" title="Ll. Combustible " type="java.lang.Object"/>
                     <Column editable="true" title="Ll. Lavado" type="java.lang.Object"/>
@@ -101,6 +101,14 @@
                     <Column editable="true" title="At. Mantenimiento 2" type="java.lang.Object"/>
                     <Column editable="true" title="At. caja 1" type="java.lang.Object"/>
                     <Column editable="true" title="At. caja 2" type="java.lang.Object"/>
+                    <Column editable="true" title="S1 Estado" type="java.lang.Object"/>
+                    <Column editable="true" title="S1 Cola" type="java.lang.Object"/>
+                    <Column editable="true" title="S2 Estado" type="java.lang.Object"/>
+                    <Column editable="true" title="S2 Cola" type="java.lang.Object"/>
+                    <Column editable="true" title="S3 Estado" type="java.lang.Object"/>
+                    <Column editable="true" title="S3 Cola" type="java.lang.Object"/>
+                    <Column editable="true" title="S4 Estado" type="java.lang.Object"/>
+                    <Column editable="true" title="S4 Cola" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="autoResizeMode" type="int" value="0"/>
@@ -177,6 +185,46 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>

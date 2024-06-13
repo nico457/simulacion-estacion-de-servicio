@@ -4,25 +4,26 @@ import Clases.clientes.ClienteCaja;
 
 import java.util.ArrayList;
 
-public class Caja {
+public class Caja implements Cloneable {
     private String estado;
-    private int cola;
     private int subindice;
     private ArrayList<ClienteCaja> clientesCaja;
 
     public Caja(int subindice) {
         estado = "libre";
-        cola = 0;
         this.subindice = subindice;
         clientesCaja = new ArrayList<>();
     }
 
-    public void sumarCola() {
-        cola++;
+    public ArrayList<ClienteCaja> getClientesCaja() {
+        return clientesCaja;
     }
-    public void restarCola() {
-        cola--;
+
+    public void setClientesCaja(ArrayList<ClienteCaja> clientesCaja) {
+        this.clientesCaja = clientesCaja;
     }
+    
+
 
     public String getEstado() {
         return estado;
@@ -49,6 +50,7 @@ public class Caja {
             }
         }
         clienteMenor.setEstado("SA");
+        
         return clienteMenor;
     }
 
@@ -61,15 +63,16 @@ public class Caja {
         return null;
     }
 
-    public int getCola() {
-        return cola;
-    }
 
     public int getSubindice() {
         return subindice;
     }
     public boolean esLibre() {
         return estado.equals("libre");
+    }
+         @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 

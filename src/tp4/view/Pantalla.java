@@ -87,14 +87,14 @@ public class Pantalla extends javax.swing.JFrame {
 
             },
             new String [] {
-                "reloj", "Ll. Combustible ", "Ll. Lavado", "Ll. Mantenimiento", "Ll. Caja", "At. Combustible 1", "At. Combustible 2", "At. Combustible 3", "At. Combustible 4", "At. lavado 1", "At. lavado 2", "At. Mantenimiento 1", "At. Mantenimiento 2", "At. caja 1", "At. caja 2"
+                "reloj", "Ll. Combustible ", "Ll. Lavado", "Ll. Mantenimiento", "Ll. Caja", "At. Combustible 1", "At. Combustible 2", "At. Combustible 3", "At. Combustible 4", "At. lavado 1", "At. lavado 2", "At. Mantenimiento 1", "At. Mantenimiento 2", "At. caja 1", "At. caja 2", "S1 Estado", "S1 Cola", "S2 Estado", "S2 Cola", "S3 Estado", "S3 Cola", "S4 Estado", "S4 Cola"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true, true, true, true, true, true, true
+                false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {

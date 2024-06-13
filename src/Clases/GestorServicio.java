@@ -36,6 +36,20 @@ public class GestorServicio implements ActionListener {
     private ArrayList<Simulacion> simulacionesRango;
     private Simulacion filaActual;
     private Simulacion filaAnterior;
+    
+    private double promEsperaCombustible;
+    private double promEsperaLavado;
+    private double promEsperaMantenimiento;
+    private double promEsperaCaja;
+    
+    // Acumuladores clientes atendidos
+    private double tiempoOcupadoCombustible;
+    private double tiempoOcupadoLavado;
+    private double tiempoOcupadoMantenimiento;
+    private double tiempoOcupadoCaja;
+    // Tiempo minimo atencion
+    private double tiempoMinimoAtencion;
+    private String nombreServicioMinimo;
 
 
     public GestorServicio(Pantalla views) {
@@ -45,6 +59,7 @@ public class GestorServicio implements ActionListener {
         this.simulacionesRango = new ArrayList<>();
         this.filaActual = new Simulacion();
         this.filaAnterior = new Simulacion();
+        
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -53,6 +68,11 @@ public class GestorServicio implements ActionListener {
              resetVariables();
              generarSimulacion();
              mostrarSimulaciones();
+             
+             // Actividades
+             calcularPromediosEspera();
+             calcularPorcentajeOcupacion();
+             calcularMenorTiempoAtencion();
              
         }
   
@@ -138,28 +158,28 @@ public class GestorServicio implements ActionListener {
         int menorSurtidorSubIndice = 0;
         filaActual.setLlegadaCombustible(new LlegadaCombustible(2,reloj));
         //hago una copia de los surtidores anteriores para no cambiarlos y actualizarlos para el actual
-        ArrayList<Surtidor> surtidoresAct = filaAnterior.getSurtidores();
+        ArrayList<Surtidor> surtidoresAct = (ArrayList<Surtidor>) filaAnterior.getSurtidores().clone();
+        int colaMinima = Integer.MAX_VALUE;
         for (Surtidor surtidor : filaAnterior.getSurtidores()) {
             
-            int colaMinima = Integer.MAX_VALUE;
+            
             if (surtidor.esLibre()) {
                 surtidoresAct.get(surtidor.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
                 filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_combustible.getText()),surtidor.getSubindice(),reloj));
                 surtidoresAct.get(surtidor.getSubindice()).agregarCliente(new ClienteCombustible("SA",filaActual.getRelojActual()));
-                filaActual.setSurtidores(surtidoresAct);
+                filaActual.setSurtidores((ArrayList<Surtidor>) surtidoresAct.clone());
                 break;
 
-            } else if (surtidor.getCola() < colaMinima) {
-                colaMinima = surtidor.getCola();
+            } else if (surtidor.getClientesCombustible().size() < colaMinima) {
+                colaMinima = surtidor.getClientesCombustible().size();
                 menorSurtidorSubIndice = surtidor.getSubindice();
             }
         }
         if (!algunoLibre) {
-            surtidoresAct.get(menorSurtidorSubIndice).sumarCola();
             surtidoresAct.get(menorSurtidorSubIndice).agregarCliente(new ClienteCombustible("EA",filaActual.getRelojActual()));
-            filaActual.setSurtidores(surtidoresAct);
+            filaActual.setSurtidores((ArrayList<Surtidor>) surtidoresAct.clone());
         }
 
     }
@@ -169,27 +189,28 @@ public class GestorServicio implements ActionListener {
         int menorEstacionSubIndice = 0;
         filaActual.setLlegadaLavado(new LlegadaLavado(4,reloj));
 
-        ArrayList<EstacionLavado> estacionesAct = filaAnterior.getEstacionesLavado();
+        ArrayList<EstacionLavado> estacionesAct = (ArrayList<EstacionLavado>) filaAnterior.getEstacionesLavado().clone();
+        int colaMinima = Integer.MAX_VALUE;
         for (EstacionLavado estacionLavado : filaAnterior.getEstacionesLavado()) {
-            int colaMinima = Integer.MAX_VALUE;
+            
             if (estacionLavado.esLibre()) {
                 estacionesAct.get(estacionLavado.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
                 filaActual.agregarFinAtencionLavado(new FinAtencionLavado(Double.parseDouble(views.media_atencion_lavado.getText()),estacionLavado.getSubindice(),reloj));
                 estacionesAct.get(estacionLavado.getSubindice()).agregarCliente(new ClienteLavado("SA",filaActual.getRelojActual()));
-                filaActual.setEstacionesLavado(estacionesAct);
+                filaActual.setEstacionesLavado((ArrayList<EstacionLavado>)estacionesAct.clone());
                 break;
 
-            } else if (estacionLavado.getCola() < colaMinima) {
-                colaMinima = estacionLavado.getCola();
+            } else if (estacionLavado.getClientesLavado().size() < colaMinima) {
+                colaMinima = estacionLavado.getClientesLavado().size();
                 menorEstacionSubIndice = estacionLavado.getSubindice();
             }
         }
         if (!algunoLibre) {
-            estacionesAct.get(menorEstacionSubIndice).sumarCola();
+     
             estacionesAct.get(menorEstacionSubIndice).agregarCliente(new ClienteLavado("EA",filaActual.getRelojActual()));
-            filaActual.setEstacionesLavado(estacionesAct);
+            filaActual.setEstacionesLavado((ArrayList<EstacionLavado>)estacionesAct.clone());
         }
 
     }
@@ -198,28 +219,27 @@ public class GestorServicio implements ActionListener {
         boolean algunoLibre = false;
         int menorEstacionSubIndice = 0;
         filaActual.setLlegadaMantenimiento(new LlegadaMantenimiento(6,reloj));
-
-        ArrayList<EstacionMantenimiento> estacionesAct = filaAnterior.getEstacionesMantenimiento();
+        int colaMinima = Integer.MAX_VALUE;    
+        ArrayList<EstacionMantenimiento> estacionesAct = (ArrayList<EstacionMantenimiento>) filaAnterior.getEstacionesMantenimiento().clone();
         for (EstacionMantenimiento estacionMantenimiento : filaAnterior.getEstacionesMantenimiento()) {
-            int colaMinima = Integer.MAX_VALUE;
+            
             if (estacionMantenimiento.esLibre()) {
                 estacionesAct.get(estacionMantenimiento.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
                 filaActual.agregarFinAtencionMantenimiento(new FinAtencionMantenimiento(Double.parseDouble(views.media_atencion_mantenimiento.getText()),estacionMantenimiento.getSubindice(),reloj));
                 estacionesAct.get(estacionMantenimiento.getSubindice()).agregarCliente(new ClienteMantenimiento("SA",filaActual.getRelojActual()));
-                filaActual.setEstacionesMantenimiento(estacionesAct);
+                filaActual.setEstacionesMantenimiento((ArrayList<EstacionMantenimiento>)estacionesAct.clone());
                 break;
 
-            } else if (estacionMantenimiento.getCola() < colaMinima) {
-                colaMinima = estacionMantenimiento.getCola();
+            } else if (estacionMantenimiento.getClientesMantenimiento().size() < colaMinima) {
+                colaMinima = estacionMantenimiento.getClientesMantenimiento().size();
                 menorEstacionSubIndice = estacionMantenimiento.getSubindice();
             }
         }
         if (!algunoLibre) {
-            estacionesAct.get(menorEstacionSubIndice).sumarCola();
             estacionesAct.get(menorEstacionSubIndice).agregarCliente(new ClienteMantenimiento("EA",filaActual.getRelojActual()));
-            filaActual.setEstacionesMantenimiento(estacionesAct);
+            filaActual.setEstacionesMantenimiento((ArrayList<EstacionMantenimiento>)estacionesAct.clone());
         }
 
     }
@@ -228,97 +248,91 @@ public class GestorServicio implements ActionListener {
         boolean algunoLibre = false;
         int menorCajaSubIndice = 0;
         filaActual.setLlegadaCaja(new LlegadaCaja(1.5,reloj));
+        int colaMinima = Integer.MAX_VALUE;
         //hago una copia de los surtidores anteriores para no cambiarlos y actualizarlos para el actual
-        ArrayList<Caja> cajasAct = filaAnterior.getCajas();
+        ArrayList<Caja> cajasAct = (ArrayList<Caja>)filaAnterior.getCajas().clone();
         for (Caja caja : filaAnterior.getCajas()) {
-            int colaMinima = Integer.MAX_VALUE;
+            
             if (caja.esLibre()) {
                 cajasAct.get(caja.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
                 filaActual.agregarFinAtencionCaja(new FinAtencionCaja(Double.parseDouble(views.media_atencion_caja.getText()), caja.getSubindice(),reloj));
                 cajasAct.get(caja.getSubindice()).agregarCliente(new ClienteCaja("SA", filaActual.getRelojActual()));
-                filaActual.setCajas(cajasAct);
+                filaActual.setCajas((ArrayList<Caja>) cajasAct.clone());
                 break;
 
-            } else if (caja.getCola() < colaMinima) {
-                colaMinima = caja.getCola();
+            } else if (caja.getClientesCaja().size() < colaMinima) {
+                colaMinima = caja.getClientesCaja().size();
                 menorCajaSubIndice = caja.getSubindice();
             }
         }
         if (!algunoLibre) {
-            cajasAct.get(menorCajaSubIndice).sumarCola();
             cajasAct.get(menorCajaSubIndice).agregarCliente(new ClienteCaja("EA",filaActual.getRelojActual()));
-            filaActual.setCajas(cajasAct);
+            filaActual.setCajas((ArrayList<Caja>) cajasAct.clone());
         }
     }
 
     public void calcularFinAtencionCombustible(FinAtencionCombustible objetoFin) {
         int indice = objetoFin.getSubindice();
-        Surtidor surtidor = filaAnterior.getSurtidor(indice);
-        filaAnterior.getSurtidor(indice).eliminarCliente();
-        if (surtidor.getCola() == 0) {
-            surtidor.setEstado("libre");
+        filaActual.getSurtidor(indice).eliminarCliente();
+        if (filaAnterior.getSurtidor(indice).getClientesCombustible().isEmpty()) {
+            filaActual.getSurtidor(indice).setEstado("libre");
 
 
         } else {
-            surtidor.restarCola();
-            ClienteCombustible cliente = surtidor.buscarSiguiente();
+            
+            ClienteCombustible cliente = filaActual.getSurtidor(indice).buscarSiguiente();
             filaActual.actualizarEsperaCombustible(reloj - cliente.getTiempoLlegada());
             filaActual.actualizarAtendidosCombustible();
 
-            filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_combustible.getText()),surtidor.getSubindice(),reloj));
+            filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_combustible.getText()),filaActual.getSurtidor(indice).getSubindice(),reloj));
 
         }
 
     }
     public void calcularFinAtencionLavado(FinAtencionLavado objetoFin) {
         int indice = objetoFin.getSubindice();
-        EstacionLavado estacionLavado = filaAnterior.getEstacionLavado(indice);
-        estacionLavado.eliminarCliente();
-        if (estacionLavado.getCola() == 0) {
-            estacionLavado.setEstado("libre");
+        filaActual.getEstacionLavado(indice).eliminarCliente();
+        if (filaAnterior.getEstacionLavado(indice).getClientesLavado().isEmpty()) {
+            filaActual.getEstacionLavado(indice).setEstado("libre");
 
         } else {
-            estacionLavado.restarCola();
+             filaActual.getEstacionLavado(indice);
             // Busco siguiente cliente y calculo tiempo espera y sumo contador
-            ClienteLavado cliente = estacionLavado.buscarSiguiente();
+            ClienteLavado cliente =  filaActual.getEstacionLavado(indice).buscarSiguiente();
             filaActual.actualizarEsperaLavado(reloj - cliente.getTiempoLlegada());
             filaActual.actualizarAtendidosLavado();
-            filaActual.agregarFinAtencionLavado(new FinAtencionLavado(Double.parseDouble(views.media_atencion_lavado.getText()),estacionLavado.getSubindice(),reloj));
+            filaActual.agregarFinAtencionLavado(new FinAtencionLavado(Double.parseDouble(views.media_atencion_lavado.getText()), filaActual.getEstacionLavado(indice).getSubindice(),reloj));
 
         }
     }
     public void calcularFinAtencionMantenimiento(FinAtencionMantenimiento objetoFin) {
         int indice = objetoFin.getSubindice();
-        EstacionMantenimiento estacionMantenimiento = filaAnterior.getEstacionMantenimiento(indice);
-        estacionMantenimiento.eliminarCliente();
-        if (estacionMantenimiento.getCola() == 0) {
-            estacionMantenimiento.setEstado("libre");
+        filaActual.getEstacionMantenimiento(indice).eliminarCliente();
+        if (filaAnterior.getEstacionMantenimiento(indice).getClientesMantenimiento().isEmpty()) {
+            filaActual.getEstacionMantenimiento(indice).setEstado("libre");
 
         } else {
-            estacionMantenimiento.restarCola();
             // Busco siguiente cliente y calculo tiempo espera y sumo contador
-            ClienteMantenimiento cliente = estacionMantenimiento.buscarSiguiente();
+            ClienteMantenimiento cliente = filaAnterior.getEstacionMantenimiento(indice).buscarSiguiente();
             filaActual.actualizarEsperaMantenimiento(reloj - cliente.getTiempoLlegada());
             filaActual.actualizarAtendidosMantenimiento();
-            filaActual.agregarFinAtencionMantenimiento(new FinAtencionMantenimiento(Double.parseDouble(views.media_atencion_mantenimiento.getText()),estacionMantenimiento.getSubindice(),reloj));
+            filaActual.agregarFinAtencionMantenimiento(new FinAtencionMantenimiento(Double.parseDouble(views.media_atencion_mantenimiento.getText()),filaAnterior.getEstacionMantenimiento(indice).getSubindice(),reloj));
         }
     }
     public void calcularFinAtencionCaja(FinAtencionCaja objetoFin) {
         int indice = objetoFin.getSubindice();
-        Caja caja = filaAnterior.getCaja(indice);
-        caja.eliminarCliente();
-        if (caja.getCola() == 0) {
-            caja.setEstado("libre");
+        filaActual.getCaja(indice).eliminarCliente();
+        if (filaAnterior.getCaja(indice).getClientesCaja().isEmpty()) {
+            filaActual.getCaja(indice).setEstado("libre");
 
         } else {
-            caja.restarCola();
             // Busco siguiente cliente y calculo tiempo espera y sumo contador
-            ClienteCaja cliente = caja.buscarSiguiente();
+            ClienteCaja cliente =  filaActual.getCaja(indice).buscarSiguiente();
             filaActual.actualizarEsperaCaja(reloj - cliente.getTiempoLlegada());
             filaActual.actualizarAtendidosCaja();
-            filaActual.agregarFinAtencionCaja(new FinAtencionCaja(Double.parseDouble(views.media_atencion_caja.getText()),caja.getSubindice(),reloj));
+            filaActual.agregarFinAtencionCaja(new FinAtencionCaja(Double.parseDouble(views.media_atencion_caja.getText()), filaActual.getCaja(indice).getSubindice(),reloj));
 
         }
     }
@@ -328,7 +342,7 @@ public class GestorServicio implements ActionListener {
      
             for (int i = 0; i < simulacionesRango.size(); i++) {
                
-                Object[] row = new Object[15];
+                Object[] row = new Object[23];
                 row[0] = String.format("%.2f",simulacionesRango.get(i).getRelojActual());
                 row[1] = String.format("%.2f",simulacionesRango.get(i).getLlegadaCombustible().getProxLlegada());
                 row[2] = String.format("%.2f",simulacionesRango.get(i).getLlegadaLavado().getProxLlegada());
@@ -365,6 +379,16 @@ public class GestorServicio implements ActionListener {
                 
                 row[14] = ((simulacionesRango.get(i).getFinAtencionCaja().get(1) != null))?  
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCaja().get(1).getProxFin()):' '; 
+               
+                
+                row[15] = simulacionesRango.get(i).getSurtidor(0).getEstado();
+                row[16] = simulacionesRango.get(i).getSurtidor(0).getClientesCombustible().size();
+                row[17] = simulacionesRango.get(i).getSurtidor(1).getEstado();
+                row[18] = simulacionesRango.get(i).getSurtidor(1).getClientesCombustible().size();
+                row[19] = simulacionesRango.get(i).getSurtidor(2).getEstado();
+                row[20] = simulacionesRango.get(i).getSurtidor(2).getClientesCombustible().size();
+                row[21] = simulacionesRango.get(i).getSurtidor(3).getEstado();
+                row[22] = simulacionesRango.get(i).getSurtidor(3).getClientesCombustible().size();
                 model.addRow(row);
                 
             }
@@ -383,6 +407,43 @@ public class GestorServicio implements ActionListener {
         this.filaAnterior = new Simulacion();
         
     }
-   
+    
+        public void calcularPromediosEspera(){
+        this.promEsperaCombustible = filaActual.getAcumEsperaCombustible()/filaActual.getAtendidosCombustible();
+        this.promEsperaLavado = filaActual.getAcumEsperaLavado()/filaActual.getAtendidosLavado();
+        this.promEsperaMantenimiento = filaActual.getAcumEsperaMantenimiento()/filaActual.getAtendidosMantenimiento();
+        this.promEsperaCaja = filaActual.getAcumEsperaCaja()/filaActual.getAtendidosCaja();
+    }
 
+    public void calcularPorcentajeOcupacion(){
+        this.tiempoOcupadoCombustible = Double.parseDouble(views.media_atencion_combustible.getText()) * filaActual.getAtendidosCombustible();
+        this.tiempoOcupadoLavado = Double.parseDouble(views.media_atencion_lavado.getText()) * filaActual.getAtendidosCombustible();
+        this.tiempoOcupadoMantenimiento = Double.parseDouble(views.media_atencion_mantenimiento.getText()) * filaActual.getAtendidosCombustible();
+        this.tiempoOcupadoCaja = Double.parseDouble(views.media_atencion_caja.getText()) * filaActual.getAtendidosCombustible();
+    }
+
+    public void calcularMenorTiempoAtencion(){
+        double tiempoCombustible = promEsperaCombustible + Double.parseDouble(views.media_atencion_combustible.getText());
+        double tiempoLavado = promEsperaLavado + Double.parseDouble(views.media_atencion_lavado.getText());
+        double tiempoMantenimiento = promEsperaMantenimiento + Double.parseDouble(views.media_atencion_mantenimiento.getText());
+        double tiempoCaja = promEsperaCaja + Double.parseDouble(views.media_atencion_caja.getText());
+
+        if (tiempoCombustible < tiempoLavado && tiempoCombustible < tiempoMantenimiento && tiempoCombustible < tiempoCaja){
+            this.tiempoMinimoAtencion = tiempoCombustible;
+            this.nombreServicioMinimo = "Combustible";
+        }
+        else if (tiempoLavado < tiempoCombustible && tiempoLavado < tiempoMantenimiento && tiempoLavado < tiempoCaja){
+            this.tiempoMinimoAtencion = tiempoLavado;
+            this.nombreServicioMinimo = "Lavado";
+        }
+        else if (tiempoMantenimiento < tiempoLavado && tiempoMantenimiento < tiempoCombustible && tiempoMantenimiento < tiempoCaja){
+            this.tiempoMinimoAtencion = tiempoMantenimiento;
+            this.nombreServicioMinimo = "Mantenimiento";
+        }
+        else if (tiempoCaja < tiempoLavado && tiempoCaja < tiempoMantenimiento && tiempoCaja < tiempoCombustible){
+            this.tiempoMinimoAtencion = tiempoCaja;
+            this.nombreServicioMinimo = "Caja";
+        }
+    
+    }
 }

@@ -6,25 +6,26 @@ import Clases.clientes.ClienteMantenimiento;
 
 import java.util.ArrayList;
 
-public class EstacionMantenimiento {
+public class EstacionMantenimiento implements Cloneable {
     private String estado;
-    private int cola;
     private int subindice;
     private ArrayList<ClienteMantenimiento> clientesMantenimiento;
 
     public EstacionMantenimiento(int subindice) {
         estado = "libre";
-        cola = 0;
         this.subindice = subindice;
         clientesMantenimiento = new ArrayList<>();
     }
 
-    public void sumarCola() {
-        cola++;
+    public ArrayList<ClienteMantenimiento> getClientesMantenimiento() {
+        return clientesMantenimiento;
     }
-    public void restarCola() {
-        cola--;
+
+    public void setClientesMantenimiento(ArrayList<ClienteMantenimiento> clientesMantenimiento) {
+        this.clientesMantenimiento = clientesMantenimiento;
     }
+    
+
 
     public String getEstado() {
         return estado;
@@ -32,10 +33,6 @@ public class EstacionMantenimiento {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public int getCola() {
-        return cola;
     }
 
     public int getSubindice() {
@@ -71,6 +68,11 @@ public class EstacionMantenimiento {
             }
         }
         clienteMenor.setEstado("SA");
+        
         return clienteMenor;
+    }
+         @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

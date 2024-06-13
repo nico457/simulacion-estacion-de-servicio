@@ -5,24 +5,15 @@ import Clases.clientes.ClienteCombustible;
 import java.util.ArrayList;
 
 
-public class Surtidor {
+public class Surtidor implements Cloneable {
     private String estado;
-    private int cola;
     private int subindice;
     private ArrayList<ClienteCombustible> clientesCombustible;
 
     public Surtidor(int subindice) {
         estado = "libre";
-        cola = 0;
         this.subindice = subindice;
         clientesCombustible = new ArrayList<>();
-    }
-
-    public void sumarCola() {
-        cola++;
-    }
-    public void restarCola() {
-        cola--;
     }
 
     public String getEstado() {
@@ -31,10 +22,6 @@ public class Surtidor {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public int getCola() {
-        return cola;
     }
 
     public int getSubindice() {
@@ -51,6 +38,15 @@ public class Surtidor {
     public void eliminarCliente() {
         clientesCombustible.remove(getCliente());
     }
+
+    public ArrayList<ClienteCombustible> getClientesCombustible() {
+        return clientesCombustible;
+    }
+
+    public void setClientesCombustible(ArrayList<ClienteCombustible> clientesCombustible) {
+        this.clientesCombustible = clientesCombustible;
+    }
+    
 
     public ClienteCombustible getCliente() {
         for (ClienteCombustible cliente : clientesCombustible) {
@@ -69,6 +65,12 @@ public class Surtidor {
             }
         }
         clienteMenor.setEstado("SA");
+        
         return clienteMenor;
     }
+         @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+    
 }
