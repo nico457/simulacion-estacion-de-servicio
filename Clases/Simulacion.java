@@ -27,10 +27,10 @@ public class Simulacion implements Cloneable {
     private LlegadaMantenimiento llegadaMantenimiento;
 
     // Fin de atencion
-    private FinAtencionCombustible finAtencionCombustible;
-    private FinAtencionLavado finAtencionLavado;
-    private FinAtencionMantenimiento finAtencionMantenimiento;
-    private FinAtencionCaja finAtencionCaja;
+    private ArrayList<FinAtencionCombustible> finAtencionCombustible;
+    private ArrayList<FinAtencionLavado> finAtencionLavado;
+    private ArrayList<FinAtencionMantenimiento> finAtencionMantenimiento;
+    private ArrayList<FinAtencionCaja> finAtencionCaja;
 
     // Objetos permanentes
     private ArrayList<Caja> cajas;
@@ -56,6 +56,21 @@ public class Simulacion implements Cloneable {
         this.llegadaCombustible = new LlegadaCombustible(mediaCombustible,relojActual);
         this.llegadaLavado = new LlegadaLavado(mediaLavado,relojActual);
         this.llegadaMantenimiento = new LlegadaMantenimiento(mediaMantenimiento,relojActual);
+        this.finAtencionCombustible = new ArrayList<>();
+        this.finAtencionCombustible.add(null);
+        this.finAtencionCombustible.add(null);
+        this.finAtencionCombustible.add(null);
+        this.finAtencionCombustible.add(null);
+        this.finAtencionLavado = new ArrayList<>();
+        this.finAtencionLavado.add(null);
+        this.finAtencionLavado.add(null);
+        this.finAtencionMantenimiento = new ArrayList<>();
+        this.finAtencionMantenimiento.add(null);
+        this.finAtencionMantenimiento.add(null);
+        this.finAtencionCaja = new ArrayList<>();
+        this.finAtencionCaja.add(null);
+        this.finAtencionCaja.add(null);
+
         this.cajas = new ArrayList<>(2);
         this.cajas.add(new Caja(0));
         this.cajas.add(new Caja(1));
@@ -76,9 +91,16 @@ public class Simulacion implements Cloneable {
                 llegadaCombustible.getProxLlegada(),
                 llegadaLavado.getProxLlegada(),
                 llegadaMantenimiento.getProxLlegada(),
-                (finAtencionCombustible != null) ? finAtencionCombustible.getProxFin() : -1,
-                (finAtencionLavado != null) ? finAtencionLavado.getProxFin() : -1,
-                (finAtencionMantenimiento != null) ? finAtencionMantenimiento.getProxFin() : -1);
+                (finAtencionCombustible.get(0) != null) ? finAtencionCombustible.get(0).getProxFin() : -1,
+                (finAtencionCombustible.get(1) != null) ? finAtencionCombustible.get(1).getProxFin() : -1,
+                (finAtencionCombustible.get(2) != null) ? finAtencionCombustible.get(2).getProxFin() : -1,
+                (finAtencionCombustible.get(3) != null) ? finAtencionCombustible.get(3).getProxFin() : -1,
+                (finAtencionLavado.get(0) != null) ? finAtencionLavado.get(0).getProxFin() : -1,
+                (finAtencionLavado.get(1) != null) ? finAtencionLavado.get(1).getProxFin() : -1,
+                (finAtencionMantenimiento.get(0) != null) ? finAtencionMantenimiento.get(0).getProxFin() : -1,
+                (finAtencionMantenimiento.get(1) != null) ? finAtencionMantenimiento.get(1).getProxFin() : -1,
+                (finAtencionCaja.get(0) != null) ? finAtencionCaja.get(0).getProxFin() : -1,
+                (finAtencionCaja.get(1) != null) ? finAtencionCaja.get(1).getProxFin() : -1);
 
         if (min == llegadaCaja.getProxLlegada()) {
             return llegadaCaja;
@@ -92,14 +114,35 @@ public class Simulacion implements Cloneable {
         if (min == llegadaMantenimiento.getProxLlegada()) {
             return llegadaMantenimiento;
         }
-        if (finAtencionCombustible != null && min == finAtencionCombustible.getProxFin()) {
-            return finAtencionCombustible;
+        if (finAtencionCombustible.get(0) != null && min == finAtencionCombustible.get(0).getProxFin()) {
+            return finAtencionCombustible.get(0);
         }
-        if (finAtencionCombustible != null && min == finAtencionLavado.getProxFin()) {
-            return finAtencionLavado;
+        if (finAtencionCombustible.get(1) != null && min == finAtencionCombustible.get(1).getProxFin()) {
+            return finAtencionCombustible.get(1);
         }
-        if (finAtencionCombustible != null && min == finAtencionMantenimiento.getProxFin()) {
-            return finAtencionMantenimiento;
+        if (finAtencionCombustible.get(2) != null && min == finAtencionCombustible.get(2).getProxFin()) {
+            return finAtencionCombustible.get(2);
+        }
+        if (finAtencionCombustible.get(3) != null && min == finAtencionCombustible.get(3).getProxFin()) {
+            return finAtencionCombustible.get(3);
+        }
+        if (finAtencionLavado.get(0) != null && min == finAtencionLavado.get(0).getProxFin()) {
+            return finAtencionLavado.get(0);
+        }
+        if (finAtencionLavado.get(1) != null && min == finAtencionLavado.get(1).getProxFin()) {
+            return finAtencionLavado.get(1);
+        }
+        if (finAtencionMantenimiento.get(0) != null && min == finAtencionMantenimiento.get(0).getProxFin()) {
+            return finAtencionMantenimiento.get(0);
+        }
+        if (finAtencionMantenimiento.get(1) != null && min == finAtencionMantenimiento.get(1).getProxFin()) {
+            return finAtencionMantenimiento.get(1);
+        }
+        if (finAtencionCaja.get(0) != null && min == finAtencionCaja.get(0).getProxFin()) {
+            return finAtencionCaja.get(0);
+        }
+        if (finAtencionCaja.get(1) != null && min == finAtencionCaja.get(1).getProxFin()) {
+            return finAtencionCaja.get(1);
         }
         return null;
 
@@ -148,36 +191,17 @@ public class Simulacion implements Cloneable {
         this.llegadaMantenimiento = llegadaMantenimiento;
     }
 
-    public FinAtencionCombustible getFinAtencionCombustible() {
-        return finAtencionCombustible;
+    public void agregarFinAtencionCombustible(FinAtencionCombustible finAt){
+        finAtencionCombustible.set(finAt.getSubindice(),finAt);
     }
-
-    public void setFinAtencionCombustible(FinAtencionCombustible finAtencionCombustible) {
-        this.finAtencionCombustible = finAtencionCombustible;
+    public void agregarFinAtencionLavado(FinAtencionLavado finAt){
+        finAtencionLavado.set(finAt.getSubindice(),finAt);
     }
-
-    public FinAtencionLavado getFinAtencionLavado() {
-        return finAtencionLavado;
+     public void agregarFinAtencionMantenimiento(FinAtencionMantenimiento finAt){
+        finAtencionMantenimiento.set(finAt.getSubindice(),finAt);
     }
-
-    public void setFinAtencionLavado(FinAtencionLavado finAtencionLavado) {
-        this.finAtencionLavado = finAtencionLavado;
-    }
-
-    public FinAtencionMantenimiento getFinAtencionMantenimiento() {
-        return finAtencionMantenimiento;
-    }
-
-    public void setFinAtencionMantenimiento(FinAtencionMantenimiento finAtencionMantenimiento) {
-        this.finAtencionMantenimiento = finAtencionMantenimiento;
-    }
-
-    public FinAtencionCaja getFinAtencionCaja() {
-        return finAtencionCaja;
-    }
-
-    public void setFinAtencionCaja(FinAtencionCaja finAtencionCaja) {
-        this.finAtencionCaja = finAtencionCaja;
+     public void agregarFinAtencionCaja(FinAtencionCaja finAt){
+        finAtencionCaja.set(finAt.getSubindice(),finAt);
     }
 
     public ArrayList<Caja> getCajas() {
