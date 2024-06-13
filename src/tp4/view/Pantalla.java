@@ -34,7 +34,7 @@ public class Pantalla extends javax.swing.JFrame {
         tabla_servicios = new javax.swing.JTable();
         tabbedPaneCustom1 = new tp4.view.tabbedPane.TabbedPaneCustom();
         jPanel1 = new javax.swing.JPanel();
-        media_atencion_lavado = new javax.swing.JTextField();
+        media_atencion_combustible = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         media_llegada_combustible = new javax.swing.JTextField();
@@ -42,7 +42,7 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         media_llegada_lavado = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        media_atencion_lavado = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -87,14 +87,14 @@ public class Pantalla extends javax.swing.JFrame {
 
             },
             new String [] {
-                "reloj", "Ll. Combustible", "Ll. Lavado", "Ll. Mantenimiento", "Ll. Caja", "At. Combustible", "At. lavado", "At. Mantenimiento", "At. caja"
+                "reloj", "Ll. Combustible ", "Ll. Lavado", "Ll. Mantenimiento", "Ll. Caja", "At. Combustible 1", "At. Combustible 2", "At. Combustible 3", "At. Combustible 4", "At. lavado 1", "At. lavado 2", "At. Mantenimiento 1", "At. Mantenimiento 2", "At. caja 1", "At. caja 2"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true
+                false, true, true, true, true, true, true, true, true, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -109,8 +109,24 @@ public class Pantalla extends javax.swing.JFrame {
         tabla_servicios.setDragEnabled(true);
         tabla_servicios.setMaximumSize(new java.awt.Dimension(800, 400));
         jScrollPane4.setViewportView(tabla_servicios);
+        if (tabla_servicios.getColumnModel().getColumnCount() > 0) {
+            tabla_servicios.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(2).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(3).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(4).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(5).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(6).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(7).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(8).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(9).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(10).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(11).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(12).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(13).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(14).setPreferredWidth(120);
+        }
 
-        jPanel3.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 950, 240));
+        jPanel3.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 950, 280));
 
         tabbedPaneCustom1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         tabbedPaneCustom1.setSelectedColor(new java.awt.Color(0, 102, 102));
@@ -118,12 +134,13 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        media_atencion_lavado.addActionListener(new java.awt.event.ActionListener() {
+        media_atencion_combustible.setText("3");
+        media_atencion_combustible.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                media_atencion_lavadoActionPerformed(evt);
+                media_atencion_combustibleActionPerformed(evt);
             }
         });
-        jPanel1.add(media_atencion_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
+        jPanel1.add(media_atencion_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel3.setText("FIN ATENCIÓN:");
@@ -132,6 +149,13 @@ public class Pantalla extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("LLEGADA:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        media_llegada_combustible.setText("2");
+        media_llegada_combustible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                media_llegada_combustibleActionPerformed(evt);
+            }
+        });
         jPanel1.add(media_llegada_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 110, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-gasolinera-50.png"))); // NOI18N
@@ -144,8 +168,12 @@ public class Pantalla extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("LLEGADA:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        media_llegada_lavado.setText("4");
         jPanel2.add(media_llegada_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 110, -1));
-        jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
+
+        media_atencion_lavado.setText("6");
+        jPanel2.add(media_atencion_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-lavado-automático-de-vehículos-50.png"))); // NOI18N
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, 60));
@@ -162,11 +190,15 @@ public class Pantalla extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setText("LLEGADA:");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        media_llegada_mantenimiento.setText("6");
         jPanel4.add(media_llegada_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 110, -1));
 
         jLabel10.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel10.setText("FIN ATENCIÓN:");
         jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+
+        media_atencion_mantenimiento.setText("12");
         jPanel4.add(media_atencion_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-servicio-de-coche-64.png"))); // NOI18N
@@ -180,11 +212,15 @@ public class Pantalla extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setText("LLEGADA:");
         jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
+
+        media_llegada_caja.setText("1.5");
         jPanel5.add(media_llegada_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 110, -1));
 
         jLabel13.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel13.setText("FIN ATENCIÓN:");
         jPanel5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+
+        media_atencion_caja.setText("4");
         jPanel5.add(media_atencion_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-caja-registradora-50.png"))); // NOI18N
@@ -213,6 +249,8 @@ public class Pantalla extends javax.swing.JFrame {
             }
         });
         jPanel6.add(nro_simulaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 110, -1));
+
+        hasta.setText("100");
         jPanel6.add(hasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 110, -1));
 
         jLabel17.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
@@ -224,20 +262,24 @@ public class Pantalla extends javax.swing.JFrame {
 
         tabbedPaneCustom1.addTab("Simular", jPanel6);
 
-        jPanel3.add(tabbedPaneCustom1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 650, 150));
+        jPanel3.add(tabbedPaneCustom1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 650, 150));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void media_atencion_lavadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_media_atencion_lavadoActionPerformed
+    private void media_atencion_combustibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_media_atencion_combustibleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_media_atencion_lavadoActionPerformed
+    }//GEN-LAST:event_media_atencion_combustibleActionPerformed
 
     private void nro_simulacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nro_simulacionesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nro_simulacionesActionPerformed
+
+    private void media_llegada_combustibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_media_llegada_combustibleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_media_llegada_combustibleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,8 +344,8 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextField4;
     public javax.swing.JTextField media_atencion_caja;
+    public javax.swing.JTextField media_atencion_combustible;
     public javax.swing.JTextField media_atencion_lavado;
     public javax.swing.JTextField media_atencion_mantenimiento;
     public javax.swing.JTextField media_llegada_caja;

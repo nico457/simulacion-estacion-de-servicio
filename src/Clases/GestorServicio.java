@@ -33,12 +33,6 @@ public class GestorServicio implements ActionListener {
     private int cantSimulaciones;
     private int limiteSuperior;
     private int limiteInferior;
-    private float acumEsperaCombustible;
-    private float acumEsperaMantenimiento;
-    private float acumEsperaLavado;
-    private int clientesAtendidosCombustible;
-    private int clientesAtendidosMantenimiento;
-    private int clientesAtendidosLavado;
     private ArrayList<Simulacion> simulacionesRango;
     private Simulacion filaActual;
     private Simulacion filaAnterior;
@@ -48,12 +42,6 @@ public class GestorServicio implements ActionListener {
         this.reloj = 0;
         this.views = views;
         this.views.btn_simular.addActionListener(this);
-        this.acumEsperaCombustible = 0;
-        this.acumEsperaMantenimiento = 0;
-        this.acumEsperaLavado = 0;
-        this.clientesAtendidosCombustible = 0;
-        this.clientesAtendidosMantenimiento = 0;
-        this.clientesAtendidosLavado = 0;
         this.simulacionesRango = new ArrayList<>();
         this.filaActual = new Simulacion();
         this.filaAnterior = new Simulacion();
@@ -61,6 +49,8 @@ public class GestorServicio implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == views.btn_simular){     
+             cleanTable();
+             resetVariables();
              generarSimulacion();
              mostrarSimulaciones();
              
@@ -73,8 +63,12 @@ public class GestorServicio implements ActionListener {
         this.cantSimulaciones = Integer.parseInt(views.nro_simulaciones.getText());
         this.limiteInferior =  Integer.parseInt(views.desde.getText());
         this.limiteSuperior = Integer.parseInt(views.hasta.getText());
-        filaActual.inicializar(1.5,2,4,6);
+        filaActual.inicializar(Double.parseDouble(views.media_llegada_caja.getText()),
+                (Double.parseDouble(views.media_llegada_combustible.getText())),
+                (Double.parseDouble(views.media_llegada_lavado.getText())),
+                (Double.parseDouble(views.media_llegada_mantenimiento.getText())));
         if(limiteInferior == 0){
+          
             simulacionesRango.add(filaActual.clone());
         }
         filaAnterior = filaActual.clone(); // para la primer iteracion fila anterior es igual a la actual
@@ -128,6 +122,10 @@ public class GestorServicio implements ActionListener {
             if (i >= limiteInferior && i <= limiteSuperior) {
                 simulacionesRango.add(filaActual.clone());
             }
+            // Guardo si es la ultima linea
+            if (i == cantSimulaciones-1){
+                simulacionesRango.add(filaActual.clone());
+            }
 
             //al finalizar la linea actual la guardo en la anterior
             filaAnterior = filaActual.clone();
@@ -142,13 +140,13 @@ public class GestorServicio implements ActionListener {
         //hago una copia de los surtidores anteriores para no cambiarlos y actualizarlos para el actual
         ArrayList<Surtidor> surtidoresAct = filaAnterior.getSurtidores();
         for (Surtidor surtidor : filaAnterior.getSurtidores()) {
-            System.out.println(reloj);
+            
             int colaMinima = Integer.MAX_VALUE;
             if (surtidor.esLibre()) {
                 surtidoresAct.get(surtidor.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
-                filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(3,surtidor.getSubindice(),reloj));
+                filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_combustible.getText()),surtidor.getSubindice(),reloj));
                 surtidoresAct.get(surtidor.getSubindice()).agregarCliente(new ClienteCombustible("SA",filaActual.getRelojActual()));
                 filaActual.setSurtidores(surtidoresAct);
                 break;
@@ -178,7 +176,7 @@ public class GestorServicio implements ActionListener {
                 estacionesAct.get(estacionLavado.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
-                filaActual.agregarFinAtencionLavado(new FinAtencionLavado(6,estacionLavado.getSubindice(),reloj));
+                filaActual.agregarFinAtencionLavado(new FinAtencionLavado(Double.parseDouble(views.media_atencion_lavado.getText()),estacionLavado.getSubindice(),reloj));
                 estacionesAct.get(estacionLavado.getSubindice()).agregarCliente(new ClienteLavado("SA",filaActual.getRelojActual()));
                 filaActual.setEstacionesLavado(estacionesAct);
                 break;
@@ -208,7 +206,7 @@ public class GestorServicio implements ActionListener {
                 estacionesAct.get(estacionMantenimiento.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
-                filaActual.agregarFinAtencionMantenimiento(new FinAtencionMantenimiento(12,estacionMantenimiento.getSubindice(),reloj));
+                filaActual.agregarFinAtencionMantenimiento(new FinAtencionMantenimiento(Double.parseDouble(views.media_atencion_mantenimiento.getText()),estacionMantenimiento.getSubindice(),reloj));
                 estacionesAct.get(estacionMantenimiento.getSubindice()).agregarCliente(new ClienteMantenimiento("SA",filaActual.getRelojActual()));
                 filaActual.setEstacionesMantenimiento(estacionesAct);
                 break;
@@ -238,7 +236,7 @@ public class GestorServicio implements ActionListener {
                 cajasAct.get(caja.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
-                filaActual.agregarFinAtencionCaja(new FinAtencionCaja(4, caja.getSubindice(),reloj));
+                filaActual.agregarFinAtencionCaja(new FinAtencionCaja(Double.parseDouble(views.media_atencion_caja.getText()), caja.getSubindice(),reloj));
                 cajasAct.get(caja.getSubindice()).agregarCliente(new ClienteCaja("SA", filaActual.getRelojActual()));
                 filaActual.setCajas(cajasAct);
                 break;
@@ -262,11 +260,14 @@ public class GestorServicio implements ActionListener {
         if (surtidor.getCola() == 0) {
             surtidor.setEstado("libre");
 
+
         } else {
             surtidor.restarCola();
-            surtidor.buscarSiguiente();
+            ClienteCombustible cliente = surtidor.buscarSiguiente();
+            filaActual.actualizarEsperaCombustible(reloj - cliente.getTiempoLlegada());
+            filaActual.actualizarAtendidosCombustible();
 
-            filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(3,surtidor.getSubindice(),reloj));
+            filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_combustible.getText()),surtidor.getSubindice(),reloj));
 
         }
 
@@ -280,8 +281,11 @@ public class GestorServicio implements ActionListener {
 
         } else {
             estacionLavado.restarCola();
-            estacionLavado.buscarSiguiente();
-            filaActual.agregarFinAtencionLavado(new FinAtencionLavado(6,estacionLavado.getSubindice(),reloj));
+            // Busco siguiente cliente y calculo tiempo espera y sumo contador
+            ClienteLavado cliente = estacionLavado.buscarSiguiente();
+            filaActual.actualizarEsperaLavado(reloj - cliente.getTiempoLlegada());
+            filaActual.actualizarAtendidosLavado();
+            filaActual.agregarFinAtencionLavado(new FinAtencionLavado(Double.parseDouble(views.media_atencion_lavado.getText()),estacionLavado.getSubindice(),reloj));
 
         }
     }
@@ -294,8 +298,11 @@ public class GestorServicio implements ActionListener {
 
         } else {
             estacionMantenimiento.restarCola();
-            estacionMantenimiento.buscarSiguiente();
-            filaActual.agregarFinAtencionMantenimiento(new FinAtencionMantenimiento(12,estacionMantenimiento.getSubindice(),reloj));
+            // Busco siguiente cliente y calculo tiempo espera y sumo contador
+            ClienteMantenimiento cliente = estacionMantenimiento.buscarSiguiente();
+            filaActual.actualizarEsperaMantenimiento(reloj - cliente.getTiempoLlegada());
+            filaActual.actualizarAtendidosMantenimiento();
+            filaActual.agregarFinAtencionMantenimiento(new FinAtencionMantenimiento(Double.parseDouble(views.media_atencion_mantenimiento.getText()),estacionMantenimiento.getSubindice(),reloj));
         }
     }
     public void calcularFinAtencionCaja(FinAtencionCaja objetoFin) {
@@ -307,15 +314,17 @@ public class GestorServicio implements ActionListener {
 
         } else {
             caja.restarCola();
-            caja.buscarSiguiente();
-            filaActual.agregarFinAtencionCaja(new FinAtencionCaja(4,caja.getSubindice(),reloj));
+            // Busco siguiente cliente y calculo tiempo espera y sumo contador
+            ClienteCaja cliente = caja.buscarSiguiente();
+            filaActual.actualizarEsperaCaja(reloj - cliente.getTiempoLlegada());
+            filaActual.actualizarAtendidosCaja();
+            filaActual.agregarFinAtencionCaja(new FinAtencionCaja(Double.parseDouble(views.media_atencion_caja.getText()),caja.getSubindice(),reloj));
 
         }
     }
 
     private void mostrarSimulaciones() {
             model = (DefaultTableModel) views.tabla_servicios.getModel();
-            
      
             for (int i = 0; i < simulacionesRango.size(); i++) {
                
@@ -362,7 +371,18 @@ public class GestorServicio implements ActionListener {
             views.tabla_servicios.setModel(model);
         
     }
-
+    public void cleanTable() {
+       DefaultTableModel model = (DefaultTableModel) views.tabla_servicios.getModel();
+        model.setRowCount(0);
+       
+    }
+    public void resetVariables(){
+        this.reloj = 0;
+        this.simulacionesRango = new ArrayList<>();
+        this.filaActual = new Simulacion();
+        this.filaAnterior = new Simulacion();
+        
+    }
    
 
 }
