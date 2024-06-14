@@ -80,7 +80,14 @@ public class EstacionMantenimiento implements Cloneable {
         return cola;
     }
 
-     public void setCola() {
-        cola =  clientesMantenimiento.size();    
+    
+    public void setCola() {
+        
+            if(clientesMantenimiento.isEmpty()){
+                cola = 0;
+            }else{
+                cola =  clientesMantenimiento.size()-1;
+            }       
+       
     }
 }

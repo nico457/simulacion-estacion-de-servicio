@@ -80,8 +80,15 @@ public class Caja implements Cloneable {
         return cola;
     }
 
+   
     public void setCola() {
-        cola =  clientesCaja.size();   
+        
+            if(clientesCaja.isEmpty()){
+                cola = 0;
+            }else{
+                cola =  clientesCaja.size()-1;
+            }       
+       
     }
     
     

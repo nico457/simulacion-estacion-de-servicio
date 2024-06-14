@@ -78,7 +78,12 @@ public class Surtidor implements Cloneable {
     }
 
     public void setCola() {
-             cola =  clientesCombustible.size();
+        
+            if(clientesCombustible.isEmpty()){
+                cola = 0;
+            }else{
+                cola =  clientesCombustible.size()-1;
+            }       
        
     }
     
