@@ -459,15 +459,11 @@ public class GestorServicio implements ActionListener {
     }
 
     public void calcularPorcentajeOcupacion(){
-        int total = filaActual.getAtendidosCombustible() + filaActual.getAtendidosLavado() +filaActual.getAtendidosMantenimiento() + filaActual.getAtendidosCaja();
-        double comb = filaActual.getAtendidosCombustible();
-        double lav = filaActual.getAtendidosLavado();
-        double mant = filaActual. getAtendidosMantenimiento();
-        double caja = filaActual. getAtendidosCaja();
-        this.tiempoOcupadoCombustible = comb / total * 100; 
-        this.tiempoOcupadoLavado = lav / total * 100;
-        this.tiempoOcupadoMantenimiento = mant / total * 100;
-        this.tiempoOcupadoCaja = caja/total *100;
+        this.tiempoOcupadoCombustible = Double.parseDouble(views.media_atencion_combustible.getText()) * filaActual.getAtendidosCombustible()/reloj *100;
+        this.tiempoOcupadoLavado = Double.parseDouble(views.media_atencion_lavado.getText()) * filaActual.getAtendidosCombustible()/reloj *100;
+        this.tiempoOcupadoMantenimiento = Double.parseDouble(views.media_atencion_mantenimiento.getText()) * filaActual.getAtendidosCombustible()/reloj *100;
+        this.tiempoOcupadoCaja = Double.parseDouble(views.media_atencion_caja.getText()) * filaActual.getAtendidosCombustible()/reloj *100;
+    
 }
 
     public void calcularMenorTiempoAtencion(){
