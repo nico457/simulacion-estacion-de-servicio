@@ -33,13 +33,9 @@ public class Simulacion implements Cloneable {
     private ArrayList<FinAtencionCaja> finAtencionCaja;
 
     //Objetos permanentes
-
     private ArrayList<Caja> cajas;
-
     private ArrayList<Surtidor> surtidores;
-
     private ArrayList<EstacionMantenimiento> estacionesMantenimiento;
-
     private ArrayList<EstacionLavado> estacionesLavado;
     
    // Contadores y Acumuladores Actividades
@@ -47,10 +43,16 @@ public class Simulacion implements Cloneable {
     private double acumEsperaLavado;
     private double acumEsperaMantenimiento;
     private double acumEsperaCaja;
+
     private int contCombustibleAtendidos;
     private int contLavadoAtendidos;
     private int contMantenimientoAtendidos;
     private int contCajaAtendidos;
+
+    private double acumOcupadoCombustible;
+    private double acumOcupadoLavado;
+    private double acumOcupadoMantenimiento;
+    private double acumOcupadoCaja;
 
 
     public void inicializar(double mediaCaja,double mediaCombustible, double mediaLavado, double mediaMantenimiento){
@@ -370,7 +372,7 @@ public Simulacion clone() {
     }
 }
 
-   public void actualizarEsperaCombustible(double tiempo) {
+    public void actualizarEsperaCombustible(double tiempo) {
         acumEsperaCombustible += tiempo;
     }
 
@@ -433,6 +435,38 @@ public Simulacion clone() {
 
     public int getAtendidosCaja(){
         return contCajaAtendidos;
+    }
+
+    public void actualizarOcupadoCombustible(double tiempo) {
+        acumOcupadoCombustible += tiempo;
+    }
+
+    public void actualizarOcupadoLavado(double tiempo) {
+        acumOcupadoLavado += tiempo;
+    }
+
+    public void actualizarOcupadoMantenimiento(double tiempo) {
+        acumOcupadoMantenimiento += tiempo;
+    }
+
+    public void actualizarOcupadoCaja(double tiempo) {
+        acumOcupadoCaja += tiempo;
+    }
+
+    public double getAcumOcupadoCombustible(){
+        return acumOcupadoCombustible;
+    }
+
+    public double getAcumOcupadoLavado(){
+        return acumOcupadoLavado;
+    }
+
+    public double getAcumOcupadoMantenimiento(){
+        return acumOcupadoMantenimiento;
+    }
+
+    public double getAcumOcupadoCaja(){
+        return acumOcupadoCaja;
     }
 
 }

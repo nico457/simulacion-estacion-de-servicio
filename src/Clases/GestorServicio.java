@@ -142,6 +142,9 @@ public class GestorServicio implements ActionListener {
 
             }
 
+            // Calcular tiempo ocupado
+            calcularTiempoOcupacion();
+
             if (i >= limiteInferior && i <= limiteSuperior) {
                 simulacionesRango.add(filaActual.clone());
             }
@@ -450,8 +453,39 @@ public class GestorServicio implements ActionListener {
         this.filaAnterior = new Simulacion();
         
     }
+
+    public void calcularTiempoOcupacion(){
+        //Surtidores
+        for(Surtidor surtidor : filaAnterior.getSurtidores()){
+            if (surtidor.getEstado() == "ocupado"){
+                filaActual.actualizarOcupadoCombustible(reloj - filaAnterior.getRelojActual());
+                break;
+            }
+        }
+        //Lavado
+        for(EstacionLavado estacionLavado : filaAnterior.getEstacionesLavado()){
+            if (estacionLavado.getEstado() == "ocupado"){
+                filaActual.actualizarOcupadoLavado(reloj - filaAnterior.getRelojActual());
+                break;
+            }
+        }
+        //Mantenimiento
+        for(EstacionMantenimiento estacionMantenimiento : filaAnterior.getEstacionesMantenimiento()){
+            if (estacionMantenimiento.getEstado() == "ocupado"){
+                filaActual.actualizarOcupadoMantenimiento(reloj - filaAnterior.getRelojActual());
+                break;
+            }
+        }
+        //Cajas
+        for(Caja caja : filaAnterior.getCajas()){
+            if (caja.getEstado() == "ocupado"){
+                filaActual.actualizarOcupadoCaja(reloj - filaAnterior.getRelojActual());
+                break;
+            }
+        }
+    }
     
-        public void calcularPromediosEspera(){
+    public void calcularPromediosEspera(){
         this.promEsperaCombustible = filaActual.getAcumEsperaCombustible()/filaActual.getAtendidosCombustible();
         this.promEsperaLavado = filaActual.getAcumEsperaLavado()/filaActual.getAtendidosLavado();
         this.promEsperaMantenimiento = filaActual.getAcumEsperaMantenimiento()/filaActual.getAtendidosMantenimiento();
@@ -459,12 +493,12 @@ public class GestorServicio implements ActionListener {
     }
 
     public void calcularPorcentajeOcupacion(){
-        this.tiempoOcupadoCombustible = Double.parseDouble(views.media_atencion_combustible.getText()) * filaActual.getAtendidosCombustible()/reloj *100;
-        this.tiempoOcupadoLavado = Double.parseDouble(views.media_atencion_lavado.getText()) * filaActual.getAtendidosCombustible()/reloj *100;
-        this.tiempoOcupadoMantenimiento = Double.parseDouble(views.media_atencion_mantenimiento.getText()) * filaActual.getAtendidosCombustible()/reloj *100;
-        this.tiempoOcupadoCaja = Double.parseDouble(views.media_atencion_caja.getText()) * filaActual.getAtendidosCombustible()/reloj *100;
+        this.tiempoOcupadoCombustible = filaActual.getAcumOcupadoCombustible()/reloj *100;
+        this.tiempoOcupadoLavado = filaActual.getAcumOcupadoLavado()/reloj *100;
+        this.tiempoOcupadoMantenimiento = filaActual.getAcumOcupadoMantenimiento()/reloj *100;
+        this.tiempoOcupadoCaja = filaActual.getAcumOcupadoCaja()/reloj *100;
     
-}
+    }
 
     public void calcularMenorTiempoAtencion(){
         double tiempoCombustible = promEsperaCombustible + Double.parseDouble(views.media_atencion_combustible.getText());
