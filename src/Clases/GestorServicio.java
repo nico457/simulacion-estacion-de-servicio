@@ -431,6 +431,11 @@ public class GestorServicio implements ActionListener {
             views.tiempo_minimo.setText(String.format("%.2f",tiempoMinimoAtencion));
             views.servicio_minimo.setText(nombreServicioMinimo);
             
+            views.ocupacion_combustible.setText(String.format("%.2f",tiempoOcupadoCombustible) + '%');
+            views.ocupacion_lavado.setText(String.format("%.2f", tiempoOcupadoLavado) + '%');
+            views.ocupacion_mantenimiento.setText(String.format( "%.2f",tiempoOcupadoMantenimiento) + '%');
+            views.ocupacion_caja.setText(String.format( "%.2f",tiempoOcupadoCaja) + '%');
+            
         
     }
     public void cleanTable() {
@@ -454,11 +459,16 @@ public class GestorServicio implements ActionListener {
     }
 
     public void calcularPorcentajeOcupacion(){
-        this.tiempoOcupadoCombustible = Double.parseDouble(views.media_atencion_combustible.getText()) * filaActual.getAtendidosCombustible();
-        this.tiempoOcupadoLavado = Double.parseDouble(views.media_atencion_lavado.getText()) * filaActual.getAtendidosCombustible();
-        this.tiempoOcupadoMantenimiento = Double.parseDouble(views.media_atencion_mantenimiento.getText()) * filaActual.getAtendidosCombustible();
-        this.tiempoOcupadoCaja = Double.parseDouble(views.media_atencion_caja.getText()) * filaActual.getAtendidosCombustible();
-    }
+        int total = filaActual.getAtendidosCombustible() + filaActual.getAtendidosLavado() +filaActual.getAtendidosMantenimiento() + filaActual.getAtendidosCaja();
+        double comb = filaActual.getAtendidosCombustible();
+        double lav = filaActual.getAtendidosLavado();
+        double mant = filaActual. getAtendidosMantenimiento();
+        double caja = filaActual. getAtendidosCaja();
+        this.tiempoOcupadoCombustible = comb / total * 100; 
+        this.tiempoOcupadoLavado = lav / total * 100;
+        this.tiempoOcupadoMantenimiento = mant / total * 100;
+        this.tiempoOcupadoCaja = caja/total *100;
+}
 
     public void calcularMenorTiempoAtencion(){
         double tiempoCombustible = promEsperaCombustible + Double.parseDouble(views.media_atencion_combustible.getText());

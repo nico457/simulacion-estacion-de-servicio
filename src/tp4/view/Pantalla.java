@@ -39,24 +39,40 @@ public class Pantalla extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         media_llegada_combustible = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        promedio_combustible = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        ocupacion_combustible = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         media_llegada_lavado = new javax.swing.JTextField();
         media_atencion_lavado = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        promedio_lavado = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        ocupacion_lavado = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         media_llegada_mantenimiento = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         media_atencion_mantenimiento = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        promedio_mantenimiento = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        ocupacion_mantenimiento = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         media_llegada_caja = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         media_atencion_caja = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        promedio_caja = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        ocupacion_caja = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         btn_simular = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
@@ -65,14 +81,6 @@ public class Pantalla extends javax.swing.JFrame {
         hasta = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         desde = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        promedio_combustible = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        promedio_mantenimiento = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
-        promedio_lavado = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        promedio_caja = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         servicio_minimo = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
@@ -171,7 +179,21 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel1.add(media_llegada_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, 110, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-gasolinera-50.png"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, -1));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel18.setText("Promedio espera: ");
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, -1, -1));
+
+        promedio_combustible.setEditable(false);
+        jPanel1.add(promedio_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 120, -1));
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel24.setText("Porcentaje ocupación:");
+        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
+
+        ocupacion_combustible.setEditable(false);
+        jPanel1.add(ocupacion_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 120, -1));
 
         tabbedPaneCustom1.addTab("Combustible", jPanel1);
 
@@ -188,11 +210,25 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel2.add(media_atencion_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-lavado-automático-de-vehículos-50.png"))); // NOI18N
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, 60));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, 60));
 
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel7.setText("FIN ATENCIÓN:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel20.setText("Promedio espera: ");
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, -1, -1));
+
+        promedio_lavado.setEditable(false);
+        jPanel2.add(promedio_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, 120, -1));
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel25.setText("Porcentaje ocupación:");
+        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
+
+        ocupacion_lavado.setEditable(false);
+        jPanel2.add(ocupacion_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 120, -1));
 
         tabbedPaneCustom1.addTab("Lavado", jPanel2);
 
@@ -214,7 +250,21 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel4.add(media_atencion_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-servicio-de-coche-64.png"))); // NOI18N
-        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, 60));
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, 60));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel19.setText("Promedio espera: ");
+        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 40, -1, -1));
+
+        promedio_mantenimiento.setEditable(false);
+        jPanel4.add(promedio_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 110, -1));
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel26.setText("Porcentaje ocupación:");
+        jPanel4.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, -1));
+
+        ocupacion_mantenimiento.setEditable(false);
+        jPanel4.add(ocupacion_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 110, -1));
 
         tabbedPaneCustom1.addTab("Mantenimiento", jPanel4);
 
@@ -236,7 +286,21 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel5.add(media_atencion_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-caja-registradora-50.png"))); // NOI18N
-        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, 60));
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, 60));
+
+        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel21.setText("Promedio caja: ");
+        jPanel5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 30, -1, -1));
+
+        promedio_caja.setEditable(false);
+        jPanel5.add(promedio_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 110, -1));
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabel27.setText("Porcentaje ocupación:");
+        jPanel5.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, -1, -1));
+
+        ocupacion_caja.setEditable(false);
+        jPanel5.add(ocupacion_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 110, -1));
 
         tabbedPaneCustom1.addTab("Caja", jPanel5);
 
@@ -275,34 +339,6 @@ public class Pantalla extends javax.swing.JFrame {
         tabbedPaneCustom1.addTab("Simular", jPanel6);
 
         jPanel3.add(tabbedPaneCustom1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 650, 150));
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel18.setText("Promedio combustible: ");
-        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 590, -1, -1));
-
-        promedio_combustible.setEditable(false);
-        jPanel3.add(promedio_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 590, 120, -1));
-
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel19.setText("Promedio mantenimiento: ");
-        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 590, -1, -1));
-
-        promedio_mantenimiento.setEditable(false);
-        jPanel3.add(promedio_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 590, 110, -1));
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel20.setText("Promedio lavado: ");
-        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 630, -1, -1));
-
-        promedio_lavado.setEditable(false);
-        jPanel3.add(promedio_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 630, 120, -1));
-
-        jLabel21.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel21.setText("Promedio caja: ");
-        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 630, -1, -1));
-
-        promedio_caja.setEditable(false);
-        jPanel3.add(promedio_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 630, 110, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel22.setText("Servicio:");
@@ -390,6 +426,10 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -413,6 +453,10 @@ public class Pantalla extends javax.swing.JFrame {
     public javax.swing.JTextField media_llegada_lavado;
     public javax.swing.JTextField media_llegada_mantenimiento;
     public javax.swing.JTextField nro_simulaciones;
+    public javax.swing.JTextField ocupacion_caja;
+    public javax.swing.JTextField ocupacion_combustible;
+    public javax.swing.JTextField ocupacion_lavado;
+    public javax.swing.JTextField ocupacion_mantenimiento;
     public javax.swing.JTextField promedio_caja;
     public javax.swing.JTextField promedio_combustible;
     public javax.swing.JTextField promedio_lavado;
