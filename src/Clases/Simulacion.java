@@ -3,16 +3,23 @@ package Clases;
 import Clases.Servidores.Caja;
 import Clases.Servidores.EstacionLavado;
 import Clases.Servidores.EstacionMantenimiento;
+import Clases.Servidores.Shop;
 import Clases.Servidores.Surtidor;
+import Clases.clientes.ClienteCaja;
 import Clases.clientes.ClienteCombustible;
+import Clases.clientes.ClienteLavado;
+import Clases.clientes.ClienteMantenimiento;
+import Clases.clientes.ClienteShop;
 import Clases.finAtencion.FinAtencionCaja;
 import Clases.finAtencion.FinAtencionCombustible;
 import Clases.finAtencion.FinAtencionLavado;
 import Clases.finAtencion.FinAtencionMantenimiento;
+import Clases.finAtencion.FinAtencionShop;
 import Clases.llegadas.LlegadaCaja;
 import Clases.llegadas.LlegadaCombustible;
 import Clases.llegadas.LlegadaLavado;
 import Clases.llegadas.LlegadaMantenimiento;
+import Clases.llegadas.LlegadaShop;
 
 
 import java.util.ArrayList;
@@ -25,29 +32,34 @@ public class Simulacion implements Cloneable {
     private LlegadaCombustible llegadaCombustible;
     private LlegadaLavado llegadaLavado;
     private LlegadaMantenimiento llegadaMantenimiento;
+    private LlegadaShop llegadaShop;
 
     // Fin de atencion
     private ArrayList<FinAtencionCombustible> finAtencionCombustible;
     private ArrayList<FinAtencionLavado> finAtencionLavado;
     private ArrayList<FinAtencionMantenimiento> finAtencionMantenimiento;
     private ArrayList<FinAtencionCaja> finAtencionCaja;
+    private FinAtencionShop finAtencionShop; 
 
     //Objetos permanentes
     private ArrayList<Caja> cajas;
     private ArrayList<Surtidor> surtidores;
     private ArrayList<EstacionMantenimiento> estacionesMantenimiento;
     private ArrayList<EstacionLavado> estacionesLavado;
+    private Shop shop;
     
    // Contadores y Acumuladores Actividades
     private double acumEsperaCombustible;
     private double acumEsperaLavado;
     private double acumEsperaMantenimiento;
     private double acumEsperaCaja;
+    private double acumEsperaShop;
 
     private int contCombustibleAtendidos;
     private int contLavadoAtendidos;
     private int contMantenimientoAtendidos;
     private int contCajaAtendidos;
+    private int contShopAtendidos;
 
     private double acumOcupadoCombustible;
     private double acumOcupadoLavado;
@@ -55,12 +67,14 @@ public class Simulacion implements Cloneable {
     private double acumOcupadoCaja;
 
 
-    public void inicializar(double mediaCaja,double mediaCombustible, double mediaLavado, double mediaMantenimiento){
+    public void inicializar(double mediaCaja,double mediaCombustible, double mediaLavado, double mediaMantenimiento, double mediaShop){
         this.relojActual = 0;
         this.llegadaCaja = new LlegadaCaja(mediaCaja,relojActual);
         this.llegadaCombustible = new LlegadaCombustible(mediaCombustible,relojActual);
         this.llegadaLavado = new LlegadaLavado(mediaLavado,relojActual);
         this.llegadaMantenimiento = new LlegadaMantenimiento(mediaMantenimiento,relojActual);
+        this.llegadaShop = new LlegadaShop(mediaShop,relojActual);
+        
         
         this.finAtencionCombustible = new ArrayList<>();
         this.finAtencionCombustible.add(null);
@@ -96,6 +110,8 @@ public class Simulacion implements Cloneable {
         this.estacionesLavado = new ArrayList<>(2);
         this.estacionesLavado.add(new EstacionLavado(0));
         this.estacionesLavado.add(new EstacionLavado(1));
+        
+        this.shop = new Shop();
     }
 
     public Object calcularProximoEvento(){
@@ -103,6 +119,7 @@ public class Simulacion implements Cloneable {
                 llegadaCombustible.getProxLlegada(),
                 llegadaLavado.getProxLlegada(),
                 llegadaMantenimiento.getProxLlegada(),
+                llegadaShop.getProxLlegada(),
                 (finAtencionCombustible.get(0) != null) ? finAtencionCombustible.get(0).getProxFin() : -1,
                 (finAtencionCombustible.get(1) != null) ? finAtencionCombustible.get(1).getProxFin() : -1,
                 (finAtencionCombustible.get(2) != null) ? finAtencionCombustible.get(2).getProxFin() : -1,
@@ -112,9 +129,9 @@ public class Simulacion implements Cloneable {
                 (finAtencionMantenimiento.get(0) != null) ? finAtencionMantenimiento.get(0).getProxFin() : -1,
                 (finAtencionMantenimiento.get(1) != null) ? finAtencionMantenimiento.get(1).getProxFin() : -1,
                 (finAtencionCaja.get(0) != null) ? finAtencionCaja.get(0).getProxFin() : -1,
-                (finAtencionCaja.get(1) != null) ? finAtencionCaja.get(1).getProxFin() : -1);
-  
-
+                (finAtencionCaja.get(1) != null) ? finAtencionCaja.get(1).getProxFin() : -1,
+                (finAtencionShop != null) ? finAtencionShop.getProxFin() : -1);
+                
         if (min == llegadaCaja.getProxLlegada()) {
             return llegadaCaja;
         }
@@ -157,6 +174,13 @@ public class Simulacion implements Cloneable {
         if (finAtencionCaja.get(1) != null && min == finAtencionCaja.get(1).getProxFin()) {
             return finAtencionCaja.get(1);
         }
+        if (min == llegadaShop.getProxLlegada()) {
+            return llegadaShop;
+        }
+         if (finAtencionShop != null && min == finAtencionShop.getProxFin()) {
+            return finAtencionShop;
+         }
+        
         
         return null;
 
@@ -372,12 +396,71 @@ public Simulacion clone() {
     }
 }
 
+public double obtenerTiempoTotalColasCombustible(){
+    double tiempoCola = acumEsperaCombustible;
+    for (Surtidor surtidor : surtidores){
+        ArrayList<ClienteCombustible> clientesEnCola = surtidor.getClientesCombustible();
+        for (ClienteCombustible cliente : clientesEnCola){
+            tiempoCola += relojActual - cliente.getTiempoLlegada();
+        }
+    }
+
+    return tiempoCola;
+}
+
+public double obtenerTiempoTotalColasLavado(){
+    double tiempoCola = acumEsperaLavado;
+    for (EstacionLavado estLavados : estacionesLavado){
+        ArrayList<ClienteLavado> clientesEnCola = estLavados.getClientesLavado();
+        for (ClienteLavado cliente : clientesEnCola){
+            tiempoCola += relojActual - cliente.getTiempoLlegada();
+        }
+    }
+
+    return tiempoCola;
+}
+
+public double obtenerTiempoTotalColasMantenimiento(){
+    double tiempoCola = acumEsperaMantenimiento;
+    for (EstacionMantenimiento estMantenimiento : estacionesMantenimiento){
+        ArrayList<ClienteMantenimiento> clientesEnCola = estMantenimiento.getClientesMantenimiento();
+        for (ClienteMantenimiento cliente : clientesEnCola){
+            tiempoCola += relojActual - cliente.getTiempoLlegada();
+        }
+    }
+
+    return tiempoCola;
+}
+
+public double obtenerTiempoTotalColasCaja(){
+    double tiempoCola = acumEsperaCaja;
+    for (Caja caja : cajas){
+        ArrayList<ClienteCaja> clientesEnCola = caja.getClientesCaja();
+        for (ClienteCaja cliente : clientesEnCola){
+            tiempoCola += relojActual - cliente.getTiempoLlegada();
+        }
+    }
+    return tiempoCola;
+}
+public double obtenerTiempoTotalColasShop(){
+    double tiempoCola = acumEsperaShop;
+     ArrayList<ClienteShop> clientesEnCola = shop.getClientesShop();
+        for (ClienteShop cliente : clientesEnCola){
+           tiempoCola += relojActual - cliente.getTiempoLlegada();
+       }
+        return tiempoCola;
+}
+     
+
     public void actualizarEsperaCombustible(double tiempo) {
         acumEsperaCombustible += tiempo;
     }
 
     public void actualizarEsperaLavado(double tiempo) {
         acumEsperaLavado += tiempo;
+    }
+     public void actualizarEsperaShop(double tiempo) {
+        acumEsperaShop += tiempo;
     }
 
     public void actualizarEsperaMantenimiento(double tiempo) {
@@ -394,6 +477,9 @@ public Simulacion clone() {
 
     public void actualizarAtendidosLavado() {
         contLavadoAtendidos++;
+    }
+    public void actualizarAtendidosShop() {
+        contShopAtendidos++;
     }
 
     public void actualizarAtendidosMantenimiento() {
@@ -468,5 +554,49 @@ public Simulacion clone() {
     public double getAcumOcupadoCaja(){
         return acumOcupadoCaja;
     }
+
+    public LlegadaShop getLlegadaShop() {
+        return llegadaShop;
+    }
+
+    public void setLlegadaShop(LlegadaShop llegadaShop) {
+        this.llegadaShop = llegadaShop;
+    }
+
+    public FinAtencionShop getFinAtencionShop() {
+        return finAtencionShop;
+    }
+
+    public void setFinAtencionShop(FinAtencionShop finAtencionShop) {
+        this.finAtencionShop = finAtencionShop;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
+    public double getAcumEsperaShop() {
+        return acumEsperaShop;
+    }
+
+    public void setAcumEsperaShop(double acumEsperaShop) {
+        this.acumEsperaShop = acumEsperaShop;
+    }
+
+    public int getContShopAtendidos() {
+        return contShopAtendidos;
+    }
+
+    public void setContShopAtendidos(int contShopAtendidos) {
+        this.contShopAtendidos = contShopAtendidos;
+    }
+    
+    
+    
+    
 
 }

@@ -3,21 +3,25 @@ package Clases;
 import Clases.Servidores.Caja;
 import Clases.Servidores.EstacionLavado;
 import Clases.Servidores.EstacionMantenimiento;
+import Clases.Servidores.Shop;
 import Clases.Servidores.Surtidor;
 import Clases.clientes.ClienteCaja;
 import Clases.clientes.ClienteCombustible;
 import Clases.clientes.ClienteLavado;
 import Clases.clientes.ClienteMantenimiento;
+import Clases.clientes.ClienteShop;
 import Clases.finAtencion.FinAtencionCaja;
 import Clases.finAtencion.FinAtencionCombustible;
 import Clases.finAtencion.FinAtencionLavado;
 import Clases.finAtencion.FinAtencionMantenimiento;
+import Clases.finAtencion.FinAtencionShop;
 import Clases.interfaces.FinAtencion;
 import Clases.interfaces.Llegada;
 import Clases.llegadas.LlegadaCaja;
 import Clases.llegadas.LlegadaCombustible;
 import Clases.llegadas.LlegadaLavado;
 import Clases.llegadas.LlegadaMantenimiento;
+import Clases.llegadas.LlegadaShop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -41,12 +45,23 @@ public class GestorServicio implements ActionListener {
     private double promEsperaLavado;
     private double promEsperaMantenimiento;
     private double promEsperaCaja;
+    private double promEsperaShop;
+    
     
     // Acumuladores clientes atendidos
     private double tiempoOcupadoCombustible;
     private double tiempoOcupadoLavado;
     private double tiempoOcupadoMantenimiento;
     private double tiempoOcupadoCaja;
+    private double tiempoOcupadoShop;
+    
+    // Promedios de cantidad de cola de cada servicio
+    private double promCantidadColaCombustible;
+    private double promCantidadColaLavado;
+    private double promCantidadColaMantenimiento;
+    private double promCantidadColaCaja;
+    private double promCantidadColaShop;
+    
     // Tiempo minimo atencion
     private double tiempoMinimoAtencion;
     private String nombreServicioMinimo;
@@ -72,6 +87,7 @@ public class GestorServicio implements ActionListener {
              calcularPromediosEspera();
              calcularPorcentajeOcupacion();
              calcularMenorTiempoAtencion();
+             calcularPromedioCola();
              
              mostrarSimulaciones();
              
@@ -89,7 +105,7 @@ public class GestorServicio implements ActionListener {
         filaActual.inicializar(Double.parseDouble(views.media_llegada_caja.getText()),
                 (Double.parseDouble(views.media_llegada_combustible.getText())),
                 (Double.parseDouble(views.media_llegada_lavado.getText())),
-                (Double.parseDouble(views.media_llegada_mantenimiento.getText())));
+                (Double.parseDouble(views.media_llegada_mantenimiento.getText())),1);
         if(limiteInferior == 0){
           
             simulacionesRango.add(filaActual.clone());
@@ -105,19 +121,23 @@ public class GestorServicio implements ActionListener {
                 //LLEGADA COMBUSTIBLE
                 if (proximoEvento instanceof LlegadaCombustible) {
                     llegadaCombustible();
+                    determinarLlegadaShop(true);
 
                     //LLEGADA LAVADO
                 } else if (proximoEvento instanceof LlegadaLavado) {
                     llegadaLavado();
+                    determinarLlegadaShop(true);
                 } else if (proximoEvento instanceof LlegadaMantenimiento) {
 
                     //LLEGADA MANTENIMIENTO
                     llegadaMantenimiento();
-                } else {
-
+                    determinarLlegadaShop(true);
+                } else if (proximoEvento instanceof LlegadaCaja) {
                     //LLEGADA CAJA
                     llegadaCaja();
 
+                }else{
+                    llegadaShop();
                 }
 
             } else {
@@ -128,16 +148,23 @@ public class GestorServicio implements ActionListener {
                 if (proximoEvento instanceof FinAtencionCombustible) {
                     FinAtencionCombustible objetoFin = (FinAtencionCombustible) proximoEvento;
                     calcularFinAtencionCombustible(objetoFin);
+                    determinarLlegadaShop(false);
                 } else if (proximoEvento instanceof FinAtencionLavado) {
                     FinAtencionLavado objetoFin = (FinAtencionLavado) proximoEvento;
                     calcularFinAtencionLavado(objetoFin);
+                    determinarLlegadaShop(false);
                 } else if (proximoEvento instanceof FinAtencionMantenimiento) {
                     FinAtencionMantenimiento objetoFin = (FinAtencionMantenimiento) proximoEvento;
                     calcularFinAtencionMantenimiento(objetoFin);
-                } else {
+                    determinarLlegadaShop(false);
+                } else if (proximoEvento instanceof FinAtencionCaja) {
                     //FIN ATENCION CAJA
                     FinAtencionCaja objetoFin = (FinAtencionCaja) proximoEvento;
                     calcularFinAtencionCaja(objetoFin);
+                    determinarLlegadaShop(false);
+                }else{
+                    FinAtencionShop objetoFin = (FinAtencionShop) proximoEvento;
+                    calcularFinAtencionShop(objetoFin);
                 }
 
             }
@@ -158,11 +185,13 @@ public class GestorServicio implements ActionListener {
         }
         return simulacionesRango;
     }
+    
+    
 
     public void llegadaCombustible(){
         boolean algunoLibre = false;
         int menorSurtidorSubIndice = 0;
-        filaActual.setLlegadaCombustible(new LlegadaCombustible(2,reloj));
+        filaActual.setLlegadaCombustible(new LlegadaCombustible(Double.parseDouble(views.media_llegada_combustible.getText()),reloj));
         //hago una copia de los surtidores anteriores para no cambiarlos y actualizarlos para el actual
         ArrayList<Surtidor> surtidoresAct = (ArrayList<Surtidor>) filaAnterior.getSurtidores().clone();
         int colaMinima = Integer.MAX_VALUE;
@@ -173,7 +202,7 @@ public class GestorServicio implements ActionListener {
                 surtidoresAct.get(surtidor.getSubindice()).setEstado("ocupado");
                 algunoLibre = true;
                 //aca se actualizan los surtidores actuales
-                filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_combustible.getText()),surtidor.getSubindice(),reloj));
+                filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_shop.getText()),surtidor.getSubindice(),reloj));
                 surtidoresAct.get(surtidor.getSubindice()).agregarCliente(new ClienteCombustible("SA",filaActual.getRelojActual()));
                 filaActual.setSurtidores((ArrayList<Surtidor>) surtidoresAct.clone());
                 break;
@@ -193,7 +222,7 @@ public class GestorServicio implements ActionListener {
     public void llegadaLavado(){
         boolean algunoLibre = false;
         int menorEstacionSubIndice = 0;
-        filaActual.setLlegadaLavado(new LlegadaLavado(4,reloj));
+        filaActual.setLlegadaLavado(new LlegadaLavado(Double.parseDouble(views.media_llegada_lavado.getText()),reloj));
 
         ArrayList<EstacionLavado> estacionesAct = (ArrayList<EstacionLavado>) filaAnterior.getEstacionesLavado().clone();
         int colaMinima = Integer.MAX_VALUE;
@@ -224,7 +253,7 @@ public class GestorServicio implements ActionListener {
     public void llegadaMantenimiento(){
         boolean algunoLibre = false;
         int menorEstacionSubIndice = 0;
-        filaActual.setLlegadaMantenimiento(new LlegadaMantenimiento(6,reloj));
+        filaActual.setLlegadaMantenimiento(new LlegadaMantenimiento(Double.parseDouble(views.media_llegada_mantenimiento.getText()),reloj));
         int colaMinima = Integer.MAX_VALUE;    
         ArrayList<EstacionMantenimiento> estacionesAct = (ArrayList<EstacionMantenimiento>) filaAnterior.getEstacionesMantenimiento().clone();
         for (EstacionMantenimiento estacionMantenimiento : filaAnterior.getEstacionesMantenimiento()) {
@@ -253,7 +282,7 @@ public class GestorServicio implements ActionListener {
     public void llegadaCaja() {
         boolean algunoLibre = false;
         int menorCajaSubIndice = 0;
-        filaActual.setLlegadaCaja(new LlegadaCaja(1.5,reloj));
+        filaActual.setLlegadaCaja(new LlegadaCaja(Double.parseDouble(views.media_llegada_caja.getText()),reloj));
         int colaMinima = Integer.MAX_VALUE;
         //hago una copia de los surtidores anteriores para no cambiarlos y actualizarlos para el actual
         ArrayList<Caja> cajasAct = (ArrayList<Caja>)filaAnterior.getCajas().clone();
@@ -278,6 +307,27 @@ public class GestorServicio implements ActionListener {
             filaActual.setCajas((ArrayList<Caja>) cajasAct.clone());
         }
     }
+    
+    public void determinarLlegadaShop(boolean esLlegada){
+
+        double rnd = Math.random();
+        if ((esLlegada && rnd < 0.25) || (!esLlegada && rnd < 0.1)) {
+            llegadaShop();
+        }
+}
+    public void llegadaShop(){
+        filaActual.setLlegadaShop(new LlegadaShop(Double.valueOf(views.media_llegada_shop.getText()),reloj));
+        Shop shop =  filaAnterior.getShop();
+        if (shop.esLibre()) {
+            shop.setEstado("ocupado");
+            filaActual.setFinAtencionShop(new FinAtencionShop(Double.valueOf(views.media_atencion_shop.getText()),reloj));
+            filaActual.getShop().agregarCliente(new ClienteShop("SA", filaActual.getRelojActual()));
+            } else{                    
+                filaActual.getShop().agregarCliente(new ClienteShop("EA",filaActual.getRelojActual()));
+            }
+    }
+
+    
 
     public void calcularFinAtencionCombustible(FinAtencionCombustible objetoFin) {
         int indice = objetoFin.getSubindice();
@@ -292,7 +342,7 @@ public class GestorServicio implements ActionListener {
             filaActual.actualizarEsperaCombustible(reloj - cliente.getTiempoLlegada());
             filaActual.actualizarAtendidosCombustible();
 
-            filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_combustible.getText()),filaActual.getSurtidor(indice).getSubindice(),reloj));
+            filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_shop.getText()),filaActual.getSurtidor(indice).getSubindice(),reloj));
 
         }
 
@@ -342,85 +392,109 @@ public class GestorServicio implements ActionListener {
 
         }
     }
+    
+    public void calcularFinAtencionShop(FinAtencionShop objetoFin) {
+        filaActual.getShop().eliminarCliente();
+        if (filaAnterior.getShop().getClientesShop().isEmpty()) {
+            filaActual.getShop().setEstado("libre");
+
+        } else {
+            // Busco siguiente cliente y calculo tiempo espera y sumo contador
+            ClienteShop cliente =  filaActual.getShop().buscarSiguiente();
+            filaActual.actualizarEsperaShop(reloj - cliente.getTiempoLlegada());
+            filaActual.actualizarAtendidosShop();
+            filaActual.setFinAtencionShop(new FinAtencionShop(Double.valueOf(views.media_atencion_shop.getText()),reloj));
+
+        }
+    }
 
     private void mostrarSimulaciones() {
             model = (DefaultTableModel) views.tabla_servicios.getModel();
      
             for (int i = 0; i < simulacionesRango.size(); i++) {
                
-                Object[] row = new Object[43];
+                Object[] row = new Object[49];
                 row[0] = String.format("%.2f",simulacionesRango.get(i).getRelojActual());
                 row[1] = String.format("%.2f",simulacionesRango.get(i).getLlegadaCombustible().getProxLlegada());
                 row[2] = String.format("%.2f",simulacionesRango.get(i).getLlegadaLavado().getProxLlegada());
                 row[3] = String.format("%.2f",simulacionesRango.get(i).getLlegadaMantenimiento().getProxLlegada());
                 row[4] = String.format("%.2f",simulacionesRango.get(i).getLlegadaCaja().getProxLlegada());
+                row[5] = String.format("%.2f",simulacionesRango.get(i).getLlegadaShop().getProxLlegada());
+
                   
                
-                row[5] =(simulacionesRango.get(i).getFinAtencionCombustible().get(0) != null) ?
+                row[6] =(simulacionesRango.get(i).getFinAtencionCombustible().get(0) != null) ?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCombustible().get(0).getProxFin()): ' ';
                 
-                row[6] = (simulacionesRango.get(i).getFinAtencionCombustible().get(1) != null)?
+                row[7] = (simulacionesRango.get(i).getFinAtencionCombustible().get(1) != null)?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCombustible().get(1).getProxFin()): ' ';
                 
-                row[7] = (simulacionesRango.get(i).getFinAtencionCombustible().get(2) != null)?
+                row[8] = (simulacionesRango.get(i).getFinAtencionCombustible().get(2) != null)?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCombustible().get(2).getProxFin()):' ';
                 
-                row[8] = ((simulacionesRango.get(i).getFinAtencionCombustible().get(3) != null))?
+                row[9] = ((simulacionesRango.get(i).getFinAtencionCombustible().get(3) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCombustible().get(3).getProxFin()):' ';
                 
-                row[9] = ((simulacionesRango.get(i).getFinAtencionLavado().get(0) != null))?
+                row[10] = ((simulacionesRango.get(i).getFinAtencionLavado().get(0) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionLavado().get(0).getProxFin()):' ';        
                 
-                row[10] = ((simulacionesRango.get(i).getFinAtencionLavado().get(1) != null))?
+                row[11] = ((simulacionesRango.get(i).getFinAtencionLavado().get(1) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionLavado().get(1).getProxFin()):' '; 
                 
-                row[11] = ((simulacionesRango.get(i).getFinAtencionMantenimiento().get(0) != null))? 
+                row[12] = ((simulacionesRango.get(i).getFinAtencionMantenimiento().get(0) != null))? 
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionMantenimiento().get(0).getProxFin()):' '; 
                 
-                row[12] =  ((simulacionesRango.get(i).getFinAtencionMantenimiento().get(1) != null))? 
+                row[13] =  ((simulacionesRango.get(i).getFinAtencionMantenimiento().get(1) != null))? 
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionMantenimiento().get(1).getProxFin()):' '; 
                 
-                row[13] = ((simulacionesRango.get(i).getFinAtencionCaja().get(0) != null))?  
+                row[14] = ((simulacionesRango.get(i).getFinAtencionCaja().get(0) != null))?  
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCaja().get(0).getProxFin()):' '; 
                 
-                row[14] = ((simulacionesRango.get(i).getFinAtencionCaja().get(1) != null))?  
+                row[15] = ((simulacionesRango.get(i).getFinAtencionCaja().get(1) != null))?  
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCaja().get(1).getProxFin()):' '; 
                
+                row[16] =(simulacionesRango.get(i).getFinAtencionShop() != null) ?
+                        String.format("%.2f",simulacionesRango.get(i).getFinAtencionShop().getProxFin()): ' ';
                 
-                row[15] = simulacionesRango.get(i).getSurtidor(0).getEstado();
-                row[16] = simulacionesRango.get(i).getSurtidor(0).getCola();
-                row[17] = simulacionesRango.get(i).getSurtidor(1).getEstado();
-                row[18] = simulacionesRango.get(i).getSurtidor(1).getCola();
-                row[19] = simulacionesRango.get(i).getSurtidor(2).getEstado();
-                row[20] = simulacionesRango.get(i).getSurtidor(2).getCola();
-                row[21] = simulacionesRango.get(i).getSurtidor(3).getEstado();
-                row[22] = simulacionesRango.get(i).getSurtidor(3).getCola();
+                row[17] = simulacionesRango.get(i).getSurtidor(0).getEstado();
+                row[18] = simulacionesRango.get(i).getSurtidor(0).getCola();
+                row[19] = simulacionesRango.get(i).getSurtidor(1).getEstado();
+                row[20] = simulacionesRango.get(i).getSurtidor(1).getCola();
+                row[21] = simulacionesRango.get(i).getSurtidor(2).getEstado();
+                row[22] = simulacionesRango.get(i).getSurtidor(2).getCola();
+                row[23] = simulacionesRango.get(i).getSurtidor(3).getEstado();
+                row[24] = simulacionesRango.get(i).getSurtidor(3).getCola();
                 
-                row[23] =simulacionesRango.get(i).getEstacionLavado(0).getEstado();
-                row[24] =simulacionesRango.get(i).getEstacionLavado(0).getCola();
-                row[25] =simulacionesRango.get(i).getEstacionLavado(1).getEstado();
-                row[26] =simulacionesRango.get(i).getEstacionLavado(1).getCola();
+                row[25] =simulacionesRango.get(i).getEstacionLavado(0).getEstado();
+                row[26] =simulacionesRango.get(i).getEstacionLavado(0).getCola();
+                row[27] =simulacionesRango.get(i).getEstacionLavado(1).getEstado();
+                row[28] =simulacionesRango.get(i).getEstacionLavado(1).getCola();
                 
-                row[27] =simulacionesRango.get(i).getEstacionMantenimiento(0).getEstado();
-                row[28] =simulacionesRango.get(i).getEstacionMantenimiento(0).getCola();
-                row[29] =simulacionesRango.get(i).getEstacionMantenimiento(1).getEstado();
-                row[30] =simulacionesRango.get(i).getEstacionMantenimiento(1).getCola();
+                row[29] =simulacionesRango.get(i).getEstacionMantenimiento(0).getEstado();
+                row[30] =simulacionesRango.get(i).getEstacionMantenimiento(0).getCola();
+                row[31] =simulacionesRango.get(i).getEstacionMantenimiento(1).getEstado();
+                row[32] =simulacionesRango.get(i).getEstacionMantenimiento(1).getCola();
                 
-                row[31] =simulacionesRango.get(i).getCaja(0).getEstado();
-                row[32] =simulacionesRango.get(i).getCaja(0).getCola();
-                row[33] =simulacionesRango.get(i).getCaja(1).getEstado();
-                row[34] =simulacionesRango.get(i).getCaja(1).getCola();
+                row[33] =simulacionesRango.get(i).getCaja(0).getEstado();
+                row[34] =simulacionesRango.get(i).getCaja(0).getCola();
+                row[35] =simulacionesRango.get(i).getCaja(1).getEstado();
+                row[36] =simulacionesRango.get(i).getCaja(1).getCola();
                 
-                row[35] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCombustible());
-                row[36] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaLavado());
-                row[37] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaMantenimiento());
-                row[38] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCaja());
+                row[37] =simulacionesRango.get(i).getShop().getEstado();
+                row[38] =simulacionesRango.get(i).getShop().getCola();
                 
-                row[39] =simulacionesRango.get(i).getAtendidosCombustible();
-                row[40] =simulacionesRango.get(i).getAtendidosLavado();
-                row[41] =simulacionesRango.get(i).getAtendidosMantenimiento();
-                row[42] =simulacionesRango.get(i).getAtendidosCaja();
+                row[39] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCombustible());
+                row[40] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaLavado());
+                row[41] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaMantenimiento());
+                row[42] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCaja());
+                row[43] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaShop());
                 
+                
+                row[44] =simulacionesRango.get(i).getAtendidosCombustible();
+                row[45] =simulacionesRango.get(i).getAtendidosLavado();
+                row[46] =simulacionesRango.get(i).getAtendidosMantenimiento();
+                row[47] =simulacionesRango.get(i).getAtendidosCaja();
+                row[48] =simulacionesRango.get(i).getContShopAtendidos();
           
                 model.addRow(row);
                 
@@ -431,6 +505,8 @@ public class GestorServicio implements ActionListener {
             views.promedio_lavado.setText(String.format("%.2f",promEsperaLavado));
             views.promedio_mantenimiento.setText(String.format("%.2f",promEsperaMantenimiento));
             views.promedio_caja.setText(String.format("%.2f",promEsperaCaja));
+            views.promedio_shop.setText(String.format("%.2f",promEsperaCaja));
+            
             views.tiempo_minimo.setText(String.format("%.2f",tiempoMinimoAtencion));
             views.servicio_minimo.setText(nombreServicioMinimo);
             
@@ -438,6 +514,15 @@ public class GestorServicio implements ActionListener {
             views.ocupacion_lavado.setText(String.format("%.2f", tiempoOcupadoLavado) + '%');
             views.ocupacion_mantenimiento.setText(String.format( "%.2f",tiempoOcupadoMantenimiento) + '%');
             views.ocupacion_caja.setText(String.format( "%.2f",tiempoOcupadoCaja) + '%');
+            views.ocupacion_shop.setText(String.format( "%.2f",tiempoOcupadoShop) + '%');
+            
+            views.cola_combustible.setText(String.format( "%.2f",promCantidadColaCombustible));
+            views.cola_lavado.setText(String.format( "%.2f",promCantidadColaLavado));
+            views.cola_mantenimiento.setText(String.format( "%.2f",promCantidadColaMantenimiento));
+            views.cola_caja.setText(String.format( "%.2f",promCantidadColaCaja));
+            views.cola_shop.setText(String.format( "%.2f",promCantidadColaShop));
+            
+            
             
         
     }
@@ -490,6 +575,7 @@ public class GestorServicio implements ActionListener {
         this.promEsperaLavado = filaActual.getAcumEsperaLavado()/filaActual.getAtendidosLavado();
         this.promEsperaMantenimiento = filaActual.getAcumEsperaMantenimiento()/filaActual.getAtendidosMantenimiento();
         this.promEsperaCaja = filaActual.getAcumEsperaCaja()/filaActual.getAtendidosCaja();
+        this.promEsperaShop = filaActual.getAcumEsperaShop()/filaActual.getContShopAtendidos();
     }
 
     public void calcularPorcentajeOcupacion(){
@@ -497,15 +583,16 @@ public class GestorServicio implements ActionListener {
         this.tiempoOcupadoLavado = filaActual.getAcumOcupadoLavado()/reloj *100;
         this.tiempoOcupadoMantenimiento = filaActual.getAcumOcupadoMantenimiento()/reloj *100;
         this.tiempoOcupadoCaja = filaActual.getAcumOcupadoCaja()/reloj *100;
+        this.tiempoOcupadoShop = filaActual.getAcumEsperaShop()/reloj *100;
     
     }
 
     public void calcularMenorTiempoAtencion(){
-        double tiempoCombustible = promEsperaCombustible + Double.parseDouble(views.media_atencion_combustible.getText());
+        double tiempoCombustible = promEsperaCombustible + Double.parseDouble(views.media_atencion_shop.getText());
         double tiempoLavado = promEsperaLavado + Double.parseDouble(views.media_atencion_lavado.getText());
         double tiempoMantenimiento = promEsperaMantenimiento + Double.parseDouble(views.media_atencion_mantenimiento.getText());
         double tiempoCaja = promEsperaCaja + Double.parseDouble(views.media_atencion_caja.getText());
-
+        
         if (tiempoCombustible < tiempoLavado && tiempoCombustible < tiempoMantenimiento && tiempoCombustible < tiempoCaja){
             this.tiempoMinimoAtencion = tiempoCombustible;
             this.nombreServicioMinimo = "Combustible";
@@ -522,6 +609,14 @@ public class GestorServicio implements ActionListener {
             this.tiempoMinimoAtencion = tiempoCaja;
             this.nombreServicioMinimo = "Caja";
         }
-    
+ 
+    }
+    public void calcularPromedioCola(){
+        this.promCantidadColaCombustible = filaActual.obtenerTiempoTotalColasCombustible() / reloj;
+        this.promCantidadColaLavado = filaActual.obtenerTiempoTotalColasLavado() / reloj;
+        this.promCantidadColaMantenimiento = filaActual.obtenerTiempoTotalColasMantenimiento() / reloj;
+        this.promCantidadColaCaja = filaActual.obtenerTiempoTotalColasCaja() / reloj;
+        this.promCantidadColaShop = filaActual.obtenerTiempoTotalColasShop()/ reloj;
+
     }
 }
