@@ -22,7 +22,7 @@ public class FinAtencionShop implements FinAtencion,Cloneable {
         this.constante = constante;
     }
 
-     @Override
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }   

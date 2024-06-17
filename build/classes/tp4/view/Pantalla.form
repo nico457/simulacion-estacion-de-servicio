@@ -87,54 +87,54 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="49" rowCount="0">
                     <Column editable="false" title="reloj" type="java.lang.String"/>
-                    <Column editable="true" title="Ll. Combustible " type="java.lang.Object"/>
-                    <Column editable="true" title="Ll. Lavado" type="java.lang.Object"/>
-                    <Column editable="true" title="Ll. Mantenimiento" type="java.lang.Object"/>
-                    <Column editable="true" title="Ll. Caja" type="java.lang.Object"/>
-                    <Column editable="true" title="Ll. Shop" type="java.lang.Object"/>
-                    <Column editable="true" title="At. Combustible 1" type="java.lang.Object"/>
-                    <Column editable="true" title="At. Combustible 2" type="java.lang.Object"/>
-                    <Column editable="true" title="At. Combustible 3" type="java.lang.Object"/>
-                    <Column editable="true" title="At. Combustible 4" type="java.lang.Object"/>
-                    <Column editable="true" title="At. lavado 1" type="java.lang.Object"/>
-                    <Column editable="true" title="At. lavado 2" type="java.lang.Object"/>
-                    <Column editable="true" title="At. Mantenimiento 1" type="java.lang.Object"/>
-                    <Column editable="true" title="At. Mantenimiento 2" type="java.lang.Object"/>
-                    <Column editable="true" title="At. caja 1" type="java.lang.Object"/>
-                    <Column editable="true" title="At. caja 2" type="java.lang.Object"/>
-                    <Column editable="true" title="At. Shop" type="java.lang.Object"/>
-                    <Column editable="true" title="S1 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="S1 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="S2 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="S2 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="S3 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="S3 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="S4 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="S4 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="L1 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="L1 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="L2 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="L2 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="M1 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="M1 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="M2 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="M2 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="C1 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="C1 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="C2 Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="C2 Cola" type="java.lang.Object"/>
-                    <Column editable="true" title="Shop estado" type="java.lang.Object"/>
-                    <Column editable="true" title="Shop cola" type="java.lang.Object"/>
-                    <Column editable="true" title="Esp Combustible" type="java.lang.Object"/>
-                    <Column editable="true" title="Esp Lavado" type="java.lang.Object"/>
-                    <Column editable="true" title="Esp Mantenimiento" type="java.lang.Object"/>
-                    <Column editable="true" title="Esp Caja" type="java.lang.Object"/>
-                    <Column editable="true" title="Esp shop" type="java.lang.Object"/>
-                    <Column editable="true" title="Cont Combustible" type="java.lang.Object"/>
-                    <Column editable="true" title="Cont lavado" type="java.lang.Object"/>
-                    <Column editable="true" title="Cont mantenimiento" type="java.lang.Object"/>
-                    <Column editable="true" title="Cont caja" type="java.lang.Object"/>
-                    <Column editable="true" title="Cont shop" type="java.lang.Object"/>
+                    <Column editable="false" title="Ll. Combustible " type="java.lang.Object"/>
+                    <Column editable="false" title="Ll. Lavado" type="java.lang.Object"/>
+                    <Column editable="false" title="Ll. Mantenimiento" type="java.lang.Object"/>
+                    <Column editable="false" title="Ll. Caja" type="java.lang.Object"/>
+                    <Column editable="false" title="Ll. Shop" type="java.lang.Object"/>
+                    <Column editable="false" title="At. Combustible 1" type="java.lang.Object"/>
+                    <Column editable="false" title="At. Combustible 2" type="java.lang.Object"/>
+                    <Column editable="false" title="At. Combustible 3" type="java.lang.Object"/>
+                    <Column editable="false" title="At. Combustible 4" type="java.lang.Object"/>
+                    <Column editable="false" title="At. lavado 1" type="java.lang.Object"/>
+                    <Column editable="false" title="At. lavado 2" type="java.lang.Object"/>
+                    <Column editable="false" title="At. Mantenimiento 1" type="java.lang.Object"/>
+                    <Column editable="false" title="At. Mantenimiento 2" type="java.lang.Object"/>
+                    <Column editable="false" title="At. caja 1" type="java.lang.Object"/>
+                    <Column editable="false" title="At. caja 2" type="java.lang.Object"/>
+                    <Column editable="false" title="At. Shop" type="java.lang.Object"/>
+                    <Column editable="false" title="S1 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="S1 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="S2 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="S2 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="S3 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="S3 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="S4 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="S4 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="L1 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="L1 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="L2 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="L2 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="M1 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="M1 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="M2 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="M2 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="C1 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="C1 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="C2 Estado" type="java.lang.Object"/>
+                    <Column editable="false" title="C2 Cola" type="java.lang.Object"/>
+                    <Column editable="false" title="Shop estado" type="java.lang.Object"/>
+                    <Column editable="false" title="Shop cola" type="java.lang.Object"/>
+                    <Column editable="false" title="Esp Combustible" type="java.lang.Object"/>
+                    <Column editable="false" title="Esp Lavado" type="java.lang.Object"/>
+                    <Column editable="false" title="Esp Mantenimiento" type="java.lang.Object"/>
+                    <Column editable="false" title="Esp Caja" type="java.lang.Object"/>
+                    <Column editable="false" title="Esp shop" type="java.lang.Object"/>
+                    <Column editable="false" title="Cont Combustible" type="java.lang.Object"/>
+                    <Column editable="false" title="Cont lavado" type="java.lang.Object"/>
+                    <Column editable="false" title="Cont mantenimiento" type="java.lang.Object"/>
+                    <Column editable="false" title="Cont caja" type="java.lang.Object"/>
+                    <Column editable="false" title="Cont shop" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="autoResizeMode" type="int" value="0"/>
@@ -1108,7 +1108,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="media_llegada_shop">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="1.5"/>
+                    <Property name="text" type="java.lang.String" value="3"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

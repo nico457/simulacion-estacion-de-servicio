@@ -65,9 +65,12 @@ public class GestorServicio implements ActionListener {
     // Tiempo minimo atencion
     private double tiempoMinimoAtencion;
     private String nombreServicioMinimo;
+    
+    private boolean shopOcupado;
 
 
     public GestorServicio(Pantalla views) {
+        this.shopOcupado = false;
         this.reloj = 0;
         this.views = views;
         this.views.btn_simular.addActionListener(this);
@@ -313,10 +316,14 @@ public class GestorServicio implements ActionListener {
         double rnd = Math.random();
         if ((esLlegada && rnd < 0.25) || (!esLlegada && rnd < 0.1)) {
             llegadaShop();
+            shopOcupado = true;
         }
 }
     public void llegadaShop(){
-        filaActual.setLlegadaShop(new LlegadaShop(Double.valueOf(views.media_llegada_shop.getText()),reloj));
+        if(!shopOcupado){
+            filaActual.setLlegadaShop(new LlegadaShop(Double.valueOf(views.media_llegada_shop.getText()),reloj));
+        }
+        
         Shop shop =  filaAnterior.getShop();
         if (shop.esLibre()) {
             shop.setEstado("ocupado");
@@ -395,8 +402,10 @@ public class GestorServicio implements ActionListener {
     
     public void calcularFinAtencionShop(FinAtencionShop objetoFin) {
         filaActual.getShop().eliminarCliente();
+        shopOcupado = false;
         if (filaAnterior.getShop().getClientesShop().isEmpty()) {
             filaActual.getShop().setEstado("libre");
+       
 
         } else {
             // Busco siguiente cliente y calculo tiempo espera y sumo contador

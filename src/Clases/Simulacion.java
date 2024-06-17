@@ -75,7 +75,6 @@ public class Simulacion implements Cloneable {
         this.llegadaCombustible = new LlegadaCombustible(mediaCombustible,relojActual);
         this.llegadaLavado = new LlegadaLavado(mediaLavado,relojActual);
         this.llegadaMantenimiento = new LlegadaMantenimiento(mediaMantenimiento,relojActual);
-        //this.llegadaShop = new LlegadaShop(mediaShop,relojActual);
         
         
         this.finAtencionCombustible = new ArrayList<>();
@@ -176,7 +175,7 @@ public class Simulacion implements Cloneable {
         if (finAtencionCaja.get(1) != null && min == finAtencionCaja.get(1).getProxFin()) {
             return finAtencionCaja.get(1);
         }
-        if (min == llegadaShop.getProxLlegada()) {
+        if (llegadaShop != null && min == llegadaShop.getProxLlegada()) {
             return llegadaShop;
         }
          if (finAtencionShop != null && min == finAtencionShop.getProxFin()) {
