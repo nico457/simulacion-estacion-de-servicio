@@ -47,8 +47,7 @@ public class Simulacion implements Cloneable {
     private ArrayList<EstacionMantenimiento> estacionesMantenimiento;
     private ArrayList<EstacionLavado> estacionesLavado;
     private Shop shop;
-    private String shopEstado;
-    private int shopCola;
+
     
    // Contadores y Acumuladores Actividades
     private double acumEsperaCombustible;
@@ -348,7 +347,7 @@ public Simulacion clone() {
         clonada.llegadaCombustible = (LlegadaCombustible) llegadaCombustible.clone();
         clonada.llegadaLavado = (LlegadaLavado) llegadaLavado.clone();
         clonada.llegadaMantenimiento = (LlegadaMantenimiento) llegadaMantenimiento.clone();
-
+        clonada.llegadaShop = (LlegadaShop) llegadaShop.clone();
         // Clonación profunda de listas de fin de atencion
         clonada.finAtencionCombustible = new ArrayList<>();
         for (FinAtencionCombustible fin : finAtencionCombustible) {
@@ -365,6 +364,9 @@ public Simulacion clone() {
         clonada.finAtencionCaja = new ArrayList<>();
         for (FinAtencionCaja fin : finAtencionCaja) {
             clonada.finAtencionCaja.add(fin != null ? (FinAtencionCaja) fin.clone() : null);
+        }
+        if(finAtencionShop != null){
+            clonada.finAtencionShop = (FinAtencionShop) finAtencionShop.clone();
         }
         // Clonación profunda de listas de objetos permanentes
         clonada.cajas = new ArrayList<>();
@@ -390,9 +392,7 @@ public Simulacion clone() {
         }
 
         shop.setCola();
-        //clonada.setShop((Shop) shop.clone()); // Nose porque tira error
-        clonada.shopEstado = shop.getEstado();
-        clonada.shopCola = shop.getCola();
+        clonada.shop = (Shop) shop.clone();
 
        
 
@@ -616,12 +616,5 @@ public double obtenerTiempoTotalColasShop(){
         this.contShopAtendidos = contShopAtendidos;
     }
     
-    public String getShopEstado(){
-        return shopEstado;
-    }
-    
-    public int getShopCola(){
-        return shopCola;
-    }
 
 }

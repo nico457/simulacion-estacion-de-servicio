@@ -206,21 +206,21 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
         promedio_combustible.setEditable(false);
-        jPanel1.add(promedio_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 120, -1));
+        jPanel1.add(promedio_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 120, -1));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel24.setText("Porcentaje ocupación:");
-        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, -1, -1));
+        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, -1));
 
         ocupacion_combustible.setEditable(false);
-        jPanel1.add(ocupacion_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 120, -1));
+        jPanel1.add(ocupacion_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 120, -1));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel33.setText("Promedio en cola:");
-        jPanel1.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, -1, -1));
+        jPanel1.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, -1, -1));
 
         cola_combustible.setEditable(false);
-        jPanel1.add(cola_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, 120, -1));
+        jPanel1.add(cola_combustible, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 120, -1));
 
         tabbedPaneCustom1.addTab("Combustible", jPanel1);
 
@@ -245,24 +245,24 @@ public class Pantalla extends javax.swing.JFrame {
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel20.setText("Promedio espera: ");
-        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
         promedio_lavado.setEditable(false);
-        jPanel2.add(promedio_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 120, -1));
+        jPanel2.add(promedio_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 120, -1));
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel25.setText("Porcentaje ocupación:");
-        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, -1, -1));
+        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, -1));
 
         ocupacion_lavado.setEditable(false);
-        jPanel2.add(ocupacion_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 120, -1));
+        jPanel2.add(ocupacion_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 120, -1));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel34.setText("Promedio en cola:");
         jPanel2.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, -1, -1));
 
         cola_lavado.setEditable(false);
-        jPanel2.add(cola_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 120, -1));
+        jPanel2.add(cola_lavado, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 120, -1));
 
         tabbedPaneCustom1.addTab("Lavado", jPanel2);
 
@@ -284,28 +284,28 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel4.add(media_atencion_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-servicio-de-coche-64.png"))); // NOI18N
-        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, 60));
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 30, -1, 60));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel19.setText("Promedio espera: ");
-        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, -1, -1));
+        jPanel4.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, 20));
 
         promedio_mantenimiento.setEditable(false);
-        jPanel4.add(promedio_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 110, -1));
+        jPanel4.add(promedio_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 120, -1));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel26.setText("Porcentaje ocupación:");
-        jPanel4.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, -1, -1));
+        jPanel4.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, 20));
 
         ocupacion_mantenimiento.setEditable(false);
-        jPanel4.add(ocupacion_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, 110, -1));
+        jPanel4.add(ocupacion_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 120, -1));
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel35.setText("Promedio en cola:");
-        jPanel4.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, -1, -1));
+        jPanel4.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, -1, 20));
 
         cola_mantenimiento.setEditable(false);
-        jPanel4.add(cola_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 120, -1));
+        jPanel4.add(cola_mantenimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 120, -1));
 
         tabbedPaneCustom1.addTab("Mantenimiento", jPanel4);
 
@@ -327,28 +327,28 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel5.add(media_atencion_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-caja-registradora-50.png"))); // NOI18N
-        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, 60));
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, 60));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel21.setText("Promedio caja: ");
-        jPanel5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, -1, -1));
+        jPanel5.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, -1, -1));
 
         promedio_caja.setEditable(false);
-        jPanel5.add(promedio_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 120, -1));
+        jPanel5.add(promedio_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, 120, -1));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel27.setText("Porcentaje ocupación:");
-        jPanel5.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, -1, -1));
+        jPanel5.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
 
         ocupacion_caja.setEditable(false);
-        jPanel5.add(ocupacion_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 120, -1));
+        jPanel5.add(ocupacion_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 50, 120, -1));
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel36.setText("Promedio en cola:");
-        jPanel5.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, -1, -1));
+        jPanel5.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, -1, -1));
 
         cola_caja.setEditable(false);
-        jPanel5.add(cola_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 90, 120, -1));
+        jPanel5.add(cola_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, 120, -1));
 
         tabbedPaneCustom1.addTab("Caja", jPanel5);
 
@@ -369,28 +369,28 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel7.add(media_atencion_caja1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 110, -1));
 
         jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tp4/images/icons8-tienda-50.png"))); // NOI18N
-        jPanel7.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, 60));
+        jPanel7.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, 60));
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel31.setText("Promedio shop: ");
-        jPanel7.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, -1, -1));
+        jPanel7.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel32.setText("Porcentaje ocupación:");
         jPanel7.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, -1));
 
         promedio_shop.setEditable(false);
-        jPanel7.add(promedio_shop, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 110, -1));
+        jPanel7.add(promedio_shop, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, 120, -1));
 
         ocupacion_shop.setEditable(false);
-        jPanel7.add(ocupacion_shop, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, 110, -1));
+        jPanel7.add(ocupacion_shop, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 50, 120, -1));
 
         jLabel37.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel37.setText("Promedio en cola:");
-        jPanel7.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, -1, -1));
+        jPanel7.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, -1, -1));
 
         cola_shop.setEditable(false);
-        jPanel7.add(cola_shop, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, 120, -1));
+        jPanel7.add(cola_shop, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, 120, -1));
 
         tabbedPaneCustom1.addTab("Shop", jPanel7);
 

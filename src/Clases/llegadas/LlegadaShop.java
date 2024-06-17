@@ -3,7 +3,7 @@ package Clases.llegadas;
 
 import Clases.interfaces.Llegada;
 
-public class LlegadaShop implements Llegada{
+public class LlegadaShop implements Llegada,Cloneable{
     
     private double rnd;
     private double llegada;

@@ -5,13 +5,13 @@ import Clases.clientes.ClienteCaja;
 import Clases.clientes.ClienteShop;
 import java.util.ArrayList;
 
-public class Shop {
+public class Shop implements Cloneable {
     
     private String estado;
     private int cola;
     private ArrayList<ClienteShop> clientesShop;
 
-    public Shop() {
+    public Shop()   {
         estado = "libre";
         clientesShop = new ArrayList<>();
     }

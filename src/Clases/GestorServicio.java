@@ -480,10 +480,10 @@ public class GestorServicio implements ActionListener {
                 row[35] =simulacionesRango.get(i).getCaja(1).getEstado();
                 row[36] =simulacionesRango.get(i).getCaja(1).getCola();
                 
-                //row[37] =simulacionesRango.get(i).getShop().getEstado();
-                //row[38] =simulacionesRango.get(i).getShop().getCola();
-                row[37] =simulacionesRango.get(i).getShopEstado();
-                row[38] =simulacionesRango.get(i).getShopCola();
+                row[37] =simulacionesRango.get(i).getShop().getEstado();
+                row[38] =simulacionesRango.get(i).getShop().getCola();
+                //row[37] =simulacionesRango.get(i).getShopEstado();
+                //row[38] =simulacionesRango.get(i).getShopCola();
                 
                 row[39] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCombustible());
                 row[40] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaLavado());
