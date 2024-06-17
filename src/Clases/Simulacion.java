@@ -75,7 +75,7 @@ public class Simulacion implements Cloneable {
         this.llegadaCombustible = new LlegadaCombustible(mediaCombustible,relojActual);
         this.llegadaLavado = new LlegadaLavado(mediaLavado,relojActual);
         this.llegadaMantenimiento = new LlegadaMantenimiento(mediaMantenimiento,relojActual);
-        this.llegadaShop = new LlegadaShop(mediaShop,relojActual);
+        //this.llegadaShop = new LlegadaShop(mediaShop,relojActual);
         
         
         this.finAtencionCombustible = new ArrayList<>();
@@ -121,7 +121,7 @@ public class Simulacion implements Cloneable {
                 llegadaCombustible.getProxLlegada(),
                 llegadaLavado.getProxLlegada(),
                 llegadaMantenimiento.getProxLlegada(),
-                llegadaShop.getProxLlegada(),
+                (llegadaShop != null) ? llegadaShop.getProxLlegada(): -1,
                 (finAtencionCombustible.get(0) != null) ? finAtencionCombustible.get(0).getProxFin() : -1,
                 (finAtencionCombustible.get(1) != null) ? finAtencionCombustible.get(1).getProxFin() : -1,
                 (finAtencionCombustible.get(2) != null) ? finAtencionCombustible.get(2).getProxFin() : -1,
@@ -347,7 +347,10 @@ public Simulacion clone() {
         clonada.llegadaCombustible = (LlegadaCombustible) llegadaCombustible.clone();
         clonada.llegadaLavado = (LlegadaLavado) llegadaLavado.clone();
         clonada.llegadaMantenimiento = (LlegadaMantenimiento) llegadaMantenimiento.clone();
-        clonada.llegadaShop = (LlegadaShop) llegadaShop.clone();
+        if(llegadaShop != null){
+            clonada.llegadaShop = (LlegadaShop) llegadaShop.clone();
+
+        }
         // Clonación profunda de listas de fin de atencion
         clonada.finAtencionCombustible = new ArrayList<>();
         for (FinAtencionCombustible fin : finAtencionCombustible) {

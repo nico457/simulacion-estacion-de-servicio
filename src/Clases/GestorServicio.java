@@ -419,8 +419,8 @@ public class GestorServicio implements ActionListener {
                 row[2] = String.format("%.2f",simulacionesRango.get(i).getLlegadaLavado().getProxLlegada());
                 row[3] = String.format("%.2f",simulacionesRango.get(i).getLlegadaMantenimiento().getProxLlegada());
                 row[4] = String.format("%.2f",simulacionesRango.get(i).getLlegadaCaja().getProxLlegada());
-                row[5] = String.format("%.2f",simulacionesRango.get(i).getLlegadaShop().getProxLlegada());
-
+                row[5] =(simulacionesRango.get(i).getLlegadaShop() != null) ?
+                        String.format("%.2f",simulacionesRango.get(i).getLlegadaShop().getProxLlegada()): ' ';
                   
                
                 row[6] =(simulacionesRango.get(i).getFinAtencionCombustible().get(0) != null) ?
