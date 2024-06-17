@@ -135,7 +135,7 @@ public class GestorServicio implements ActionListener {
                 } else if (proximoEvento instanceof LlegadaCaja) {
                     //LLEGADA CAJA
                     llegadaCaja();
-
+                    determinarLlegadaShop(true);
                 }else{
                     llegadaShop();
                 }
@@ -480,8 +480,10 @@ public class GestorServicio implements ActionListener {
                 row[35] =simulacionesRango.get(i).getCaja(1).getEstado();
                 row[36] =simulacionesRango.get(i).getCaja(1).getCola();
                 
-                row[37] =simulacionesRango.get(i).getShop().getEstado();
-                row[38] =simulacionesRango.get(i).getShop().getCola();
+                //row[37] =simulacionesRango.get(i).getShop().getEstado();
+                //row[38] =simulacionesRango.get(i).getShop().getCola();
+                row[37] =simulacionesRango.get(i).getShopEstado();
+                row[38] =simulacionesRango.get(i).getShopCola();
                 
                 row[39] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCombustible());
                 row[40] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaLavado());
@@ -568,6 +570,10 @@ public class GestorServicio implements ActionListener {
                 break;
             }
         }
+        //Shop
+        if (filaAnterior.getShop().getEstado() == "ocupado"){
+            filaActual.actualizarOcupadoShop(reloj - filaAnterior.getRelojActual());
+        }
     }
     
     public void calcularPromediosEspera(){
@@ -583,7 +589,7 @@ public class GestorServicio implements ActionListener {
         this.tiempoOcupadoLavado = filaActual.getAcumOcupadoLavado()/reloj *100;
         this.tiempoOcupadoMantenimiento = filaActual.getAcumOcupadoMantenimiento()/reloj *100;
         this.tiempoOcupadoCaja = filaActual.getAcumOcupadoCaja()/reloj *100;
-        this.tiempoOcupadoShop = filaActual.getAcumEsperaShop()/reloj *100;
+        this.tiempoOcupadoShop = filaActual.getAcumOcupadoShop()/reloj *100;
     
     }
 

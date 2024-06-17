@@ -47,6 +47,8 @@ public class Simulacion implements Cloneable {
     private ArrayList<EstacionMantenimiento> estacionesMantenimiento;
     private ArrayList<EstacionLavado> estacionesLavado;
     private Shop shop;
+    private String shopEstado;
+    private int shopCola;
     
    // Contadores y Acumuladores Actividades
     private double acumEsperaCombustible;
@@ -65,6 +67,7 @@ public class Simulacion implements Cloneable {
     private double acumOcupadoLavado;
     private double acumOcupadoMantenimiento;
     private double acumOcupadoCaja;
+    private double acumOcupadoShop;
 
 
     public void inicializar(double mediaCaja,double mediaCombustible, double mediaLavado, double mediaMantenimiento, double mediaShop){
@@ -291,8 +294,6 @@ public class Simulacion implements Cloneable {
         this.estacionesLavado = estacionesLavado;
     }
 
-
-
     public double getRelojActual() {
         return relojActual;
     }
@@ -388,6 +389,11 @@ public Simulacion clone() {
             clonada.estacionesLavado.add((EstacionLavado) estacion.clone());
         }
 
+        shop.setCola();
+        //clonada.setShop((Shop) shop.clone()); // Nose porque tira error
+        clonada.shopEstado = shop.getEstado();
+        clonada.shopCola = shop.getCola();
+
        
 
         return clonada;
@@ -451,7 +457,7 @@ public double obtenerTiempoTotalColasShop(){
         return tiempoCola;
 }
      
-
+    // Actualizar Acumuladores Esperas
     public void actualizarEsperaCombustible(double tiempo) {
         acumEsperaCombustible += tiempo;
     }
@@ -459,7 +465,8 @@ public double obtenerTiempoTotalColasShop(){
     public void actualizarEsperaLavado(double tiempo) {
         acumEsperaLavado += tiempo;
     }
-     public void actualizarEsperaShop(double tiempo) {
+
+    public void actualizarEsperaShop(double tiempo) {
         acumEsperaShop += tiempo;
     }
 
@@ -471,6 +478,7 @@ public double obtenerTiempoTotalColasShop(){
         acumEsperaCaja += tiempo;
     }
 
+    // Actualizar contadores clientes atendidos
     public void actualizarAtendidosCombustible() {
         contCombustibleAtendidos++;
     }
@@ -478,6 +486,7 @@ public double obtenerTiempoTotalColasShop(){
     public void actualizarAtendidosLavado() {
         contLavadoAtendidos++;
     }
+
     public void actualizarAtendidosShop() {
         contShopAtendidos++;
     }
@@ -490,7 +499,7 @@ public double obtenerTiempoTotalColasShop(){
         contCajaAtendidos++;
     }
 
-
+    // Gets acumuladores espera
     public double getAcumEsperaCombustible(){
         return acumEsperaCombustible;
     }
@@ -506,7 +515,12 @@ public double obtenerTiempoTotalColasShop(){
     public double getAcumEsperaCaja(){
         return acumEsperaCaja;
     }
+    
+    public double getAcumEsperaShop() {
+        return acumEsperaShop;
+    }
 
+    // Gets contadores clientes atendidos
     public int getAtendidosCombustible(){
         return contCombustibleAtendidos;
     }
@@ -523,6 +537,11 @@ public double obtenerTiempoTotalColasShop(){
         return contCajaAtendidos;
     }
 
+    public int getContShopAtendidos() {
+        return contShopAtendidos;
+    }
+
+    // Actualizar tiempos ocupados
     public void actualizarOcupadoCombustible(double tiempo) {
         acumOcupadoCombustible += tiempo;
     }
@@ -539,6 +558,11 @@ public double obtenerTiempoTotalColasShop(){
         acumOcupadoCaja += tiempo;
     }
 
+    public void actualizarOcupadoShop(double tiempo){
+        acumOcupadoShop += tiempo;
+    }
+
+    // Gets tiempos ocupados
     public double getAcumOcupadoCombustible(){
         return acumOcupadoCombustible;
     }
@@ -555,6 +579,11 @@ public double obtenerTiempoTotalColasShop(){
         return acumOcupadoCaja;
     }
 
+    public double getAcumOcupadoShop(){
+        return acumOcupadoShop;
+    }
+
+    // Eventos shop
     public LlegadaShop getLlegadaShop() {
         return llegadaShop;
     }
@@ -579,24 +608,20 @@ public double obtenerTiempoTotalColasShop(){
         this.shop = shop;
     }
 
-    public double getAcumEsperaShop() {
-        return acumEsperaShop;
-    }
-
     public void setAcumEsperaShop(double acumEsperaShop) {
         this.acumEsperaShop = acumEsperaShop;
-    }
-
-    public int getContShopAtendidos() {
-        return contShopAtendidos;
     }
 
     public void setContShopAtendidos(int contShopAtendidos) {
         this.contShopAtendidos = contShopAtendidos;
     }
     
+    public String getShopEstado(){
+        return shopEstado;
+    }
     
-    
-    
+    public int getShopCola(){
+        return shopCola;
+    }
 
 }
