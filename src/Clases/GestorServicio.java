@@ -543,6 +543,32 @@ public class GestorServicio implements ActionListener {
         this.simulacionesRango = new ArrayList<>();
         this.filaActual = new Simulacion();
         this.filaAnterior = new Simulacion();
+        promEsperaCombustible = 0;
+        promEsperaLavado = 0;
+        promEsperaMantenimiento = 0;
+        promEsperaCaja = 0;
+        promEsperaShop = 0;
+    
+    
+    // Acumuladores clientes atendidos
+   tiempoOcupadoCombustible = 0;
+   tiempoOcupadoLavado = 0;
+   tiempoOcupadoMantenimiento = 0;
+   tiempoOcupadoCaja = 0;
+   tiempoOcupadoShop = 0;
+    
+    // Promedios de cantidad de cola de cada servicio
+   promCantidadColaCombustible = 0;
+   promCantidadColaLavado = 0;
+   promCantidadColaMantenimiento = 0;
+   promCantidadColaCaja = 0;
+   promCantidadColaShop = 0;
+    
+    // Tiempo minimo atencion
+   tiempoMinimoAtencion = 0;
+   nombreServicioMinimo = " ";
+    
+   shopOcupado=false;
         
     }
 
