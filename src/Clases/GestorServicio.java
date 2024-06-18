@@ -322,14 +322,10 @@ public class GestorServicio implements ActionListener {
     public void llegadaShop(){
         if(!shopOcupado){
             filaActual.setLlegadaShop(new LlegadaShop(Double.valueOf(views.media_llegada_shop.getText()),reloj));
-        }
-        
-        Shop shop =  filaAnterior.getShop();
-        if (shop.esLibre()) {
-            shop.setEstado("ocupado");
             filaActual.setFinAtencionShop(new FinAtencionShop(Double.valueOf(views.media_atencion_shop.getText()),reloj));
             filaActual.getShop().agregarCliente(new ClienteShop("SA", filaActual.getRelojActual()));
-            } else{                    
+        }
+        else{                    
                 filaActual.getShop().agregarCliente(new ClienteShop("EA",filaActual.getRelojActual()));
             }
     }
