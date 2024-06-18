@@ -321,6 +321,7 @@ public class GestorServicio implements ActionListener {
 }
     public void llegadaShop(){
         if(!shopOcupado){
+            filaActual.getShop().setEstado("ocupado");
             filaActual.setLlegadaShop(new LlegadaShop(Double.valueOf(views.media_llegada_shop.getText()),reloj));
             filaActual.setFinAtencionShop(new FinAtencionShop(Double.valueOf(views.media_atencion_shop.getText()),reloj));
             filaActual.getShop().agregarCliente(new ClienteShop("SA", filaActual.getRelojActual()));
@@ -620,6 +621,7 @@ public class GestorServicio implements ActionListener {
         this.tiempoOcupadoLavado = filaActual.getAcumOcupadoLavado()/reloj *100;
         this.tiempoOcupadoMantenimiento = filaActual.getAcumOcupadoMantenimiento()/reloj *100;
         this.tiempoOcupadoCaja = filaActual.getAcumOcupadoCaja()/reloj *100;
+        
         this.tiempoOcupadoShop = filaActual.getAcumOcupadoShop()/reloj *100;
     
     }
