@@ -10,16 +10,8 @@ import Clases.clientes.ClienteCombustible;
 import Clases.clientes.ClienteLavado;
 import Clases.clientes.ClienteMantenimiento;
 import Clases.clientes.ClienteShop;
-import Clases.finAtencion.FinAtencionCaja;
-import Clases.finAtencion.FinAtencionCombustible;
-import Clases.finAtencion.FinAtencionLavado;
-import Clases.finAtencion.FinAtencionMantenimiento;
-import Clases.finAtencion.FinAtencionShop;
-import Clases.llegadas.LlegadaCaja;
-import Clases.llegadas.LlegadaCombustible;
-import Clases.llegadas.LlegadaLavado;
-import Clases.llegadas.LlegadaMantenimiento;
-import Clases.llegadas.LlegadaShop;
+import Clases.finAtencion.*;
+import Clases.llegadas.*;
 
 
 import java.util.ArrayList;
@@ -33,13 +25,16 @@ public class Simulacion implements Cloneable {
     private LlegadaLavado llegadaLavado;
     private LlegadaMantenimiento llegadaMantenimiento;
     private LlegadaShop llegadaShop;
+    private LlegadaCorteDeLuz llegadaCorteDeLuz;
 
     // Fin de atencion
     private ArrayList<FinAtencionCombustible> finAtencionCombustible;
     private ArrayList<FinAtencionLavado> finAtencionLavado;
     private ArrayList<FinAtencionMantenimiento> finAtencionMantenimiento;
     private ArrayList<FinAtencionCaja> finAtencionCaja;
-    private FinAtencionShop finAtencionShop; 
+    private FinAtencionShop finAtencionShop;
+
+    private FinCorteLuz finCorteLuz;
 
     //Objetos permanentes
     private ArrayList<Caja> cajas;
@@ -75,7 +70,7 @@ public class Simulacion implements Cloneable {
         this.llegadaCombustible = new LlegadaCombustible(mediaCombustible,relojActual);
         this.llegadaLavado = new LlegadaLavado(mediaLavado,relojActual);
         this.llegadaMantenimiento = new LlegadaMantenimiento(mediaMantenimiento,relojActual);
-        
+        this.llegadaCorteDeLuz = new LlegadaCorteDeLuz(relojActual);
         
         this.finAtencionCombustible = new ArrayList<>();
         this.finAtencionCombustible.add(null);
@@ -91,9 +86,8 @@ public class Simulacion implements Cloneable {
         this.finAtencionCaja = new ArrayList<>();
         this.finAtencionCaja.add(null);
         this.finAtencionCaja.add(null);
-        
-     
-        
+        this.finCorteLuz = new FinCorteLuz(relojActual);
+
         this.cajas = new ArrayList<>(2);
         this.cajas.add(new Caja(0));
         this.cajas.add(new Caja(1));
@@ -120,6 +114,7 @@ public class Simulacion implements Cloneable {
                 llegadaCombustible.getProxLlegada(),
                 llegadaLavado.getProxLlegada(),
                 llegadaMantenimiento.getProxLlegada(),
+                llegadaCorteDeLuz.getProxLlegada(),
                 (llegadaShop != null) ? llegadaShop.getProxLlegada(): -1,
                 (finAtencionCombustible.get(0) != null) ? finAtencionCombustible.get(0).getProxFin() : -1,
                 (finAtencionCombustible.get(1) != null) ? finAtencionCombustible.get(1).getProxFin() : -1,
@@ -131,7 +126,9 @@ public class Simulacion implements Cloneable {
                 (finAtencionMantenimiento.get(1) != null) ? finAtencionMantenimiento.get(1).getProxFin() : -1,
                 (finAtencionCaja.get(0) != null) ? finAtencionCaja.get(0).getProxFin() : -1,
                 (finAtencionCaja.get(1) != null) ? finAtencionCaja.get(1).getProxFin() : -1,
-                (finAtencionShop != null) ? finAtencionShop.getProxFin() : -1);
+                (finAtencionShop != null) ? finAtencionShop.getProxFin() : -1,
+                (finCorteLuz != null) ? finCorteLuz.getEnfriamientoTermica() : -1);
+
                 
         if (min == llegadaCaja.getProxLlegada()) {
             return llegadaCaja;
@@ -144,6 +141,9 @@ public class Simulacion implements Cloneable {
         }
         if (min == llegadaMantenimiento.getProxLlegada()) {
             return llegadaMantenimiento;
+        }
+        if (min == llegadaCorteDeLuz.getProxLlegada()) {
+            return llegadaCorteDeLuz;
         }
         if (finAtencionCombustible.get(0) != null && min == finAtencionCombustible.get(0).getProxFin()) {
             return finAtencionCombustible.get(0);
@@ -181,12 +181,12 @@ public class Simulacion implements Cloneable {
          if (finAtencionShop != null && min == finAtencionShop.getProxFin()) {
             return finAtencionShop;
          }
-        
-        
+         if(finCorteLuz != null && min == finCorteLuz.getEnfriamientoTermica()){
+             return finCorteLuz;
+         }
         return null;
-
-
     }
+
     public double findMin(double... numbers) {
         double min = Double.MAX_VALUE;
         for (double number : numbers) {
@@ -346,6 +346,7 @@ public Simulacion clone() {
         clonada.llegadaCombustible = (LlegadaCombustible) llegadaCombustible.clone();
         clonada.llegadaLavado = (LlegadaLavado) llegadaLavado.clone();
         clonada.llegadaMantenimiento = (LlegadaMantenimiento) llegadaMantenimiento.clone();
+        clonada.llegadaCorteDeLuz = (LlegadaCorteDeLuz) llegadaCorteDeLuz.clone();
         if(llegadaShop != null){
             clonada.llegadaShop = (LlegadaShop) llegadaShop.clone();
 
@@ -369,6 +370,9 @@ public Simulacion clone() {
         }
         if(finAtencionShop != null){
             clonada.finAtencionShop = (FinAtencionShop) finAtencionShop.clone();
+        }
+        if(finCorteLuz != null){
+            clonada.finCorteLuz = (FinCorteLuz) finCorteLuz.clone();
         }
         // Clonación profunda de listas de objetos permanentes
         clonada.cajas = new ArrayList<>();
@@ -617,6 +621,16 @@ public double obtenerTiempoTotalColasShop(){
     public void setContShopAtendidos(int contShopAtendidos) {
         this.contShopAtendidos = contShopAtendidos;
     }
-    
 
+    public LlegadaCorteDeLuz getLlegadaCorteDeLuz() {
+        return llegadaCorteDeLuz;
+    }
+
+    public void setFinCorteLuz(FinCorteLuz finCorteLuz) {
+        this.finCorteLuz = finCorteLuz;
+    }
+
+    public void setLlegadaCorteDeLuz(LlegadaCorteDeLuz llegadaCorteDeLuz) {
+        this.llegadaCorteDeLuz = llegadaCorteDeLuz;
+    }
 }

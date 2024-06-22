@@ -7,7 +7,6 @@ import java.awt.Color;
 
 public class Pantalla extends javax.swing.JFrame {
 
-
     public Pantalla() {
         initComponents();
         setSize(1010,700);

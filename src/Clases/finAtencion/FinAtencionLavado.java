@@ -17,6 +17,10 @@ public class FinAtencionLavado implements FinAtencion, Cloneable {
         this.subindice = subindice;
         this.proxFin = reloj + constante;
     }
+    public FinAtencionLavado(int subindice,double reloj, double tr){
+        this.subindice = subindice;
+        this.proxFin = reloj + tr;
+    }
 
 
     public double getConstante() {

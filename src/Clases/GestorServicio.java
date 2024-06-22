@@ -10,11 +10,7 @@ import Clases.clientes.ClienteCombustible;
 import Clases.clientes.ClienteLavado;
 import Clases.clientes.ClienteMantenimiento;
 import Clases.clientes.ClienteShop;
-import Clases.finAtencion.FinAtencionCaja;
-import Clases.finAtencion.FinAtencionCombustible;
-import Clases.finAtencion.FinAtencionLavado;
-import Clases.finAtencion.FinAtencionMantenimiento;
-import Clases.finAtencion.FinAtencionShop;
+import Clases.finAtencion.*;
 import Clases.interfaces.FinAtencion;
 import Clases.interfaces.Llegada;
 import Clases.llegadas.LlegadaCaja;
@@ -67,6 +63,8 @@ public class GestorServicio implements ActionListener {
     private String nombreServicioMinimo;
     
     private boolean shopOcupado;
+
+    private double tiempoRestante;
 
 
     public GestorServicio(Pantalla views) {
@@ -139,11 +137,13 @@ public class GestorServicio implements ActionListener {
                     //LLEGADA CAJA
                     llegadaCaja();
                     determinarLlegadaShop(true);
-                }else{
+                } else if (proximoEvento instanceof LlegadaShop){
                     llegadaShop();
+                } else{
+                    llegadaCorte();
                 }
 
-            } else {
+            } else if (proximoEvento instanceof FinAtencion){
                 // FIN ATENCION
                 filaActual.setRelojActual(((FinAtencion) proximoEvento).getProxFin());
                 reloj = filaActual.getRelojActual();
@@ -165,11 +165,14 @@ public class GestorServicio implements ActionListener {
                     FinAtencionCaja objetoFin = (FinAtencionCaja) proximoEvento;
                     calcularFinAtencionCaja(objetoFin);
                     determinarLlegadaShop(false);
-                }else{
+                } else {
                     FinAtencionShop objetoFin = (FinAtencionShop) proximoEvento;
                     calcularFinAtencionShop(objetoFin);
                 }
-
+            } else {
+                filaActual.setRelojActual(((FinCorteLuz) proximoEvento).getEnfriamientoTermica());
+                reloj = filaActual.getRelojActual();
+                calcularFinCorteLuz();
             }
 
             // Calcular tiempo ocupado
@@ -188,8 +191,25 @@ public class GestorServicio implements ActionListener {
         }
         return simulacionesRango;
     }
-    
-    
+
+    private void llegadaCorte() {
+        filaActual.getEstacionesLavado().get(0).setEstado("Suspendido");
+        if(filaActual.getEstacionesLavado().get(0).getCliente() != null){
+            filaActual.getEstacionesLavado().get(0).getCliente().setEstado("Suspendido");
+        }
+        tiempoRestante = filaActual.getFinAtencionLavado().get(0).getProxFin() - reloj;
+        filaActual.getFinAtencionLavado().set(0,null);
+        filaActual.setLlegadaCorteDeLuz(null);
+    }
+
+    private void calcularFinCorteLuz() {
+        filaActual.getEstacionesLavado().get(0).setEstado("ocupado");
+        filaActual.getFinAtencionLavado().set(0,new FinAtencionLavado(0, reloj, tiempoRestante));
+        if(filaActual.getEstacionesLavado().get(0).getCliente() != null) {
+            filaActual.getEstacionesLavado().get(0).getCliente().setEstado("SA");
+        }
+        filaActual.setFinCorteLuz(new FinCorteLuz(reloj));
+    }
 
     public void llegadaCombustible(){
         boolean algunoLibre = false;
