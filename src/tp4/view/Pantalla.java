@@ -7,6 +7,7 @@ import java.awt.Color;
 
 public class Pantalla extends javax.swing.JFrame {
 
+
     public Pantalla() {
         initComponents();
         setSize(1010,700);
@@ -126,14 +127,14 @@ public class Pantalla extends javax.swing.JFrame {
 
             },
             new String [] {
-                "reloj", "Ll. Combustible ", "Ll. Lavado", "Ll. Mantenimiento", "Ll. Caja", "Ll. Shop", "At. Combustible 1", "At. Combustible 2", "At. Combustible 3", "At. Combustible 4", "At. lavado 1", "At. lavado 2", "At. Mantenimiento 1", "At. Mantenimiento 2", "At. caja 1", "At. caja 2", "At. Shop", "S1 Estado", "S1 Cola", "S2 Estado", "S2 Cola", "S3 Estado", "S3 Cola", "S4 Estado", "S4 Cola", "L1 Estado", "L1 Cola", "L2 Estado", "L2 Cola", "M1 Estado", "M1 Cola", "M2 Estado", "M2 Cola", "C1 Estado", "C1 Cola", "C2 Estado", "C2 Cola", "Shop estado", "Shop cola", "Esp Combustible", "Esp Lavado", "Esp Mantenimiento", "Esp Caja", "Esp shop", "Cont Combustible", "Cont lavado", "Cont mantenimiento", "Cont caja", "Cont shop"
+                "reloj", "Ll. Combustible ", "Ll. Lavado", "Ll. Mantenimiento", "Ll. Caja", "Ll. Shop", "Ll. corte", "At. Combustible 1", "At. Combustible 2", "At. Combustible 3", "At. Combustible 4", "At. lavado 1", "At. lavado 2", "At. Mantenimiento 1", "At. Mantenimiento 2", "At. caja 1", "At. caja 2", "At. Shop", "Fin corte", "S1 Estado", "S1 Cola", "S2 Estado", "S2 Cola", "S3 Estado", "S3 Cola", "S4 Estado", "S4 Cola", "L1 Estado", "L1 Cola", "L2 Estado", "L2 Cola", "M1 Estado", "M1 Cola", "M2 Estado", "M2 Cola", "C1 Estado", "C1 Cola", "C2 Estado", "C2 Cola", "Shop estado", "Shop cola", "Esp Combustible", "Esp Lavado", "Esp Mantenimiento", "Esp Caja", "Esp shop", "Cont Combustible", "Cont lavado", "Cont mantenimiento", "Cont caja", "Cont shop"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -153,7 +154,6 @@ public class Pantalla extends javax.swing.JFrame {
             tabla_servicios.getColumnModel().getColumn(2).setPreferredWidth(120);
             tabla_servicios.getColumnModel().getColumn(3).setPreferredWidth(120);
             tabla_servicios.getColumnModel().getColumn(4).setPreferredWidth(120);
-            tabla_servicios.getColumnModel().getColumn(6).setPreferredWidth(120);
             tabla_servicios.getColumnModel().getColumn(7).setPreferredWidth(120);
             tabla_servicios.getColumnModel().getColumn(8).setPreferredWidth(120);
             tabla_servicios.getColumnModel().getColumn(9).setPreferredWidth(120);
@@ -163,6 +163,7 @@ public class Pantalla extends javax.swing.JFrame {
             tabla_servicios.getColumnModel().getColumn(13).setPreferredWidth(120);
             tabla_servicios.getColumnModel().getColumn(14).setPreferredWidth(120);
             tabla_servicios.getColumnModel().getColumn(15).setPreferredWidth(120);
+            tabla_servicios.getColumnModel().getColumn(16).setPreferredWidth(120);
         }
 
         jPanel3.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 950, 280));

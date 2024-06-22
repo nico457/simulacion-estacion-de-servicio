@@ -437,7 +437,7 @@ public class GestorServicio implements ActionListener {
      
             for (int i = 0; i < simulacionesRango.size(); i++) {
                
-                Object[] row = new Object[49];
+                Object[] row = new Object[51];
                 row[0] = String.format("%.2f",simulacionesRango.get(i).getRelojActual());
                 row[1] = String.format("%.2f",simulacionesRango.get(i).getLlegadaCombustible().getProxLlegada());
                 row[2] = String.format("%.2f",simulacionesRango.get(i).getLlegadaLavado().getProxLlegada());
@@ -445,82 +445,80 @@ public class GestorServicio implements ActionListener {
                 row[4] = String.format("%.2f",simulacionesRango.get(i).getLlegadaCaja().getProxLlegada());
                 row[5] =(simulacionesRango.get(i).getLlegadaShop() != null) ?
                         String.format("%.2f",simulacionesRango.get(i).getLlegadaShop().getProxLlegada()): ' ';
-                  
+                row[6] =(simulacionesRango.get(i).getLlegadaCorteDeLuz() != null) ?
+                        String.format("%.2f",simulacionesRango.get(i).getLlegadaCorteDeLuz().getProxLlegada()): ' ';
                
-                row[6] =(simulacionesRango.get(i).getFinAtencionCombustible().get(0) != null) ?
+                row[7] =(simulacionesRango.get(i).getFinAtencionCombustible().get(0) != null) ?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCombustible().get(0).getProxFin()): ' ';
                 
-                row[7] = (simulacionesRango.get(i).getFinAtencionCombustible().get(1) != null)?
+                row[8] = (simulacionesRango.get(i).getFinAtencionCombustible().get(1) != null)?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCombustible().get(1).getProxFin()): ' ';
                 
-                row[8] = (simulacionesRango.get(i).getFinAtencionCombustible().get(2) != null)?
+                row[9] = (simulacionesRango.get(i).getFinAtencionCombustible().get(2) != null)?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCombustible().get(2).getProxFin()):' ';
                 
-                row[9] = ((simulacionesRango.get(i).getFinAtencionCombustible().get(3) != null))?
+                row[10] = ((simulacionesRango.get(i).getFinAtencionCombustible().get(3) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCombustible().get(3).getProxFin()):' ';
                 
-                row[10] = ((simulacionesRango.get(i).getFinAtencionLavado().get(0) != null))?
+                row[11] = ((simulacionesRango.get(i).getFinAtencionLavado().get(0) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionLavado().get(0).getProxFin()):' ';        
                 
-                row[11] = ((simulacionesRango.get(i).getFinAtencionLavado().get(1) != null))?
+                row[12] = ((simulacionesRango.get(i).getFinAtencionLavado().get(1) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionLavado().get(1).getProxFin()):' '; 
                 
-                row[12] = ((simulacionesRango.get(i).getFinAtencionMantenimiento().get(0) != null))? 
+                row[13] = ((simulacionesRango.get(i).getFinAtencionMantenimiento().get(0) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionMantenimiento().get(0).getProxFin()):' '; 
                 
-                row[13] =  ((simulacionesRango.get(i).getFinAtencionMantenimiento().get(1) != null))? 
+                row[14] =  ((simulacionesRango.get(i).getFinAtencionMantenimiento().get(1) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionMantenimiento().get(1).getProxFin()):' '; 
                 
-                row[14] = ((simulacionesRango.get(i).getFinAtencionCaja().get(0) != null))?  
+                row[15] = ((simulacionesRango.get(i).getFinAtencionCaja().get(0) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCaja().get(0).getProxFin()):' '; 
                 
-                row[15] = ((simulacionesRango.get(i).getFinAtencionCaja().get(1) != null))?  
+                row[16] = ((simulacionesRango.get(i).getFinAtencionCaja().get(1) != null))?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionCaja().get(1).getProxFin()):' '; 
                
-                row[16] =(simulacionesRango.get(i).getFinAtencionShop() != null) ?
+                row[17] =(simulacionesRango.get(i).getFinAtencionShop() != null) ?
                         String.format("%.2f",simulacionesRango.get(i).getFinAtencionShop().getProxFin()): ' ';
+                row[18] =(simulacionesRango.get(i).getFinCorteLuz() != null) ?
+                        String.format("%.2f",simulacionesRango.get(i).getFinCorteLuz().getEnfriamientoTermica()): ' ';
+                row[19] = simulacionesRango.get(i).getSurtidor(0).getEstado();
+                row[20] = simulacionesRango.get(i).getSurtidor(0).getCola();
+                row[21] = simulacionesRango.get(i).getSurtidor(1).getEstado();
+                row[22] = simulacionesRango.get(i).getSurtidor(1).getCola();
+                row[23] = simulacionesRango.get(i).getSurtidor(2).getEstado();
+                row[24] = simulacionesRango.get(i).getSurtidor(2).getCola();
+                row[25] = simulacionesRango.get(i).getSurtidor(3).getEstado();
+                row[26] = simulacionesRango.get(i).getSurtidor(3).getCola();
+                row[27] =simulacionesRango.get(i).getEstacionLavado(0).getEstado();
+                row[28] =simulacionesRango.get(i).getEstacionLavado(0).getCola();
+                row[29] =simulacionesRango.get(i).getEstacionLavado(1).getEstado();
+                row[30] =simulacionesRango.get(i).getEstacionLavado(1).getCola();
                 
-                row[17] = simulacionesRango.get(i).getSurtidor(0).getEstado();
-                row[18] = simulacionesRango.get(i).getSurtidor(0).getCola();
-                row[19] = simulacionesRango.get(i).getSurtidor(1).getEstado();
-                row[20] = simulacionesRango.get(i).getSurtidor(1).getCola();
-                row[21] = simulacionesRango.get(i).getSurtidor(2).getEstado();
-                row[22] = simulacionesRango.get(i).getSurtidor(2).getCola();
-                row[23] = simulacionesRango.get(i).getSurtidor(3).getEstado();
-                row[24] = simulacionesRango.get(i).getSurtidor(3).getCola();
+                row[31] =simulacionesRango.get(i).getEstacionMantenimiento(0).getEstado();
+                row[32] =simulacionesRango.get(i).getEstacionMantenimiento(0).getCola();
+                row[33] =simulacionesRango.get(i).getEstacionMantenimiento(1).getEstado();
+                row[34] =simulacionesRango.get(i).getEstacionMantenimiento(1).getCola();
                 
-                row[25] =simulacionesRango.get(i).getEstacionLavado(0).getEstado();
-                row[26] =simulacionesRango.get(i).getEstacionLavado(0).getCola();
-                row[27] =simulacionesRango.get(i).getEstacionLavado(1).getEstado();
-                row[28] =simulacionesRango.get(i).getEstacionLavado(1).getCola();
+                row[35] =simulacionesRango.get(i).getCaja(0).getEstado();
+                row[36] =simulacionesRango.get(i).getCaja(0).getCola();
+                row[37] =simulacionesRango.get(i).getCaja(1).getEstado();
+                row[38] =simulacionesRango.get(i).getCaja(1).getCola();
                 
-                row[29] =simulacionesRango.get(i).getEstacionMantenimiento(0).getEstado();
-                row[30] =simulacionesRango.get(i).getEstacionMantenimiento(0).getCola();
-                row[31] =simulacionesRango.get(i).getEstacionMantenimiento(1).getEstado();
-                row[32] =simulacionesRango.get(i).getEstacionMantenimiento(1).getCola();
-                
-                row[33] =simulacionesRango.get(i).getCaja(0).getEstado();
-                row[34] =simulacionesRango.get(i).getCaja(0).getCola();
-                row[35] =simulacionesRango.get(i).getCaja(1).getEstado();
-                row[36] =simulacionesRango.get(i).getCaja(1).getCola();
-                
-                row[37] =simulacionesRango.get(i).getShop().getEstado();
-                row[38] =simulacionesRango.get(i).getShop().getCola();
-                //row[37] =simulacionesRango.get(i).getShopEstado();
-                //row[38] =simulacionesRango.get(i).getShopCola();
-                
-                row[39] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCombustible());
-                row[40] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaLavado());
-                row[41] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaMantenimiento());
-                row[42] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCaja());
-                row[43] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaShop());
+                row[39] =simulacionesRango.get(i).getShop().getEstado();
+                row[40] =simulacionesRango.get(i).getShop().getCola();
+                row[41] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCombustible());
+                row[42] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaLavado());
+                row[43] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaMantenimiento());
+                row[44] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaCaja());
+                row[45] =String.format("%.2f",simulacionesRango.get(i).getAcumEsperaShop());
                 
                 
-                row[44] =simulacionesRango.get(i).getAtendidosCombustible();
-                row[45] =simulacionesRango.get(i).getAtendidosLavado();
-                row[46] =simulacionesRango.get(i).getAtendidosMantenimiento();
-                row[47] =simulacionesRango.get(i).getAtendidosCaja();
-                row[48] =simulacionesRango.get(i).getContShopAtendidos();
+                row[46] =simulacionesRango.get(i).getAtendidosCombustible();
+                row[47] =simulacionesRango.get(i).getAtendidosLavado();
+                row[48] =simulacionesRango.get(i).getAtendidosMantenimiento();
+                row[49] =simulacionesRango.get(i).getAtendidosCaja();
+                row[50] =simulacionesRango.get(i).getContShopAtendidos();
           
                 model.addRow(row);
                 
