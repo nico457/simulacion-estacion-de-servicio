@@ -193,9 +193,9 @@ public class GestorServicio implements ActionListener {
         filaActual.getEstacionesLavado().get(0).setEstado("Suspendido");
         if(filaActual.getEstacionesLavado().get(0).getCliente() != null){
             filaActual.getEstacionesLavado().get(0).getCliente().setEstado("Suspendido");
+            tiempoRestante = filaActual.getFinAtencionLavado().get(0).getProxFin() - reloj;
         }
         filaActual.setFinCorteLuz(new FinCorteLuz(reloj));
-        tiempoRestante = filaActual.getFinAtencionLavado().get(0).getProxFin() - reloj;
         filaActual.getFinAtencionLavado().set(0,null);
 
     }
@@ -565,6 +565,7 @@ public class GestorServicio implements ActionListener {
         promEsperaMantenimiento = 0;
         promEsperaCaja = 0;
         promEsperaShop = 0;
+        tiempoRestante = 0;
     
     
     // Acumuladores clientes atendidos

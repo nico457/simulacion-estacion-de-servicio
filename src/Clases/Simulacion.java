@@ -86,7 +86,6 @@ public class Simulacion implements Cloneable {
         this.finAtencionCaja = new ArrayList<>();
         this.finAtencionCaja.add(null);
         this.finAtencionCaja.add(null);
-        this.finCorteLuz = new FinCorteLuz(relojActual);
 
 
         this.cajas = new ArrayList<>(2);
