@@ -13,11 +13,8 @@ import Clases.clientes.ClienteShop;
 import Clases.finAtencion.*;
 import Clases.interfaces.FinAtencion;
 import Clases.interfaces.Llegada;
-import Clases.llegadas.LlegadaCaja;
-import Clases.llegadas.LlegadaCombustible;
-import Clases.llegadas.LlegadaLavado;
-import Clases.llegadas.LlegadaMantenimiento;
-import Clases.llegadas.LlegadaShop;
+import Clases.llegadas.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -197,9 +194,10 @@ public class GestorServicio implements ActionListener {
         if(filaActual.getEstacionesLavado().get(0).getCliente() != null){
             filaActual.getEstacionesLavado().get(0).getCliente().setEstado("Suspendido");
         }
+        filaActual.setFinCorteLuz(new FinCorteLuz(reloj));
         tiempoRestante = filaActual.getFinAtencionLavado().get(0).getProxFin() - reloj;
         filaActual.getFinAtencionLavado().set(0,null);
-        filaActual.setLlegadaCorteDeLuz(null);
+
     }
 
     private void calcularFinCorteLuz() {
@@ -208,7 +206,7 @@ public class GestorServicio implements ActionListener {
         if(filaActual.getEstacionesLavado().get(0).getCliente() != null) {
             filaActual.getEstacionesLavado().get(0).getCliente().setEstado("SA");
         }
-        filaActual.setFinCorteLuz(new FinCorteLuz(reloj));
+        filaActual.setLlegadaCorteDeLuz(new LlegadaCorteDeLuz(reloj));
     }
 
     public void llegadaCombustible(){

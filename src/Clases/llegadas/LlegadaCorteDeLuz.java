@@ -10,7 +10,7 @@ public class LlegadaCorteDeLuz implements Llegada,Cloneable {
 
     @Override
     public double getProxLlegada() {
-        return 0;
+        return proxLlegada;
     }
     public LlegadaCorteDeLuz(double reloj) {
         this.rnd = Math.random();
@@ -18,7 +18,7 @@ public class LlegadaCorteDeLuz implements Llegada,Cloneable {
         this.proxLlegada = reloj + llegada;
     }
     public int calcularLlegada(double random){
-        int t = 3;
+        int t = 2;
 
         if(random < 0.20){
             return 4 * t;

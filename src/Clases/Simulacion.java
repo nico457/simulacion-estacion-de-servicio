@@ -88,6 +88,7 @@ public class Simulacion implements Cloneable {
         this.finAtencionCaja.add(null);
         this.finCorteLuz = new FinCorteLuz(relojActual);
 
+
         this.cajas = new ArrayList<>(2);
         this.cajas.add(new Caja(0));
         this.cajas.add(new Caja(1));
@@ -632,5 +633,9 @@ public double obtenerTiempoTotalColasShop(){
 
     public void setLlegadaCorteDeLuz(LlegadaCorteDeLuz llegadaCorteDeLuz) {
         this.llegadaCorteDeLuz = llegadaCorteDeLuz;
+    }
+
+    public FinCorteLuz getFinCorteLuz() {
+        return finCorteLuz;
     }
 }

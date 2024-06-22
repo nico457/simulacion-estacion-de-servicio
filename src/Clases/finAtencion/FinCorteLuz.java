@@ -21,6 +21,7 @@ public class FinCorteLuz implements Cloneable{
             double k4 = 0.025 * (t +h)  - 0.5 * (c + h * k3) - 12.85;
             c = c + h/6 * (k1 + 2*k2 + 2*k3 + k4);
         }
+
         return (t*0.5) + c0;
     }
 
