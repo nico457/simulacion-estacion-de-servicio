@@ -85,13 +85,14 @@
             <Component class="javax.swing.JTable" name="tabla_servicios">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="49" rowCount="0">
+                  <Table columnCount="51" rowCount="0">
                     <Column editable="false" title="reloj" type="java.lang.String"/>
                     <Column editable="false" title="Ll. Combustible " type="java.lang.Object"/>
                     <Column editable="false" title="Ll. Lavado" type="java.lang.Object"/>
                     <Column editable="false" title="Ll. Mantenimiento" type="java.lang.Object"/>
                     <Column editable="false" title="Ll. Caja" type="java.lang.Object"/>
                     <Column editable="false" title="Ll. Shop" type="java.lang.Object"/>
+                    <Column editable="false" title="Ll. corte" type="java.lang.Object"/>
                     <Column editable="false" title="At. Combustible 1" type="java.lang.Object"/>
                     <Column editable="false" title="At. Combustible 2" type="java.lang.Object"/>
                     <Column editable="false" title="At. Combustible 3" type="java.lang.Object"/>
@@ -103,6 +104,7 @@
                     <Column editable="false" title="At. caja 1" type="java.lang.Object"/>
                     <Column editable="false" title="At. caja 2" type="java.lang.Object"/>
                     <Column editable="false" title="At. Shop" type="java.lang.Object"/>
+                    <Column editable="false" title="Fin corte" type="java.lang.Object"/>
                     <Column editable="false" title="S1 Estado" type="java.lang.Object"/>
                     <Column editable="false" title="S1 Cola" type="java.lang.Object"/>
                     <Column editable="false" title="S2 Estado" type="java.lang.Object"/>
@@ -170,7 +172,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -216,6 +218,16 @@
                       <Renderer/>
                     </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>

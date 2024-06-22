@@ -354,6 +354,7 @@ public class GestorServicio implements ActionListener {
     public void calcularFinAtencionCombustible(FinAtencionCombustible objetoFin) {
         int indice = objetoFin.getSubindice();
         filaActual.getSurtidor(indice).eliminarCliente();
+        filaActual.actualizarAtendidosCombustible();
         if (filaAnterior.getSurtidor(indice).getClientesCombustible().isEmpty()) {
             filaActual.getSurtidor(indice).setEstado("libre");
 
@@ -362,16 +363,16 @@ public class GestorServicio implements ActionListener {
             
             ClienteCombustible cliente = filaActual.getSurtidor(indice).buscarSiguiente();
             filaActual.actualizarEsperaCombustible(reloj - cliente.getTiempoLlegada());
-            filaActual.actualizarAtendidosCombustible();
-
+            
             filaActual.agregarFinAtencionCombustible(new FinAtencionCombustible(Double.parseDouble(views.media_atencion_shop.getText()),filaActual.getSurtidor(indice).getSubindice(),reloj));
-
+            
         }
 
     }
     public void calcularFinAtencionLavado(FinAtencionLavado objetoFin) {
         int indice = objetoFin.getSubindice();
         filaActual.getEstacionLavado(indice).eliminarCliente();
+        filaActual.actualizarAtendidosLavado();
         if (filaAnterior.getEstacionLavado(indice).getClientesLavado().isEmpty()) {
             filaActual.getEstacionLavado(indice).setEstado("libre");
 
@@ -380,7 +381,6 @@ public class GestorServicio implements ActionListener {
             // Busco siguiente cliente y calculo tiempo espera y sumo contador
             ClienteLavado cliente =  filaActual.getEstacionLavado(indice).buscarSiguiente();
             filaActual.actualizarEsperaLavado(reloj - cliente.getTiempoLlegada());
-            filaActual.actualizarAtendidosLavado();
             filaActual.agregarFinAtencionLavado(new FinAtencionLavado(Double.parseDouble(views.media_atencion_lavado.getText()), filaActual.getEstacionLavado(indice).getSubindice(),reloj));
 
         }
@@ -388,6 +388,7 @@ public class GestorServicio implements ActionListener {
     public void calcularFinAtencionMantenimiento(FinAtencionMantenimiento objetoFin) {
         int indice = objetoFin.getSubindice();
         filaActual.getEstacionMantenimiento(indice).eliminarCliente();
+        filaActual.actualizarAtendidosMantenimiento();
         if (filaAnterior.getEstacionMantenimiento(indice).getClientesMantenimiento().isEmpty()) {
             filaActual.getEstacionMantenimiento(indice).setEstado("libre");
 
@@ -395,13 +396,13 @@ public class GestorServicio implements ActionListener {
             // Busco siguiente cliente y calculo tiempo espera y sumo contador
             ClienteMantenimiento cliente = filaAnterior.getEstacionMantenimiento(indice).buscarSiguiente();
             filaActual.actualizarEsperaMantenimiento(reloj - cliente.getTiempoLlegada());
-            filaActual.actualizarAtendidosMantenimiento();
             filaActual.agregarFinAtencionMantenimiento(new FinAtencionMantenimiento(Double.parseDouble(views.media_atencion_mantenimiento.getText()),filaAnterior.getEstacionMantenimiento(indice).getSubindice(),reloj));
         }
     }
     public void calcularFinAtencionCaja(FinAtencionCaja objetoFin) {
         int indice = objetoFin.getSubindice();
         filaActual.getCaja(indice).eliminarCliente();
+        filaActual.actualizarAtendidosCaja();
         if (filaAnterior.getCaja(indice).getClientesCaja().isEmpty()) {
             filaActual.getCaja(indice).setEstado("libre");
 
@@ -409,7 +410,6 @@ public class GestorServicio implements ActionListener {
             // Busco siguiente cliente y calculo tiempo espera y sumo contador
             ClienteCaja cliente =  filaActual.getCaja(indice).buscarSiguiente();
             filaActual.actualizarEsperaCaja(reloj - cliente.getTiempoLlegada());
-            filaActual.actualizarAtendidosCaja();
             filaActual.agregarFinAtencionCaja(new FinAtencionCaja(Double.parseDouble(views.media_atencion_caja.getText()), filaActual.getCaja(indice).getSubindice(),reloj));
 
         }
@@ -418,6 +418,7 @@ public class GestorServicio implements ActionListener {
     public void calcularFinAtencionShop(FinAtencionShop objetoFin) {
         filaActual.getShop().eliminarCliente();
         shopOcupado = false;
+        filaActual.actualizarAtendidosShop();
         if (filaAnterior.getShop().getClientesShop().isEmpty()) {
             filaActual.getShop().setEstado("libre");
        
@@ -426,10 +427,9 @@ public class GestorServicio implements ActionListener {
             // Busco siguiente cliente y calculo tiempo espera y sumo contador
             ClienteShop cliente =  filaActual.getShop().buscarSiguiente();
             filaActual.actualizarEsperaShop(reloj - cliente.getTiempoLlegada());
-            filaActual.actualizarAtendidosShop();
-            filaActual.setFinAtencionShop(new FinAtencionShop(Double.valueOf(views.media_atencion_shop.getText()),reloj));
-
+            
         }
+        filaActual.setFinAtencionShop(new FinAtencionShop(Double.valueOf(views.media_atencion_shop.getText()),reloj));
     }
 
     private void mostrarSimulaciones() {
